@@ -1190,6 +1190,20 @@ const Footer = () => {
             <a href="#" className="text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors duration-300">Terms of Service</a>
           </div>
         </div>
+        
+        <div className="pt-6 text-center">
+          <p className="text-xs text-[#525252]">
+            Website powered by{' '}
+            <a 
+              href="https://techbook.co.in/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sand hover:text-white transition-colors duration-300"
+            >
+              Techbook Technologies
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );
