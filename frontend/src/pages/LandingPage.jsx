@@ -1,11 +1,30 @@
-import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { ChevronDown, Play, ArrowRight, Check, Loader2 } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { ChevronDown, Play, ArrowRight, Check, Loader2, ChevronUp, Menu, X, Quote, Plus, Minus } from 'lucide-react';
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// Logo component - using the dark theme version (white logo)
+const Logo = ({ className = "h-12" }) => (
+  <svg 
+    viewBox="0 0 120 140" 
+    className={className}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Vertical line */}
+    <line x1="35" y1="10" x2="35" y2="130" stroke="currentColor" strokeWidth="2"/>
+    {/* Oval */}
+    <ellipse cx="70" cy="85" rx="40" ry="45" stroke="currentColor" strokeWidth="2" fill="none"/>
+    {/* Text "the" */}
+    <text x="52" y="80" fill="currentColor" fontSize="14" fontFamily="serif">the</text>
+    {/* Text "becoming" */}
+    <text x="38" y="98" fill="currentColor" fontSize="14" fontFamily="serif">becoming</text>
+  </svg>
+);
 
 // Animation variants
 const fadeInUp = {
@@ -33,7 +52,9 @@ const images = {
   foggyForest: "https://images.unsplash.com/photo-1601307426703-20d19577e455?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwyfHxmb2dneSUyMGZvcmVzdCUyMG1vcm5pbmd8ZW58MHx8fHwxNzcwMzQ4NjM2fDA&ixlib=rb-4.1.0&q=85",
   abstractShadow: "https://images.unsplash.com/photo-1758239652104-2ece77db996b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NjZ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGxpZ2h0JTIwc2hhZG93JTIwdGV4dHVyZXxlbnwwfHx8fDE3NzAzNDg2NDJ8MA&ixlib=rb-4.1.0&q=85",
   silhouetteView: "https://images.unsplash.com/photo-1767238270052-c7c3540dcd3d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBzaWxob3VldHRlJTIwbG9va2luZyUyMGF0JTIwdmlld3xlbnwwfHx8fDE3NzAzNDg2NDZ8MA&ixlib=rb-4.1.0&q=85",
-  calmWater: "https://images.unsplash.com/photo-1763389141084-67e33aef1f6f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBzaWxob3VldHRlJTIwbG9va2luZyUyMGF0JTIwdmlld3xlbnwwfHx8fDE3NzAzNDg2NDZ8MA&ixlib=rb-4.1.0&q=85"
+  calmWater: "https://images.unsplash.com/photo-1763389141084-67e33aef1f6f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBzaWxob3VldHRlJTIwbG9va2luZyUyMGF0JTIwdmlld3xlbnwwfHx8fDE3NzAzNDg2NDZ8MA&ixlib=rb-4.1.0&q=85",
+  meditation: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80",
+  nature: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80"
 };
 
 // Section component with scroll animation
@@ -55,8 +76,138 @@ const AnimatedSection = ({ children, className = "", id = "" }) => {
   );
 };
 
-// Hero Section
+// Animated Counter Component
+const AnimatedCounter = ({ end, suffix = "", duration = 2 }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView) {
+      let startTime;
+      const animate = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+        setCount(Math.floor(progress * end));
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    }
+  }, [isInView, end, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+};
+
+// Navigation Header
+const Navigation = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { label: 'About', href: '#what-is-it' },
+    { label: 'Experience', href: '#experience' },
+    { label: 'For You?', href: '#who-its-for' },
+    { label: 'Process', href: '#how-it-works' },
+    { label: 'FAQ', href: '#faq' },
+  ];
+
+  const scrollTo = (href) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMobileMenuOpen(false);
+  };
+
+  return (
+    <>
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled ? 'bg-void/90 backdrop-blur-lg border-b border-white/5' : 'bg-transparent'
+        }`}
+        data-testid="navigation"
+      >
+        <div className="content-container px-6 py-4 flex items-center justify-between">
+          <a href="#" className="text-[#e5e5e5] hover:text-sand transition-colors duration-300">
+            <Logo className="h-10 w-auto" />
+          </a>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+              <button
+                key={item.label}
+                onClick={() => scrollTo(item.href)}
+                className="text-sm text-[#a3a3a3] hover:text-sand transition-colors duration-300 animated-underline"
+              >
+                {item.label}
+              </button>
+            ))}
+            <button
+              onClick={() => scrollTo('#signup')}
+              className="btn-primary text-sm py-2 px-6"
+              data-testid="nav-cta"
+            >
+              Join The Becoming
+            </button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-[#e5e5e5] p-2"
+            data-testid="mobile-menu-toggle"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+      </motion.header>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 bg-void/98 backdrop-blur-lg pt-20 md:hidden"
+          >
+            <nav className="flex flex-col items-center gap-6 p-8">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => scrollTo(item.href)}
+                  className="text-xl text-[#e5e5e5] hover:text-sand transition-colors duration-300"
+                >
+                  {item.label}
+                </button>
+              ))}
+              <button
+                onClick={() => scrollTo('#signup')}
+                className="btn-primary mt-4"
+              >
+                Join The Becoming
+              </button>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+// Hero Section with Parallax
 const HeroSection = () => {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, 150]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
   const scrollToSignup = () => {
     document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -68,12 +219,30 @@ const HeroSection = () => {
   return (
     <section 
       data-testid="hero-section"
-      className="relative min-h-screen flex items-center justify-center hero-bg"
-      style={{ backgroundImage: `url(${images.foggyForest})` }}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
+      <motion.div 
+        style={{ y }}
+        className="absolute inset-0 hero-bg"
+      >
+        <img 
+          src={images.foggyForest} 
+          alt="" 
+          className="w-full h-full object-cover scale-110"
+        />
+      </motion.div>
       <div className="absolute inset-0 hero-overlay" />
       
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <motion.div style={{ opacity }} className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+          className="mb-8"
+        >
+          <Logo className="h-20 w-auto mx-auto text-[#e5e5e5]" />
+        </motion.div>
+        
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -128,7 +297,7 @@ const HeroSection = () => {
             <ChevronDown className="w-4 h-4" />
           </button>
         </motion.div>
-      </div>
+      </motion.div>
       
       <motion.div 
         initial={{ opacity: 0 }}
@@ -139,6 +308,40 @@ const HeroSection = () => {
         <ChevronDown className="w-6 h-6 text-[#525252] animate-bounce" />
       </motion.div>
     </section>
+  );
+};
+
+// Stats Section
+const StatsSection = () => {
+  const stats = [
+    { value: 20, suffix: '', label: 'Curated Seats' },
+    { value: 4, suffix: '', label: 'Days of Immersion' },
+    { value: 2, suffix: '', label: 'Psychologists On-Site' },
+    { value: 100, suffix: '%', label: 'Transformative Intent' },
+  ];
+
+  return (
+    <div className="py-16 bg-ash border-y border-white/5">
+      <div className="content-container px-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="text-center"
+            >
+              <p className="font-heading text-4xl lg:text-5xl text-sand mb-2">
+                <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+              </p>
+              <p className="text-sm text-[#a3a3a3]">{stat.label}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -197,11 +400,11 @@ const WhatIsItSection = () => {
 // Experience Section
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Nature & Stillness", description: "Reconnect with the natural world and find peace in silence" },
-    { title: "Mindful Movement", description: "Listen to your body and move with intention" },
-    { title: "Reflection & Creativity", description: "Express what words cannot capture" },
-    { title: "Writing & Music", description: "Explore the landscapes of your inner world" },
-    { title: "Storytelling & Connection", description: "Share and listen to honest human stories" }
+    { title: "Nature & Stillness", description: "Reconnect with the natural world and find peace in silence", icon: "🌿" },
+    { title: "Mindful Movement", description: "Listen to your body and move with intention", icon: "🧘" },
+    { title: "Reflection & Creativity", description: "Express what words cannot capture", icon: "✨" },
+    { title: "Writing & Music", description: "Explore the landscapes of your inner world", icon: "🎵" },
+    { title: "Storytelling & Connection", description: "Share and listen to honest human stories", icon: "💬" }
   ];
 
   return (
@@ -222,10 +425,13 @@ const ExperienceSection = () => {
             <motion.div 
               key={index}
               variants={fadeInUp}
-              className="becoming-card group"
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="becoming-card group cursor-pointer"
               data-testid={`experience-card-${index}`}
             >
-              <div className="w-2 h-2 rounded-full bg-sand mb-6 group-hover:scale-150 transition-transform duration-500" />
+              <div className="w-12 h-12 rounded-full bg-sand/10 flex items-center justify-center mb-6 group-hover:bg-sand/20 transition-colors duration-500">
+                <span className="text-2xl">{exp.icon}</span>
+              </div>
               <h3 className="font-heading text-xl text-[#e5e5e5] mb-3">{exp.title}</h3>
               <p className="text-sm text-[#a3a3a3]">{exp.description}</p>
             </motion.div>
@@ -242,6 +448,95 @@ const ExperienceSection = () => {
         </motion.div>
       </div>
     </AnimatedSection>
+  );
+};
+
+// Testimonials Section
+const TestimonialsSection = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  
+  const testimonials = [
+    {
+      quote: "I came thinking I needed answers. I left understanding that I am the answer I've been searching for.",
+      author: "Priya S.",
+      role: "Corporate Executive",
+    },
+    {
+      quote: "For the first time in decades, I felt permission to just be. Not perform. Not achieve. Just exist.",
+      author: "Rahul M.",
+      role: "Entrepreneur",
+    },
+    {
+      quote: "The Becoming didn't fix me. It helped me realize I was never broken. Just buried.",
+      author: "Ananya K.",
+      role: "Artist & Mother",
+    },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
+
+  return (
+    <section className="section-spacing bg-void relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5">
+        <img src={images.nature} alt="" className="w-full h-full object-cover" />
+      </div>
+      <div className="content-container relative z-10">
+        <motion.p 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4 text-center"
+        >
+          Voices From Within
+        </motion.p>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-16 text-center"
+        >
+          What They <em>Discovered</em>
+        </motion.h2>
+
+        <div className="max-w-3xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <Quote className="w-12 h-12 text-sand/30 mx-auto mb-8" />
+              <p className="font-heading text-2xl lg:text-3xl text-[#e5e5e5] italic mb-8 leading-relaxed">
+                "{testimonials[activeIndex].quote}"
+              </p>
+              <p className="text-sand font-medium">{testimonials[activeIndex].author}</p>
+              <p className="text-sm text-[#525252]">{testimonials[activeIndex].role}</p>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="flex justify-center gap-2 mt-12">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === activeIndex ? 'bg-sand w-8' : 'bg-white/20 hover:bg-white/40'
+                }`}
+                data-testid={`testimonial-dot-${index}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -315,7 +610,8 @@ const WhoItsForSection = () => {
                 <motion.li 
                   key={index} 
                   variants={fadeInUp}
-                  className="becoming-card"
+                  whileHover={{ x: 8, transition: { duration: 0.3 } }}
+                  className="becoming-card cursor-pointer"
                 >
                   <p className="text-[#e5e5e5] font-heading italic">{sign}</p>
                 </motion.li>
@@ -355,6 +651,7 @@ const CircleSection = () => {
             <motion.div 
               key={index} 
               variants={fadeInUp}
+              whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               className="becoming-card text-left"
             >
               <div className="w-8 h-8 rounded-full border border-sand/30 flex items-center justify-center mb-4">
@@ -468,6 +765,7 @@ const HowItWorksSection = () => {
             <motion.div 
               key={index} 
               variants={fadeInUp}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className="relative"
               data-testid={`step-${index + 1}`}
             >
@@ -482,6 +780,86 @@ const HowItWorksSection = () => {
             </motion.div>
           ))}
         </div>
+      </div>
+    </AnimatedSection>
+  );
+};
+
+// FAQ Section
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const faqs = [
+    {
+      question: "How is The Becoming different from a retreat or workshop?",
+      answer: "The Becoming is not designed to teach, preach, or fix. Unlike retreats focused on wellness activities or workshops with learning outcomes, we create an intentional space for you to simply be. There's no agenda to follow, no skills to acquire—just an invitation to turn inward and reconnect with yourself."
+    },
+    {
+      question: "What happens during the 4 days?",
+      answer: "Each day unfolds organically through nature walks, stillness practices, creative expression, music, storytelling circles, and deep human connection. There are no rigid schedules—only invitations. Our psychologists are present throughout to hold space safely."
+    },
+    {
+      question: "Do I need to have any specific issues or problems to attend?",
+      answer: "Not at all. The Becoming isn't for people who are broken. It's for people who are functioning fine but feel there's something more. If you're on autopilot, feeling quietly lost, or simply curious about what lies beneath the surface of your everyday life—you're ready."
+    },
+    {
+      question: "Why is there a screening process?",
+      answer: "The Becoming requires a certain readiness. Our psychologists review applications to ensure participants are in a stable place to engage with introspection. It's not about qualification—it's about timing and genuine resonance with what we offer."
+    },
+    {
+      question: "What do I need to bring?",
+      answer: "Just yourself. We ask that you leave your work, devices, and everyday identities behind. Come as you are—not as a CEO, mother, professional, or any role. We'll provide everything else you need for the experience."
+    },
+    {
+      question: "What happens after The Becoming ends?",
+      answer: "You join The Circle—a continuing community of like-minded individuals. We stay in touch, offer periodic gatherings, and remind you of what matters when life gets noisy again. The Becoming is not a one-time event; it's the beginning of a longer journey."
+    }
+  ];
+
+  return (
+    <AnimatedSection id="faq" className="section-spacing bg-void">
+      <div className="content-container max-w-3xl mx-auto">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4 text-center">
+          Questions
+        </motion.p>
+        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-12 text-center">
+          Frequently <em>Asked</em>
+        </motion.h2>
+
+        <motion.div variants={staggerContainer} className="space-y-4">
+          {faqs.map((faq, index) => (
+            <motion.div
+              key={index}
+              variants={fadeInUp}
+              className="becoming-card overflow-hidden"
+              data-testid={`faq-${index}`}
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full flex items-center justify-between text-left py-2"
+              >
+                <span className="font-heading text-lg text-[#e5e5e5] pr-4">{faq.question}</span>
+                {openIndex === index ? (
+                  <Minus className="w-5 h-5 text-sand flex-shrink-0" />
+                ) : (
+                  <Plus className="w-5 h-5 text-sand flex-shrink-0" />
+                )}
+              </button>
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <p className="text-[#a3a3a3] pt-4 pb-2 leading-relaxed">{faq.answer}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </AnimatedSection>
   );
@@ -523,7 +901,7 @@ const SignUpSection = () => {
 
   if (isSubmitted) {
     return (
-      <AnimatedSection id="signup" className="section-spacing bg-void">
+      <AnimatedSection id="signup" className="section-spacing bg-ash">
         <div className="content-container max-w-2xl mx-auto text-center">
           <motion.div variants={fadeInUp} className="becoming-card py-16">
             <div className="w-16 h-16 rounded-full bg-sand/20 flex items-center justify-center mx-auto mb-6">
@@ -541,7 +919,7 @@ const SignUpSection = () => {
   }
 
   return (
-    <AnimatedSection id="signup" className="section-spacing bg-void">
+    <AnimatedSection id="signup" className="section-spacing bg-ash">
       <div className="content-container max-w-2xl mx-auto">
         <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4 text-center">
           Begin Your Journey
@@ -674,7 +1052,7 @@ const SignUpSection = () => {
 // Founder's Note Section
 const FounderSection = () => {
   return (
-    <AnimatedSection id="founder" className="section-spacing bg-ash">
+    <AnimatedSection id="founder" className="section-spacing bg-void">
       <div className="content-container max-w-4xl mx-auto">
         <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4 text-center">
           A Personal Note
@@ -703,8 +1081,8 @@ const FounderSection = () => {
           </motion.div>
           
           <motion.div variants={fadeInUp}>
-            <div className="video-placeholder" data-testid="video-placeholder">
-              <div className="play-button">
+            <div className="video-placeholder group" data-testid="video-placeholder">
+              <div className="play-button group-hover:scale-110 transition-transform duration-300">
                 <Play className="w-8 h-8 text-sand ml-1" />
               </div>
             </div>
@@ -718,17 +1096,99 @@ const FounderSection = () => {
   );
 };
 
+// Back to Top Button
+const BackToTop = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsVisible(window.scrollY > 500);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-sand text-void flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-300 z-50"
+          data-testid="back-to-top"
+        >
+          <ChevronUp className="w-6 h-6" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+};
+
 // Footer
 const Footer = () => {
+  const scrollTo = (href) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <footer className="py-12 bg-void border-t border-white/5">
-      <div className="content-container px-6 text-center">
-        <p className="font-heading text-2xl text-[#e5e5e5] mb-2">The Becoming</p>
-        <p className="text-sm text-[#525252]">A curated human experience</p>
-        <div className="mt-8 pt-8 border-t border-white/5">
+    <footer className="py-16 bg-ash border-t border-white/5">
+      <div className="content-container px-6">
+        <div className="grid md:grid-cols-3 gap-12 mb-12">
+          {/* Logo and tagline */}
+          <div>
+            <Logo className="h-16 w-auto text-[#e5e5e5] mb-4" />
+            <p className="text-sm text-[#525252] mt-4">A curated human experience for those ready to become real again.</p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-heading text-lg text-[#e5e5e5] mb-4">Explore</h4>
+            <nav className="space-y-3">
+              {[
+                { label: 'About', href: '#what-is-it' },
+                { label: 'Experience', href: '#experience' },
+                { label: 'Who It\'s For', href: '#who-its-for' },
+                { label: 'Process', href: '#how-it-works' },
+                { label: 'FAQ', href: '#faq' },
+              ].map((link) => (
+                <button
+                  key={link.label}
+                  onClick={() => scrollTo(link.href)}
+                  className="block text-sm text-[#a3a3a3] hover:text-sand transition-colors duration-300"
+                >
+                  {link.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-heading text-lg text-[#e5e5e5] mb-4">Connect</h4>
+            <p className="text-sm text-[#a3a3a3] mb-4">
+              Have questions? Reach out to us.
+            </p>
+            <a 
+              href="mailto:hello@thebecoming.in" 
+              className="text-sand hover:text-white transition-colors duration-300"
+            >
+              hello@thebecoming.in
+            </a>
+          </div>
+        </div>
+
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[#525252]">
             © {new Date().getFullYear()} The Becoming. All rights reserved.
           </p>
+          <div className="flex items-center gap-6">
+            <a href="#" className="text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors duration-300">Privacy Policy</a>
+            <a href="#" className="text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors duration-300">Terms of Service</a>
+          </div>
         </div>
       </div>
     </footer>
@@ -750,16 +1210,21 @@ export default function LandingPage() {
           }
         }}
       />
+      <Navigation />
       <HeroSection />
+      <StatsSection />
       <WhatIsItSection />
       <ExperienceSection />
+      <TestimonialsSection />
       <WhoItsForSection />
       <CircleSection />
       <PilotBatchSection />
       <HowItWorksSection />
+      <FAQSection />
       <SignUpSection />
       <FounderSection />
       <Footer />
+      <BackToTop />
     </div>
   );
 }
