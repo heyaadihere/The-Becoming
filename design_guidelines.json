@@ -1,0 +1,165 @@
+{
+  "identity": {
+    "persona": "E1",
+    "tone": "Introspective, Psychological, Raw, Editorial, Human",
+    "anti_patterns": [
+      "Corporate Memphis art",
+      "Generic SaaS gradients (Blue/Purple)",
+      "Inter font for headings",
+      "Bootstrap/12-column rigid grids",
+      "Pure black (#000000) backgrounds without texture"
+    ]
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Playfair Display, serif",
+      "weights": ["400", "600"],
+      "tracking": "tracking-tight",
+      "usage": "All section titles, hero statements. Use italics for emphasis words."
+    },
+    "body": {
+      "font_family": "Manrope, sans-serif",
+      "weights": ["300", "400", "500"],
+      "tracking": "tracking-wide",
+      "usage": "Paragraphs, UI elements, labels."
+    },
+    "mono": {
+      "font_family": "JetBrains Mono, monospace",
+      "usage": "Small labels, dates, technical details (minimal use)."
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": {
+        "default": "#0c0c0c",
+        "paper": "#161616",
+        "overlay": "rgba(12, 12, 12, 0.8)"
+      },
+      "foreground": {
+        "primary": "#e5e5e5",
+        "secondary": "#a3a3a3",
+        "muted": "#525252"
+      },
+      "accent": {
+        "primary": "#d4a373",
+        "secondary": "#bc4749",
+        "glow": "rgba(212, 163, 115, 0.15)"
+      },
+      "border": {
+        "subtle": "#262626",
+        "active": "#404040"
+      }
+    },
+    "tailwind_config_extension": {
+      "colors": {
+        "void": "#0c0c0c",
+        "ash": "#161616",
+        "sand": "#d4a373",
+        "clay": "#bc4749"
+      }
+    }
+  },
+  "visual_enhancers": {
+    "textures": [
+      "Grain overlay (opacity 0.03) on all backgrounds",
+      "Subtle fog/smoke video backgrounds"
+    ],
+    "shadows": {
+      "glow": "0 0 40px -10px rgba(212, 163, 115, 0.1)",
+      "deep": "0 20px 40px -20px rgba(0,0,0,0.8)"
+    },
+    "borders": "1px solid rgba(255,255,255,0.08)"
+  },
+  "layout_strategy": {
+    "grid_system": "The Bento Grid (Mode A - Tetris)",
+    "spacing": "Generous. Use p-12, p-24, p-32. Never cram content.",
+    "container": "max-w-7xl mx-auto px-6 md:px-12",
+    "alignment": "Asymmetric. Offset text blocks. Avoid perfect centering except for Hero."
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-sand text-void hover:bg-white transition-all duration-500 rounded-full px-8 py-4 font-medium tracking-wide",
+      "secondary": "border border-white/20 text-white hover:border-white/60 hover:bg-white/5 transition-all duration-500 rounded-full px-8 py-4"
+    },
+    "cards": {
+      "style": "bg-ash/50 backdrop-blur-md border border-white/5 hover:border-sand/30 transition-colors duration-500 p-8 rounded-xl"
+    },
+    "inputs": {
+      "style": "bg-transparent border-b border-white/20 focus:border-sand outline-none py-4 text-lg transition-colors duration-300 placeholder:text-white/20 rounded-none"
+    }
+  },
+  "sections": {
+    "hero": {
+      "type": "Immersive",
+      "elements": "Full screen video/image background with heavy overlay. Centered serif typography. Dual CTA.",
+      "image_ref": "foggy_forest"
+    },
+    "what_is_it": {
+      "type": "Asymmetric Split",
+      "elements": "Text on left, abstract shadow image on right (floating).",
+      "image_ref": "abstract_shadow"
+    },
+    "experience": {
+      "type": "Bento Grid",
+      "elements": "Grid of 4-5 cards describing the feelings (Silence, Connection, Mirroring)."
+    },
+    "founder": {
+      "type": "Editorial",
+      "elements": "Video placeholder (aspect-video) with custom play button. Signature-style text."
+    }
+  },
+  "media": {
+    "image_urls": {
+      "foggy_forest": "https://images.unsplash.com/photo-1601307426703-20d19577e455?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwyfHxmb2dneSUyMGZvcmVzdCUyMG1vcm5pbmd8ZW58MHx8fHwxNzcwMzQ4NjM2fDA&ixlib=rb-4.1.0&q=85",
+      "abstract_shadow": "https://images.unsplash.com/photo-1758239652104-2ece77db996b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NjZ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGxpZ2h0JTIwc2hhZG93JTIwdGV4dHVyZXxlbnwwfHx8fDE3NzAzNDg2NDJ8MA&ixlib=rb-4.1.0&q=85",
+      "silhouette_view": "https://images.unsplash.com/photo-1767238270052-c7c3540dcd3d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBzaWxob3VldHRlJTIwbG9va2luZyUyMGF0JTIwdmlld3xlbnwwfHx8fDE3NzAzNDg2NDZ8MA&ixlib=rb-4.1.0&q=85",
+      "calm_water": "https://images.unsplash.com/photo-1763389141084-67e33aef1f6f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBzaWxob3VldHRlJTIwbG9va2luZyUyMGF0JTIwdmlld3xlbnwwfHx8fDE3NzAzNDg2NDZ8MA&ixlib=rb-4.1.0&q=85"
+    },
+    "video_placeholders": {
+      "founder_note": "Use a div with aspect-video, bg-neutral-900, and a centered 'Play' icon in a circle."
+    }
+  },
+  "motion": {
+    "library": "framer-motion",
+    "guidelines": [
+      "Use slow, long-duration transitions (0.8s - 1.2s).",
+      "Stagger children elements by 0.1s.",
+      "Parallax effect on background images.",
+      "Text reveal: Slide up + Fade in."
+    ]
+  },
+  "accessibility": {
+    "contrast": "Ensure text is #e5e5e5 or lighter on dark backgrounds.",
+    "focus_states": "Visible border-sand ring on focus.",
+    "reduced_motion": "Respect prefers-reduced-motion media query."
+  },
+  "instructions_to_main_agent": [
+    "Install 'framer-motion', 'lucide-react', 'clsx', 'tailwind-merge' if not present.",
+    "Configure tailwind.config.js to include the custom colors (void, ash, sand, clay) and fonts.",
+    "Import fonts via Google Fonts in index.css: Playfair Display (400,600) and Manrope (300,400,500).",
+    "Create a 'Layout' component that wraps the page with a smooth scroll provider (Lenis recommended if possible, otherwise standard).",
+    "Build the 'Sign Up' form using Shadcn components but styled with the 'inputs.style' defined above (transparent border-b).",
+    "Ensure the 'Hero' section feels cinematic - full height, immersive.",
+    "The 'Founder's Note' video placeholder must look premium - not just a gray box. Add a subtle border and a custom play button."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy",
+    "Use glass-morphism effects with backdrop filters (12-24px blur)",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯📚🎭🎬🎪🎉🎊🎁🎀🎂🍰🎈🎨🎰💰💵💳🏦💎🪙💸🤑📊📈📉💹🔢🏆🥇 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN",
+    "Prioritize using pre-existing components from src/components/ui when applicable",
+    "Create new components that match the style and conventions of existing components when needed",
+    "Examine existing components to understand the project's component patterns before creating new ones",
+    "Components MUST use named exports (export const ComponentName = ...)",
+    "Pages MUST use default exports (export default function PageName() {...})",
+    "Use sonner for toasts"
+  ]
+}
