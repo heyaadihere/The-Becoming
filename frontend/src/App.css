@@ -1,34 +1,214 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Reset text-align center */
+.App {
+    text-align: left;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+/* Hero background image */
+.hero-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Hero overlay */
+.hero-overlay {
+    background: linear-gradient(
+        to bottom,
+        rgba(12, 12, 12, 0.6) 0%,
+        rgba(12, 12, 12, 0.8) 50%,
+        rgba(12, 12, 12, 1) 100%
+    );
+}
+
+/* Section spacing */
+.section-spacing {
+    padding: 6rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .section-spacing {
+        padding: 8rem 3rem;
     }
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
+@media (min-width: 1024px) {
+    .section-spacing {
+        padding: 10rem 3rem;
+    }
+}
+
+/* Container */
+.content-container {
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+/* Input styling */
+.becoming-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 0;
+    font-size: 1.125rem;
+    color: #e5e5e5;
+    width: 100%;
+    transition: border-color 0.3s ease;
+    border-radius: 0;
+}
+
+.becoming-input:focus {
+    outline: none;
+    border-bottom-color: #d4a373;
+}
+
+.becoming-input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* Textarea styling */
+.becoming-textarea {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    font-size: 1rem;
+    color: #e5e5e5;
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+    border-radius: 8px;
+}
+
+.becoming-textarea:focus {
+    outline: none;
+    border-color: #d4a373;
+}
+
+.becoming-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: #d4a373;
+    color: #0c0c0c;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: background-color 0.5s ease, transform 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #e5e5e5;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #e5e5e5;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    transition: border-color 0.5s ease, background-color 0.5s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Card styles */
+.becoming-card {
+    background: rgba(22, 22, 22, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 12px;
+    transition: border-color 0.5s ease;
+}
+
+.becoming-card:hover {
+    border-color: rgba(212, 163, 115, 0.3);
+}
+
+/* Video placeholder */
+.video-placeholder {
+    aspect-ratio: 16 / 9;
+    background: #161616;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    transition: border-color 0.3s ease;
 }
 
-.App-link {
-    color: #61dafb;
+.video-placeholder:hover {
+    border-color: rgba(212, 163, 115, 0.3);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
+/* Play button */
+.play-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(212, 163, 115, 0.2);
+    border: 2px solid #d4a373;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.play-button:hover {
+    background: rgba(212, 163, 115, 0.4);
+    transform: scale(1.1);
+}
+
+/* Accent text */
+.text-sand {
+    color: #d4a373;
+}
+
+/* Muted text */
+.text-muted {
+    color: #a3a3a3;
+}
+
+/* Very muted */
+.text-very-muted {
+    color: #525252;
+}
+
+/* Divider */
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    width: 100%;
+}
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
