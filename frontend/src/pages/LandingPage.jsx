@@ -141,12 +141,12 @@ const Navigation = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'bg-cream/95 backdrop-blur-lg border-b border-pastel-green/20 shadow-sm' : 'bg-transparent'
+          isScrolled ? 'bg-mint/95 backdrop-blur-lg border-b border-sage-light/30 shadow-sm' : 'bg-transparent'
         }`}
         data-testid="navigation"
       >
         <div className="content-container px-6 py-4 flex items-center justify-between">
-          <a href="#" className="text-text-primary hover:text-soft-sage transition-colors duration-300">
+          <a href="#" className="text-text-primary hover:text-sage transition-colors duration-300">
             <Logo className="h-10 w-auto" dark />
           </a>
 
@@ -156,7 +156,7 @@ const Navigation = () => {
               <button
                 key={item.label}
                 onClick={() => scrollTo(item.href)}
-                className="text-sm text-text-secondary hover:text-soft-sage transition-colors duration-300 animated-underline"
+                className="text-sm text-text-secondary hover:text-sage transition-colors duration-300 animated-underline"
               >
                 {item.label}
               </button>
@@ -188,14 +188,14 @@ const Navigation = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-cream/98 backdrop-blur-lg pt-20 md:hidden"
+            className="fixed inset-0 z-40 bg-mint/98 backdrop-blur-lg pt-20 md:hidden"
           >
             <nav className="flex flex-col items-center gap-6 p-8">
               {navItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => scrollTo(item.href)}
-                  className="text-xl text-text-primary hover:text-soft-sage transition-colors duration-300"
+                  className="text-xl text-text-primary hover:text-sage transition-colors duration-300"
                 >
                   {item.label}
                 </button>
