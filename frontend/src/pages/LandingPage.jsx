@@ -904,11 +904,11 @@ const SignUpSection = () => {
 
   if (isSubmitted) {
     return (
-      <AnimatedSection id="signup" className="section-spacing bg-pastel-green-light/30">
+      <AnimatedSection id="signup" className="section-spacing bg-sage-lighter/60">
         <div className="content-container max-w-2xl mx-auto text-center">
-          <motion.div variants={fadeInUp} className="becoming-card py-16 bg-white">
-            <div className="w-16 h-16 rounded-full bg-pastel-green/30 flex items-center justify-center mx-auto mb-6">
-              <Check className="w-8 h-8 text-soft-sage" />
+          <motion.div variants={fadeInUp} className="becoming-card py-16 bg-white/90">
+            <div className="w-16 h-16 rounded-full bg-sage/20 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-8 h-8 text-sage" />
             </div>
             <h2 className="font-heading text-3xl text-text-primary mb-4">Thank You</h2>
             <p className="text-text-secondary">
@@ -922,13 +922,13 @@ const SignUpSection = () => {
   }
 
   return (
-    <AnimatedSection id="signup" className="section-spacing bg-pastel-green-light/30">
+    <AnimatedSection id="signup" className="section-spacing bg-sage-lighter/60">
       <div className="content-container max-w-2xl mx-auto">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4 text-center">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sage uppercase mb-4 text-center">
           Begin Your Journey
         </motion.p>
         <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-4 text-center">
-          Ready for Your <em className="text-soft-sage">Reset</em>?
+          Ready for Your <em className="text-sage">Reset</em>?
         </motion.h2>
         <motion.p variants={fadeInUp} className="text-base text-text-secondary mb-12 text-center">
           If this resonates with you, if you feel quietly ready, take a moment and tell us who you are.
@@ -937,7 +937,7 @@ const SignUpSection = () => {
         <motion.form 
           variants={staggerContainer}
           onSubmit={handleSubmit}
-          className="space-y-8 becoming-card bg-white"
+          className="space-y-8 becoming-card bg-white/90"
           data-testid="signup-form"
         >
           <motion.div variants={fadeInUp}>
