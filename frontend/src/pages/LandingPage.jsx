@@ -231,7 +231,7 @@ const HeroSection = () => {
   return (
     <section 
       data-testid="hero-section"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-sage-lighter"
     >
       <motion.div 
         style={{ y }}
@@ -240,10 +240,10 @@ const HeroSection = () => {
         <img 
           src={images.hero} 
           alt="" 
-          className="w-full h-full object-cover scale-110 opacity-40"
+          className="w-full h-full object-cover scale-110 opacity-50"
         />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-b from-cream/30 via-cream/60 to-cream" />
+      <div className="absolute inset-0 hero-overlay" />
       
       <motion.div style={{ opacity }} className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <motion.div
@@ -259,7 +259,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="font-mono text-sm tracking-[0.3em] text-soft-sage mb-6 uppercase"
+          className="font-mono text-sm tracking-[0.3em] text-sage mb-6 uppercase"
         >
           A Curated Human Experience
         </motion.p>
@@ -271,7 +271,7 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.4 }}
           className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-tight text-text-primary mb-6"
         >
-          Do you need a <em className="text-soft-sage">reset</em>?
+          Do you need a <em className="text-sage">reset</em>?
         </motion.h1>
         
         <motion.p 
@@ -280,7 +280,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="font-heading text-2xl sm:text-3xl text-text-secondary mb-8 italic"
         >
-          The Becoming is an invitation to become <span className="text-soft-sage">real</span> again.
+          The Becoming is an invitation to become <span className="text-sage">real</span> again.
         </motion.p>
         
         <motion.p 
@@ -324,7 +324,7 @@ const HeroSection = () => {
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <ChevronDown className="w-6 h-6 text-text-muted animate-bounce" />
+        <ChevronDown className="w-6 h-6 text-sage animate-bounce" />
       </motion.div>
     </section>
   );
