@@ -7,8 +7,8 @@ import { Toaster, toast } from 'sonner';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Logo component - using the dark theme version (white logo)
-const Logo = ({ className = "h-12" }) => (
+// Logo component - soft sage green version for light theme
+const Logo = ({ className = "h-12", dark = false }) => (
   <svg 
     viewBox="0 0 120 140" 
     className={className}
@@ -16,13 +16,13 @@ const Logo = ({ className = "h-12" }) => (
     xmlns="http://www.w3.org/2000/svg"
   >
     {/* Vertical line */}
-    <line x1="35" y1="10" x2="35" y2="130" stroke="currentColor" strokeWidth="2"/>
+    <line x1="35" y1="10" x2="35" y2="130" stroke={dark ? "#2d3748" : "currentColor"} strokeWidth="2"/>
     {/* Oval */}
-    <ellipse cx="70" cy="85" rx="40" ry="45" stroke="currentColor" strokeWidth="2" fill="none"/>
+    <ellipse cx="70" cy="85" rx="40" ry="45" stroke={dark ? "#2d3748" : "currentColor"} strokeWidth="2" fill="none"/>
     {/* Text "the" */}
-    <text x="52" y="80" fill="currentColor" fontSize="14" fontFamily="serif">the</text>
+    <text x="52" y="80" fill={dark ? "#2d3748" : "currentColor"} fontSize="14" fontFamily="serif">the</text>
     {/* Text "becoming" */}
-    <text x="38" y="98" fill="currentColor" fontSize="14" fontFamily="serif">becoming</text>
+    <text x="38" y="98" fill={dark ? "#2d3748" : "currentColor"} fontSize="14" fontFamily="serif">becoming</text>
   </svg>
 );
 
@@ -47,14 +47,13 @@ const staggerContainer = {
   }
 };
 
-// Images from design guidelines
+// Soft, calming images
 const images = {
-  foggyForest: "https://images.unsplash.com/photo-1601307426703-20d19577e455?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwyfHxmb2dneSUyMGZvcmVzdCUyMG1vcm5pbmd8ZW58MHx8fHwxNzcwMzQ4NjM2fDA&ixlib=rb-4.1.0&q=85",
-  abstractShadow: "https://images.unsplash.com/photo-1758239652104-2ece77db996b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NjZ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGxpZ2h0JTIwc2hhZG93JTIwdGV4dHVyZXxlbnwwfHx8fDE3NzAzNDg2NDJ8MA&ixlib=rb-4.1.0&q=85",
-  silhouetteView: "https://images.unsplash.com/photo-1767238270052-c7c3540dcd3d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBzaWxob3VldHRlJTIwbG9va2luZyUyMGF0JTIwdmlld3xlbnwwfHx8fDE3NzAzNDg2NDZ8MA&ixlib=rb-4.1.0&q=85",
-  calmWater: "https://images.unsplash.com/photo-1763389141084-67e33aef1f6f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBzaWxob3VldHRlJTIwbG9va2luZyUyMGF0JTIwdmlld3xlbnwwfHx8fDE3NzAzNDg2NDZ8MA&ixlib=rb-4.1.0&q=85",
-  meditation: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80",
-  nature: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80"
+  hero: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&q=80",
+  nature: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80",
+  peaceful: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&q=80",
+  meditation: "https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&q=80",
+  calm: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=800&q=80"
 };
 
 // Section component with scroll animation
@@ -129,13 +128,13 @@ const Navigation = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'bg-void/90 backdrop-blur-lg border-b border-white/5' : 'bg-transparent'
+          isScrolled ? 'bg-cream/95 backdrop-blur-lg border-b border-pastel-green/20 shadow-sm' : 'bg-transparent'
         }`}
         data-testid="navigation"
       >
         <div className="content-container px-6 py-4 flex items-center justify-between">
-          <a href="#" className="text-[#e5e5e5] hover:text-sand transition-colors duration-300">
-            <Logo className="h-10 w-auto" />
+          <a href="#" className="text-text-primary hover:text-soft-sage transition-colors duration-300">
+            <Logo className="h-10 w-auto" dark />
           </a>
 
           {/* Desktop Navigation */}
@@ -144,7 +143,7 @@ const Navigation = () => {
               <button
                 key={item.label}
                 onClick={() => scrollTo(item.href)}
-                className="text-sm text-[#a3a3a3] hover:text-sand transition-colors duration-300 animated-underline"
+                className="text-sm text-text-secondary hover:text-soft-sage transition-colors duration-300 animated-underline"
               >
                 {item.label}
               </button>
@@ -154,14 +153,14 @@ const Navigation = () => {
               className="btn-primary text-sm py-2 px-6"
               data-testid="nav-cta"
             >
-              Join The Becoming
+              Begin Your Reset
             </button>
           </nav>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-[#e5e5e5] p-2"
+            className="md:hidden text-text-primary p-2"
             data-testid="mobile-menu-toggle"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -176,14 +175,14 @@ const Navigation = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-void/98 backdrop-blur-lg pt-20 md:hidden"
+            className="fixed inset-0 z-40 bg-cream/98 backdrop-blur-lg pt-20 md:hidden"
           >
             <nav className="flex flex-col items-center gap-6 p-8">
               {navItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => scrollTo(item.href)}
-                  className="text-xl text-[#e5e5e5] hover:text-sand transition-colors duration-300"
+                  className="text-xl text-text-primary hover:text-soft-sage transition-colors duration-300"
                 >
                   {item.label}
                 </button>
@@ -192,7 +191,7 @@ const Navigation = () => {
                 onClick={() => scrollTo('#signup')}
                 className="btn-primary mt-4"
               >
-                Join The Becoming
+                Begin Your Reset
               </button>
             </nav>
           </motion.div>
@@ -202,7 +201,7 @@ const Navigation = () => {
   );
 };
 
-// Hero Section with Parallax
+// Hero Section with new headline
 const HeroSection = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
@@ -223,56 +222,63 @@ const HeroSection = () => {
     >
       <motion.div 
         style={{ y }}
-        className="absolute inset-0 hero-bg"
+        className="absolute inset-0"
       >
         <img 
-          src={images.foggyForest} 
+          src={images.hero} 
           alt="" 
-          className="w-full h-full object-cover scale-110"
+          className="w-full h-full object-cover scale-110 opacity-40"
         />
       </motion.div>
-      <div className="absolute inset-0 hero-overlay" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream/30 via-cream/60 to-cream" />
       
       <motion.div style={{ opacity }} className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="mb-8"
+          className="mb-6"
         >
-          <Logo className="h-20 w-auto mx-auto text-[#e5e5e5]" />
+          <Logo className="h-16 w-auto mx-auto text-text-primary" dark />
         </motion.div>
         
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="font-mono text-sm tracking-[0.3em] text-sand mb-8 uppercase"
+          className="font-mono text-sm tracking-[0.3em] text-soft-sage mb-6 uppercase"
         >
           A Curated Human Experience
         </motion.p>
         
+        {/* NEW MAIN HEADLINE */}
         <motion.h1 
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="font-heading text-4xl sm:text-5xl lg:text-6xl leading-tight text-[#e5e5e5] mb-8"
+          className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-tight text-text-primary mb-6"
         >
-          In a world that's constantly asking you to become <em className="text-sand">more</em>,
-          <br />
-          <span className="mt-4 block">The Becoming is an invitation to become <em className="text-sand">real</em> again.</span>
+          Do you need a <em className="text-soft-sage">reset</em>?
         </motion.h1>
         
         <motion.p 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-base md:text-lg text-[#a3a3a3] max-w-2xl mx-auto mb-12 leading-relaxed font-body"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="font-heading text-2xl sm:text-3xl text-text-secondary mb-8 italic"
+        >
+          The Becoming is an invitation to become <span className="text-soft-sage">real</span> again.
+        </motion.p>
+        
+        <motion.p 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="text-base md:text-lg text-text-muted max-w-2xl mx-auto mb-12 leading-relaxed font-body"
         >
           We live fast-paced, noisy, overworked, over-connected and deeply disconnected lives. 
-          There is no me time. We get stuck in the mundane, become purposeless, but we keep going on autopilot. 
-          The Becoming exists for people who are functioning well on the outside, yet inside feel paused, restless, 
-          tired, quietly losing or quietly lost.
+          The Becoming exists for people who are functioning well on the outside, yet inside feel paused, 
+          restless, or quietly lost.
         </motion.p>
         
         <motion.div 
@@ -286,14 +292,14 @@ const HeroSection = () => {
             onClick={scrollToSignup}
             className="btn-primary text-base"
           >
-            I Want The Becoming
+            I'm Ready for a Reset
           </button>
           <button 
             data-testid="hero-cta-secondary"
             onClick={scrollToLearnMore}
             className="btn-secondary text-base flex items-center gap-2"
           >
-            <span>Scroll to learn more</span>
+            <span>Learn more</span>
             <ChevronDown className="w-4 h-4" />
           </button>
         </motion.div>
@@ -305,25 +311,24 @@ const HeroSection = () => {
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <ChevronDown className="w-6 h-6 text-[#525252] animate-bounce" />
+        <ChevronDown className="w-6 h-6 text-text-muted animate-bounce" />
       </motion.div>
     </section>
   );
 };
 
-// Stats Section
+// Stats Section - removed psychologists, updated text
 const StatsSection = () => {
   const stats = [
     { value: 20, suffix: '', label: 'Curated Seats' },
     { value: 4, suffix: '', label: 'Days of Immersion' },
-    { value: 2, suffix: '', label: 'Psychologists On-Site' },
-    { value: 100, suffix: '%', label: 'Transformative Intent' },
+    { value: 100, suffix: '%', label: 'Intentional Focus' },
   ];
 
   return (
-    <div className="py-16 bg-ash border-y border-white/5">
+    <div className="py-16 bg-pale-mint border-y border-pastel-green/20">
       <div className="content-container px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
@@ -333,10 +338,10 @@ const StatsSection = () => {
               transition={{ delay: index * 0.1 }}
               className="text-center"
             >
-              <p className="font-heading text-4xl lg:text-5xl text-sand mb-2">
+              <p className="font-heading text-4xl lg:text-5xl text-soft-sage mb-2">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="text-sm text-[#a3a3a3]">{stat.label}</p>
+              <p className="text-sm text-text-muted">{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -345,50 +350,50 @@ const StatsSection = () => {
   );
 };
 
-// What Is It Section
+// What Is It Section - removed therapy mentions
 const WhatIsItSection = () => {
   return (
-    <AnimatedSection id="what-is-it" className="section-spacing bg-void">
+    <AnimatedSection id="what-is-it" className="section-spacing bg-cream">
       <div className="content-container">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <div>
-            <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4">
+            <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
               The Essence
             </motion.p>
-            <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-8">
-              What is <em>The Becoming</em>?
+            <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-8">
+              What is <em className="text-soft-sage">The Becoming</em>?
             </motion.h2>
             
-            <motion.p variants={fadeInUp} className="text-base text-[#a3a3a3] leading-relaxed mb-6">
+            <motion.p variants={fadeInUp} className="text-base text-text-secondary leading-relaxed mb-6">
               The Becoming is a curated human experience for people who are doing what life expects of them,
               yet feel there must be more meaning, more depth, more truth to who they are.
             </motion.p>
             
             <motion.div variants={fadeInUp} className="space-y-3 mb-8">
-              <p className="text-[#e5e5e5] font-body">It is <span className="text-sand">not</span> a retreat.</p>
-              <p className="text-[#e5e5e5] font-body">It is <span className="text-sand">not</span> a workshop.</p>
-              <p className="text-[#e5e5e5] font-body">It is <span className="text-sand">not</span> therapy.</p>
+              <p className="text-text-primary font-body">It is <span className="text-soft-sage font-medium">not</span> a retreat.</p>
+              <p className="text-text-primary font-body">It is <span className="text-soft-sage font-medium">not</span> a workshop.</p>
+              <p className="text-text-primary font-body">It is <span className="text-soft-sage font-medium">not</span> a lecture.</p>
             </motion.div>
             
-            <motion.p variants={fadeInUp} className="text-base text-[#a3a3a3] leading-relaxed mb-8">
+            <motion.p variants={fadeInUp} className="text-base text-text-secondary leading-relaxed mb-8">
               No one can teach you how to live. Nobody is here to fix you.
               Instead, The Becoming creates a safe, intentional space where you step away from routines, 
-              mundane lives, screens and constant performance, and turn inward.
+              screens and constant performance, and turn inward.
             </motion.p>
             
-            <motion.div variants={fadeInUp} className="becoming-card">
-              <p className="font-heading text-xl text-[#e5e5e5] italic">
+            <motion.div variants={fadeInUp} className="becoming-card bg-pastel-green-light/50">
+              <p className="font-heading text-xl text-text-primary italic">
                 "No promises. No fixing. No preaching. No selling. Only experiences."
               </p>
             </motion.div>
           </div>
           
           <motion.div variants={fadeInUp} className="relative">
-            <div className="absolute -inset-4 bg-sand/5 rounded-2xl blur-3xl" />
+            <div className="absolute -inset-4 bg-pastel-green/10 rounded-3xl blur-3xl" />
             <img 
-              src={images.abstractShadow}
-              alt="Abstract shadows representing inner exploration"
-              className="relative rounded-xl w-full aspect-[4/5] object-cover"
+              src={images.peaceful}
+              alt="Peaceful nature representing inner exploration"
+              className="relative rounded-2xl w-full aspect-[4/5] object-cover shadow-xl"
             />
           </motion.div>
         </div>
@@ -400,23 +405,23 @@ const WhatIsItSection = () => {
 // Experience Section
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Nature & Stillness", description: "Reconnect with the natural world and find peace in silence", icon: "🌿" },
-    { title: "Mindful Movement", description: "Listen to your body and move with intention", icon: "🧘" },
-    { title: "Reflection & Creativity", description: "Express what words cannot capture", icon: "✨" },
-    { title: "Writing & Music", description: "Explore the landscapes of your inner world", icon: "🎵" },
-    { title: "Storytelling & Connection", description: "Share and listen to honest human stories", icon: "💬" }
+    { title: "Nature & Stillness", description: "Reconnect with the natural world and find peace in silence", color: "bg-pastel-green-light" },
+    { title: "Mindful Movement", description: "Listen to your body and move with intention", color: "bg-pastel-blue-light" },
+    { title: "Reflection & Creativity", description: "Express what words cannot capture", color: "bg-pastel-lavender-light" },
+    { title: "Writing & Music", description: "Explore the landscapes of your inner world", color: "bg-pastel-green-light" },
+    { title: "Storytelling & Connection", description: "Share and listen to honest human stories", color: "bg-pastel-blue-light" }
   ];
 
   return (
-    <AnimatedSection id="experience" className="section-spacing bg-ash">
+    <AnimatedSection id="experience" className="section-spacing bg-off-white">
       <div className="content-container">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
           The Journey
         </motion.p>
-        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-6">
-          What You Will <em>Experience</em>
+        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-6">
+          What You Will <em className="text-soft-sage">Experience</em>
         </motion.h2>
-        <motion.p variants={fadeInUp} className="text-base text-[#a3a3a3] max-w-2xl mb-16">
+        <motion.p variants={fadeInUp} className="text-base text-text-secondary max-w-2xl mb-16">
           At The Becoming, you are invited to experience life beyond autopilot.
         </motion.p>
         
@@ -426,23 +431,20 @@ const ExperienceSection = () => {
               key={index}
               variants={fadeInUp}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="becoming-card group cursor-pointer"
+              className={`becoming-card group cursor-pointer ${exp.color}`}
               data-testid={`experience-card-${index}`}
             >
-              <div className="w-12 h-12 rounded-full bg-sand/10 flex items-center justify-center mb-6 group-hover:bg-sand/20 transition-colors duration-500">
-                <span className="text-2xl">{exp.icon}</span>
-              </div>
-              <h3 className="font-heading text-xl text-[#e5e5e5] mb-3">{exp.title}</h3>
-              <p className="text-sm text-[#a3a3a3]">{exp.description}</p>
+              <div className="w-3 h-3 rounded-full bg-soft-sage mb-6 group-hover:scale-150 transition-transform duration-500" />
+              <h3 className="font-heading text-xl text-text-primary mb-3">{exp.title}</h3>
+              <p className="text-sm text-text-secondary">{exp.description}</p>
             </motion.div>
           ))}
         </div>
         
         <motion.div variants={fadeInUp} className="mt-16 max-w-3xl">
-          <p className="text-base text-[#a3a3a3] leading-relaxed">
+          <p className="text-base text-text-secondary leading-relaxed">
             Participants begin to listen inward and not outward. They listen to who they were, how they grew up, 
-            and who they are right now. They remove the baggage of being a father, CEO, mother, wife, husband, 
-            director – and return to themselves. They reconnect with their inner voice and rediscover parts of 
+            and who they are right now. They reconnect with their inner voice and rediscover parts of 
             themselves they might have ignored or never known.
           </p>
         </motion.div>
@@ -481,16 +483,13 @@ const TestimonialsSection = () => {
   }, [testimonials.length]);
 
   return (
-    <section className="section-spacing bg-void relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5">
-        <img src={images.nature} alt="" className="w-full h-full object-cover" />
-      </div>
+    <section className="section-spacing bg-pastel-lavender-light/30 relative overflow-hidden">
       <div className="content-container relative z-10">
         <motion.p 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4 text-center"
+          className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4 text-center"
         >
           Voices From Within
         </motion.p>
@@ -498,9 +497,9 @@ const TestimonialsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-16 text-center"
+          className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-16 text-center"
         >
-          What They <em>Discovered</em>
+          What They <em className="text-soft-sage">Discovered</em>
         </motion.h2>
 
         <div className="max-w-3xl mx-auto">
@@ -513,12 +512,12 @@ const TestimonialsSection = () => {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <Quote className="w-12 h-12 text-sand/30 mx-auto mb-8" />
-              <p className="font-heading text-2xl lg:text-3xl text-[#e5e5e5] italic mb-8 leading-relaxed">
+              <Quote className="w-12 h-12 text-pastel-green mx-auto mb-8" />
+              <p className="font-heading text-2xl lg:text-3xl text-text-primary italic mb-8 leading-relaxed">
                 "{testimonials[activeIndex].quote}"
               </p>
-              <p className="text-sand font-medium">{testimonials[activeIndex].author}</p>
-              <p className="text-sm text-[#525252]">{testimonials[activeIndex].role}</p>
+              <p className="text-soft-sage font-medium">{testimonials[activeIndex].author}</p>
+              <p className="text-sm text-text-muted">{testimonials[activeIndex].role}</p>
             </motion.div>
           </AnimatePresence>
 
@@ -528,7 +527,7 @@ const TestimonialsSection = () => {
                 key={index}
                 onClick={() => setActiveIndex(index)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === activeIndex ? 'bg-sand w-8' : 'bg-white/20 hover:bg-white/40'
+                  index === activeIndex ? 'bg-soft-sage w-8' : 'bg-pastel-green/40 hover:bg-pastel-green/60'
                 }`}
                 data-testid={`testimonial-dot-${index}`}
               />
@@ -557,27 +556,18 @@ const WhoItsForSection = () => {
   ];
 
   return (
-    <AnimatedSection id="who-its-for" className="section-spacing bg-void relative overflow-hidden">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-full opacity-20">
-        <img 
-          src={images.silhouetteView}
-          alt=""
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-void to-transparent" />
-      </div>
-      
+    <AnimatedSection id="who-its-for" className="section-spacing bg-cream relative overflow-hidden">
       <div className="content-container relative z-10">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
           Is This For You?
         </motion.p>
-        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-12">
-          Who is The Becoming <em>For</em>?
+        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-12">
+          Who is The Becoming <em className="text-soft-sage">For</em>?
         </motion.h2>
         
         <div className="grid lg:grid-cols-2 gap-16">
           <div>
-            <motion.p variants={fadeInUp} className="text-base text-[#e5e5e5] mb-8">
+            <motion.p variants={fadeInUp} className="text-base text-text-primary mb-8">
               The Becoming is designed for:
             </motion.p>
             
@@ -586,22 +576,22 @@ const WhoItsForSection = () => {
                 <motion.li 
                   key={index} 
                   variants={fadeInUp}
-                  className="flex items-center gap-4 text-[#a3a3a3]"
+                  className="flex items-center gap-4 text-text-secondary"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-sand" />
+                  <span className="w-2 h-2 rounded-full bg-soft-sage" />
                   <span>{item}</span>
                 </motion.li>
               ))}
             </motion.ul>
             
-            <motion.p variants={fadeInUp} className="text-sm text-[#525252]">
+            <motion.p variants={fadeInUp} className="text-sm text-text-muted">
               Generally, we do not want to put an age bracket to this, but anyone from 21 to 65 can be a part of it.
               It's not about the number or the profession – it's about readiness.
             </motion.p>
           </div>
           
           <div>
-            <motion.p variants={fadeInUp} className="text-base text-[#e5e5e5] mb-8">
+            <motion.p variants={fadeInUp} className="text-base text-text-primary mb-8">
               It may be for you if:
             </motion.p>
             
@@ -611,9 +601,9 @@ const WhoItsForSection = () => {
                   key={index} 
                   variants={fadeInUp}
                   whileHover={{ x: 8, transition: { duration: 0.3 } }}
-                  className="becoming-card cursor-pointer"
+                  className="becoming-card bg-pastel-green-light/30 cursor-pointer"
                 >
-                  <p className="text-[#e5e5e5] font-heading italic">{sign}</p>
+                  <p className="text-text-primary font-heading italic">{sign}</p>
                 </motion.li>
               ))}
             </motion.ul>
@@ -627,16 +617,16 @@ const WhoItsForSection = () => {
 // The Circle Section
 const CircleSection = () => {
   return (
-    <AnimatedSection id="circle" className="section-spacing bg-ash">
+    <AnimatedSection id="circle" className="section-spacing bg-off-white">
       <div className="content-container text-center max-w-3xl mx-auto">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
           Beyond The Experience
         </motion.p>
-        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-8">
-          Not Just an Experience. <em>A Circle.</em>
+        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-8">
+          Not Just an Experience. <em className="text-soft-sage">A Circle.</em>
         </motion.h2>
         
-        <motion.p variants={fadeInUp} className="text-base text-[#a3a3a3] leading-relaxed mb-12">
+        <motion.p variants={fadeInUp} className="text-base text-text-secondary leading-relaxed mb-12">
           Beyond the experience itself, The Becoming is the foundation of something larger – 
           a community of like‑minded individuals who value depth over speed, presence over performance, 
           and humanity over hustle.
@@ -652,49 +642,49 @@ const CircleSection = () => {
               key={index} 
               variants={fadeInUp}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
-              className="becoming-card text-left"
+              className="becoming-card text-left bg-pastel-blue-light/30"
             >
-              <div className="w-8 h-8 rounded-full border border-sand/30 flex items-center justify-center mb-4">
-                <span className="text-sand text-sm">{index + 1}</span>
+              <div className="w-8 h-8 rounded-full border-2 border-soft-sage/40 flex items-center justify-center mb-4">
+                <span className="text-soft-sage text-sm font-medium">{index + 1}</span>
               </div>
-              <p className="text-sm text-[#a3a3a3]">{item}</p>
+              <p className="text-sm text-text-secondary">{item}</p>
             </motion.div>
           ))}
         </motion.div>
         
         <motion.div variants={fadeInUp} className="space-y-2">
-          <p className="font-heading text-2xl text-[#e5e5e5] italic">It's not for now.</p>
-          <p className="font-heading text-2xl text-[#e5e5e5] italic">It's for <span className="text-sand">now</span> and <span className="text-sand">then</span></p>
-          <p className="font-heading text-2xl text-[#e5e5e5] italic">and <span className="text-sand">again</span>.</p>
+          <p className="font-heading text-2xl text-text-primary italic">It's not for now.</p>
+          <p className="font-heading text-2xl text-text-primary italic">It's for <span className="text-soft-sage">now</span> and <span className="text-pastel-blue">then</span></p>
+          <p className="font-heading text-2xl text-text-primary italic">and <span className="text-pastel-lavender">again</span>.</p>
         </motion.div>
       </div>
     </AnimatedSection>
   );
 };
 
-// Pilot Batch Section
+// Pilot Batch Section - updated to remove psychologists mention
 const PilotBatchSection = () => {
   return (
-    <AnimatedSection id="pilot" className="section-spacing bg-void">
+    <AnimatedSection id="pilot" className="section-spacing bg-cream">
       <div className="content-container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div variants={fadeInUp} className="relative order-2 lg:order-1">
             <img 
-              src={images.calmWater}
-              alt="Calm waters representing inner peace"
-              className="rounded-xl w-full aspect-video object-cover"
+              src={images.calm}
+              alt="Calm setting representing inner peace"
+              className="rounded-2xl w-full aspect-video object-cover shadow-xl"
             />
           </motion.div>
           
           <div className="order-1 lg:order-2">
-            <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4">
+            <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
               Limited Seats
             </motion.p>
-            <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-8">
-              The First Becoming: <em>Pilot Batch</em>
+            <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-8">
+              The First Becoming: <em className="text-soft-sage">Pilot Batch</em>
             </motion.h2>
             
-            <motion.p variants={fadeInUp} className="text-base text-[#a3a3a3] leading-relaxed mb-8">
+            <motion.p variants={fadeInUp} className="text-base text-text-secondary leading-relaxed mb-8">
               The first experience of The Becoming will be a pilot batch of just 20 people.
               This allows us to offer more care, more nurture, and a deeply held space.
             </motion.p>
@@ -703,17 +693,17 @@ const PilotBatchSection = () => {
               {[
                 { label: "Batch size", value: "20 participants only" },
                 { label: "Audience", value: "Ready working professionals, creators, curators, artists, homemakers (21–65)" },
-                { label: "Curated by", value: "Mitin and a core team, including two full‑time psychologists" }
+                { label: "Curated by", value: "Mitin and a dedicated support team focused on your emotional wellness" }
               ].map((item, index) => (
                 <motion.div 
                   key={index} 
                   variants={fadeInUp}
                   className="flex items-start gap-4"
                 >
-                  <Check className="w-5 h-5 text-sand mt-0.5 flex-shrink-0" />
+                  <Check className="w-5 h-5 text-soft-sage mt-0.5 flex-shrink-0" />
                   <div>
-                    <span className="text-[#e5e5e5] font-medium">{item.label}:</span>
-                    <span className="text-[#a3a3a3] ml-2">{item.value}</span>
+                    <span className="text-text-primary font-medium">{item.label}:</span>
+                    <span className="text-text-secondary ml-2">{item.value}</span>
                   </div>
                 </motion.div>
               ))}
@@ -725,7 +715,7 @@ const PilotBatchSection = () => {
   );
 };
 
-// How It Works Section
+// How It Works Section - updated language
 const HowItWorksSection = () => {
   const steps = [
     {
@@ -736,12 +726,12 @@ const HowItWorksSection = () => {
     {
       number: "02",
       title: "Answer a few guided questions",
-      description: "Our in‑house psychologists have designed simple archetype and reflective questions to understand who you are, where you stand in life, and why you feel you need The Becoming."
+      description: "Simple reflective questions to understand who you are, where you stand in life, and why you feel you need this reset."
     },
     {
       number: "03",
       title: "We review for readiness",
-      description: "The Becoming is not for everyone. Our psychologists and core team review responses to see who is genuinely ready for this experience."
+      description: "The Becoming is not for everyone. Our team reviews responses to see who is genuinely ready for this experience."
     },
     {
       number: "04",
@@ -751,13 +741,13 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <AnimatedSection id="how-it-works" className="section-spacing bg-ash">
+    <AnimatedSection id="how-it-works" className="section-spacing bg-pale-mint">
       <div className="content-container">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
           The Process
         </motion.p>
-        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-16">
-          How It <em>Works</em>
+        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-16">
+          How It <em className="text-soft-sage">Works</em>
         </motion.h2>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -770,12 +760,12 @@ const HowItWorksSection = () => {
               data-testid={`step-${index + 1}`}
             >
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-white/10" />
+                <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-pastel-green/30" />
               )}
-              <div className="becoming-card h-full">
-                <span className="font-mono text-3xl text-sand/30 mb-4 block">{step.number}</span>
-                <h3 className="font-heading text-xl text-[#e5e5e5] mb-3">{step.title}</h3>
-                <p className="text-sm text-[#a3a3a3]">{step.description}</p>
+              <div className="becoming-card h-full bg-white">
+                <span className="font-mono text-3xl text-pastel-green mb-4 block">{step.number}</span>
+                <h3 className="font-heading text-xl text-text-primary mb-3">{step.title}</h3>
+                <p className="text-sm text-text-secondary">{step.description}</p>
               </div>
             </motion.div>
           ))}
@@ -785,7 +775,7 @@ const HowItWorksSection = () => {
   );
 };
 
-// FAQ Section
+// FAQ Section - updated to remove therapy mentions
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -796,7 +786,7 @@ const FAQSection = () => {
     },
     {
       question: "What happens during the 4 days?",
-      answer: "Each day unfolds organically through nature walks, stillness practices, creative expression, music, storytelling circles, and deep human connection. There are no rigid schedules—only invitations. Our psychologists are present throughout to hold space safely."
+      answer: "Each day unfolds organically through nature walks, stillness practices, creative expression, music, storytelling circles, and deep human connection. There are no rigid schedules—only invitations. Our support team is present throughout to hold space safely."
     },
     {
       question: "Do I need to have any specific issues or problems to attend?",
@@ -804,7 +794,7 @@ const FAQSection = () => {
     },
     {
       question: "Why is there a screening process?",
-      answer: "The Becoming requires a certain readiness. Our psychologists review applications to ensure participants are in a stable place to engage with introspection. It's not about qualification—it's about timing and genuine resonance with what we offer."
+      answer: "The Becoming requires a certain readiness. Our team reviews applications to ensure participants are in a stable place to engage with introspection. It's not about qualification—it's about timing and genuine resonance with what we offer."
     },
     {
       question: "What do I need to bring?",
@@ -817,13 +807,13 @@ const FAQSection = () => {
   ];
 
   return (
-    <AnimatedSection id="faq" className="section-spacing bg-void">
+    <AnimatedSection id="faq" className="section-spacing bg-cream">
       <div className="content-container max-w-3xl mx-auto">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4 text-center">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4 text-center">
           Questions
         </motion.p>
-        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-12 text-center">
-          Frequently <em>Asked</em>
+        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-12 text-center">
+          Frequently <em className="text-soft-sage">Asked</em>
         </motion.h2>
 
         <motion.div variants={staggerContainer} className="space-y-4">
@@ -831,18 +821,18 @@ const FAQSection = () => {
             <motion.div
               key={index}
               variants={fadeInUp}
-              className="becoming-card overflow-hidden"
+              className="becoming-card overflow-hidden bg-white"
               data-testid={`faq-${index}`}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full flex items-center justify-between text-left py-2"
               >
-                <span className="font-heading text-lg text-[#e5e5e5] pr-4">{faq.question}</span>
+                <span className="font-heading text-lg text-text-primary pr-4">{faq.question}</span>
                 {openIndex === index ? (
-                  <Minus className="w-5 h-5 text-sand flex-shrink-0" />
+                  <Minus className="w-5 h-5 text-soft-sage flex-shrink-0" />
                 ) : (
-                  <Plus className="w-5 h-5 text-sand flex-shrink-0" />
+                  <Plus className="w-5 h-5 text-soft-sage flex-shrink-0" />
                 )}
               </button>
               <AnimatePresence>
@@ -853,7 +843,7 @@ const FAQSection = () => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <p className="text-[#a3a3a3] pt-4 pb-2 leading-relaxed">{faq.answer}</p>
+                    <p className="text-text-secondary pt-4 pb-2 leading-relaxed">{faq.answer}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -901,15 +891,15 @@ const SignUpSection = () => {
 
   if (isSubmitted) {
     return (
-      <AnimatedSection id="signup" className="section-spacing bg-ash">
+      <AnimatedSection id="signup" className="section-spacing bg-pastel-green-light/30">
         <div className="content-container max-w-2xl mx-auto text-center">
-          <motion.div variants={fadeInUp} className="becoming-card py-16">
-            <div className="w-16 h-16 rounded-full bg-sand/20 flex items-center justify-center mx-auto mb-6">
-              <Check className="w-8 h-8 text-sand" />
+          <motion.div variants={fadeInUp} className="becoming-card py-16 bg-white">
+            <div className="w-16 h-16 rounded-full bg-pastel-green/30 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-8 h-8 text-soft-sage" />
             </div>
-            <h2 className="font-heading text-3xl text-[#e5e5e5] mb-4">Thank You</h2>
-            <p className="text-[#a3a3a3]">
-              Your responses are being read with care by our core team and in‑house psychologists.
+            <h2 className="font-heading text-3xl text-text-primary mb-4">Thank You</h2>
+            <p className="text-text-secondary">
+              Your responses are being read with care by our team.
               We will reach out if The Becoming feels right for you.
             </p>
           </motion.div>
@@ -919,26 +909,26 @@ const SignUpSection = () => {
   }
 
   return (
-    <AnimatedSection id="signup" className="section-spacing bg-ash">
+    <AnimatedSection id="signup" className="section-spacing bg-pastel-green-light/30">
       <div className="content-container max-w-2xl mx-auto">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4 text-center">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4 text-center">
           Begin Your Journey
         </motion.p>
-        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-4 text-center">
-          I Want <em>The Becoming</em>
+        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-4 text-center">
+          Ready for Your <em className="text-soft-sage">Reset</em>?
         </motion.h2>
-        <motion.p variants={fadeInUp} className="text-base text-[#a3a3a3] mb-12 text-center">
+        <motion.p variants={fadeInUp} className="text-base text-text-secondary mb-12 text-center">
           If this resonates with you, if you feel quietly ready, take a moment and tell us who you are.
         </motion.p>
         
         <motion.form 
           variants={staggerContainer}
           onSubmit={handleSubmit}
-          className="space-y-8"
+          className="space-y-8 becoming-card bg-white"
           data-testid="signup-form"
         >
           <motion.div variants={fadeInUp}>
-            <label className="block text-sm text-[#a3a3a3] mb-2">Your Name *</label>
+            <label className="block text-sm text-text-muted mb-2">Your Name *</label>
             <input
               type="text"
               name="name"
@@ -952,7 +942,7 @@ const SignUpSection = () => {
           </motion.div>
           
           <motion.div variants={fadeInUp}>
-            <label className="block text-sm text-[#a3a3a3] mb-2">Email Address *</label>
+            <label className="block text-sm text-text-muted mb-2">Email Address *</label>
             <input
               type="email"
               name="email"
@@ -966,7 +956,7 @@ const SignUpSection = () => {
           </motion.div>
           
           <motion.div variants={fadeInUp}>
-            <label className="block text-sm text-[#a3a3a3] mb-2">Phone Number (Optional)</label>
+            <label className="block text-sm text-text-muted mb-2">Phone Number (Optional)</label>
             <input
               type="tel"
               name="phone"
@@ -979,7 +969,7 @@ const SignUpSection = () => {
           </motion.div>
           
           <motion.div variants={fadeInUp}>
-            <label className="block text-sm text-[#a3a3a3] mb-2">Why do you feel you need The Becoming? *</label>
+            <label className="block text-sm text-text-muted mb-2">Why do you feel you need this reset? *</label>
             <textarea
               name="why_becoming"
               value={formData.why_becoming}
@@ -993,7 +983,7 @@ const SignUpSection = () => {
           </motion.div>
           
           <motion.div variants={fadeInUp}>
-            <label className="block text-sm text-[#a3a3a3] mb-2">Where do you stand in life right now? *</label>
+            <label className="block text-sm text-text-muted mb-2">Where do you stand in life right now? *</label>
             <textarea
               name="current_state"
               value={formData.current_state}
@@ -1007,7 +997,7 @@ const SignUpSection = () => {
           </motion.div>
           
           <motion.div variants={fadeInUp}>
-            <label className="block text-sm text-[#a3a3a3] mb-2">What are you seeking? *</label>
+            <label className="block text-sm text-text-muted mb-2">What clarity are you seeking? *</label>
             <textarea
               name="what_seeking"
               value={formData.what_seeking}
@@ -1034,13 +1024,13 @@ const SignUpSection = () => {
                 </>
               ) : (
                 <>
-                  <span>Begin My Becoming</span>
+                  <span>Begin My Reset</span>
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}
             </button>
-            <p className="text-xs text-[#525252] text-center mt-4">
-              Your responses are read with care by our core team and in‑house psychologists.
+            <p className="text-xs text-text-muted text-center mt-4">
+              Your responses are read with care by our team.
             </p>
           </motion.div>
         </motion.form>
@@ -1052,18 +1042,18 @@ const SignUpSection = () => {
 // Founder's Note Section
 const FounderSection = () => {
   return (
-    <AnimatedSection id="founder" className="section-spacing bg-void">
+    <AnimatedSection id="founder" className="section-spacing bg-cream">
       <div className="content-container max-w-4xl mx-auto">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sand uppercase mb-4 text-center">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4 text-center">
           A Personal Note
         </motion.p>
-        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#e5e5e5] mb-12 text-center">
-          From <em>Mitin</em>
+        <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-12 text-center">
+          From <em className="text-soft-sage">Mitin</em>
         </motion.h2>
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div variants={fadeInUp}>
-            <blockquote className="text-base text-[#a3a3a3] leading-relaxed space-y-4">
+            <blockquote className="text-base text-text-secondary leading-relaxed space-y-4">
               <p>
                 "For over 20 years, you've seen me as a professional host. I've been on stage, 
                 on television, and in rooms full of people.
@@ -1073,20 +1063,20 @@ const FounderSection = () => {
                 what many of us really needed was a space to become more real.
               </p>
               <p>
-                The Becoming is my attempt to curate that space – not as a teacher, not as a therapist, 
+                The Becoming is my attempt to curate that space – not as a teacher, not as a guide, 
                 but as a fellow human who knows what it feels like to be on autopilot."
               </p>
             </blockquote>
-            <p className="mt-8 font-heading text-xl text-sand italic">— Mitin</p>
+            <p className="mt-8 font-heading text-xl text-soft-sage italic">— Mitin</p>
           </motion.div>
           
           <motion.div variants={fadeInUp}>
             <div className="video-placeholder group" data-testid="video-placeholder">
               <div className="play-button group-hover:scale-110 transition-transform duration-300">
-                <Play className="w-8 h-8 text-sand ml-1" />
+                <Play className="w-8 h-8 text-soft-sage ml-1" />
               </div>
             </div>
-            <p className="text-xs text-[#525252] text-center mt-4">
+            <p className="text-xs text-text-muted text-center mt-4">
               Watch: Why I Created The Becoming
             </p>
           </motion.div>
@@ -1118,7 +1108,7 @@ const BackToTop = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-sand text-void flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-300 z-50"
+          className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-soft-sage text-white flex items-center justify-center shadow-lg hover:bg-soft-sage/80 transition-colors duration-300 z-50"
           data-testid="back-to-top"
         >
           <ChevronUp className="w-6 h-6" />
@@ -1135,18 +1125,18 @@ const Footer = () => {
   };
 
   return (
-    <footer className="py-16 bg-ash border-t border-white/5">
+    <footer className="py-16 bg-off-white border-t border-pastel-green/20">
       <div className="content-container px-6">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Logo and tagline */}
           <div>
-            <Logo className="h-16 w-auto text-[#e5e5e5] mb-4" />
-            <p className="text-sm text-[#525252] mt-4">A curated human experience for those ready to become real again.</p>
+            <Logo className="h-16 w-auto text-text-primary" dark />
+            <p className="text-sm text-text-muted mt-4">A curated human experience for those ready for a reset.</p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading text-lg text-[#e5e5e5] mb-4">Explore</h4>
+            <h4 className="font-heading text-lg text-text-primary mb-4">Explore</h4>
             <nav className="space-y-3">
               {[
                 { label: 'About', href: '#what-is-it' },
@@ -1158,7 +1148,7 @@ const Footer = () => {
                 <button
                   key={link.label}
                   onClick={() => scrollTo(link.href)}
-                  className="block text-sm text-[#a3a3a3] hover:text-sand transition-colors duration-300"
+                  className="block text-sm text-text-secondary hover:text-soft-sage transition-colors duration-300"
                 >
                   {link.label}
                 </button>
@@ -1168,37 +1158,37 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-heading text-lg text-[#e5e5e5] mb-4">Connect</h4>
-            <p className="text-sm text-[#a3a3a3] mb-4">
+            <h4 className="font-heading text-lg text-text-primary mb-4">Connect</h4>
+            <p className="text-sm text-text-secondary mb-4">
               Have questions? Reach out to us.
             </p>
             <a 
               href="mailto:hello@thebecoming.in" 
-              className="text-sand hover:text-white transition-colors duration-300"
+              className="text-soft-sage hover:text-soft-sage/70 transition-colors duration-300"
             >
               hello@thebecoming.in
             </a>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#525252]">
+        <div className="pt-8 border-t border-pastel-green/20 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-text-muted">
             © {new Date().getFullYear()} The Becoming. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors duration-300">Privacy Policy</a>
-            <a href="#" className="text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors duration-300">Terms of Service</a>
+            <a href="#" className="text-xs text-text-muted hover:text-text-secondary transition-colors duration-300">Privacy Policy</a>
+            <a href="#" className="text-xs text-text-muted hover:text-text-secondary transition-colors duration-300">Terms of Service</a>
           </div>
         </div>
         
         <div className="pt-6 text-center">
-          <p className="text-xs text-[#525252]">
+          <p className="text-xs text-text-muted">
             Website powered by{' '}
             <a 
               href="https://techbook.co.in/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sand hover:text-white transition-colors duration-300"
+              className="text-soft-sage hover:text-soft-sage/70 transition-colors duration-300"
             >
               Techbook Technologies
             </a>
@@ -1212,15 +1202,15 @@ const Footer = () => {
 // Main Landing Page Component
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-void" data-testid="landing-page">
+    <div className="min-h-screen bg-cream" data-testid="landing-page">
       <div className="grain-overlay" />
       <Toaster 
         position="top-center" 
         toastOptions={{
           style: {
-            background: '#161616',
-            color: '#e5e5e5',
-            border: '1px solid rgba(255,255,255,0.1)'
+            background: '#ffffff',
+            color: '#2d3748',
+            border: '1px solid rgba(168, 213, 186, 0.3)'
           }
         }}
       />
