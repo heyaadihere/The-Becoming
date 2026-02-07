@@ -339,7 +339,7 @@ const StatsSection = () => {
   ];
 
   return (
-    <div className="py-16 bg-pale-mint border-y border-pastel-green/20">
+    <div className="py-16 bg-sage-light/40 border-y border-sage/20">
       <div className="content-container px-6">
         <div className="grid grid-cols-3 gap-8">
           {stats.map((stat, index) => (
@@ -351,10 +351,10 @@ const StatsSection = () => {
               transition={{ delay: index * 0.1 }}
               className="text-center"
             >
-              <p className="font-heading text-4xl lg:text-5xl text-soft-sage mb-2">
+              <p className="font-heading text-4xl lg:text-5xl text-sage mb-2">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="text-sm text-text-muted">{stat.label}</p>
+              <p className="text-sm text-text-secondary">{stat.label}</p>
             </motion.div>
           ))}
         </div>
