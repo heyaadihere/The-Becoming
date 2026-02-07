@@ -366,15 +366,15 @@ const StatsSection = () => {
 // What Is It Section - removed therapy mentions
 const WhatIsItSection = () => {
   return (
-    <AnimatedSection id="what-is-it" className="section-spacing bg-cream">
+    <AnimatedSection id="what-is-it" className="section-spacing bg-mint">
       <div className="content-container">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <div>
-            <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
+            <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sage uppercase mb-4">
               The Essence
             </motion.p>
             <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-8">
-              What is <em className="text-soft-sage">The Becoming</em>?
+              What is <em className="text-sage">The Becoming</em>?
             </motion.h2>
             
             <motion.p variants={fadeInUp} className="text-base text-text-secondary leading-relaxed mb-6">
@@ -383,9 +383,9 @@ const WhatIsItSection = () => {
             </motion.p>
             
             <motion.div variants={fadeInUp} className="space-y-3 mb-8">
-              <p className="text-text-primary font-body">It is <span className="text-soft-sage font-medium">not</span> a retreat.</p>
-              <p className="text-text-primary font-body">It is <span className="text-soft-sage font-medium">not</span> a workshop.</p>
-              <p className="text-text-primary font-body">It is <span className="text-soft-sage font-medium">not</span> a lecture.</p>
+              <p className="text-text-primary font-body">It is <span className="text-sage font-medium">not</span> a retreat.</p>
+              <p className="text-text-primary font-body">It is <span className="text-sage font-medium">not</span> a workshop.</p>
+              <p className="text-text-primary font-body">It is <span className="text-sage font-medium">not</span> a lecture.</p>
             </motion.div>
             
             <motion.p variants={fadeInUp} className="text-base text-text-secondary leading-relaxed mb-8">
@@ -394,7 +394,7 @@ const WhatIsItSection = () => {
               screens and constant performance, and turn inward.
             </motion.p>
             
-            <motion.div variants={fadeInUp} className="becoming-card bg-pastel-green-light/50">
+            <motion.div variants={fadeInUp} className="becoming-card bg-sage-lighter/60">
               <p className="font-heading text-xl text-text-primary italic">
                 "No promises. No fixing. No preaching. No selling. Only experiences."
               </p>
@@ -402,7 +402,7 @@ const WhatIsItSection = () => {
           </div>
           
           <motion.div variants={fadeInUp} className="relative">
-            <div className="absolute -inset-4 bg-pastel-green/10 rounded-3xl blur-3xl" />
+            <div className="absolute -inset-4 bg-sage/10 rounded-3xl blur-3xl" />
             <img 
               src={images.peaceful}
               alt="Peaceful nature representing inner exploration"
