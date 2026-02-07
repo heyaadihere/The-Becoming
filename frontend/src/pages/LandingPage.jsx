@@ -822,11 +822,11 @@ const FAQSection = () => {
   return (
     <AnimatedSection id="faq" className="section-spacing bg-cream">
       <div className="content-container max-w-3xl mx-auto">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4 text-center">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sage uppercase mb-4 text-center">
           Questions
         </motion.p>
         <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-12 text-center">
-          Frequently <em className="text-soft-sage">Asked</em>
+          Frequently <em className="text-sage">Asked</em>
         </motion.h2>
 
         <motion.div variants={staggerContainer} className="space-y-4">
@@ -834,7 +834,7 @@ const FAQSection = () => {
             <motion.div
               key={index}
               variants={fadeInUp}
-              className="becoming-card overflow-hidden bg-white"
+              className="becoming-card overflow-hidden bg-white/90"
               data-testid={`faq-${index}`}
             >
               <button
@@ -843,9 +843,9 @@ const FAQSection = () => {
               >
                 <span className="font-heading text-lg text-text-primary pr-4">{faq.question}</span>
                 {openIndex === index ? (
-                  <Minus className="w-5 h-5 text-soft-sage flex-shrink-0" />
+                  <Minus className="w-5 h-5 text-sage flex-shrink-0" />
                 ) : (
-                  <Plus className="w-5 h-5 text-soft-sage flex-shrink-0" />
+                  <Plus className="w-5 h-5 text-sage flex-shrink-0" />
                 )}
               </button>
               <AnimatePresence>
