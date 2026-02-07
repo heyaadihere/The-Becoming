@@ -1055,13 +1055,13 @@ const SignUpSection = () => {
 // Founder's Note Section
 const FounderSection = () => {
   return (
-    <AnimatedSection id="founder" className="section-spacing bg-cream">
+    <AnimatedSection id="founder" className="section-spacing bg-mint">
       <div className="content-container max-w-4xl mx-auto">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4 text-center">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sage uppercase mb-4 text-center">
           A Personal Note
         </motion.p>
         <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-12 text-center">
-          From <em className="text-soft-sage">Mitin</em>
+          From <em className="text-sage">Mitin</em>
         </motion.h2>
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -1080,13 +1080,13 @@ const FounderSection = () => {
                 but as a fellow human who knows what it feels like to be on autopilot."
               </p>
             </blockquote>
-            <p className="mt-8 font-heading text-xl text-soft-sage italic">— Mitin</p>
+            <p className="mt-8 font-heading text-xl text-sage italic">— Mitin</p>
           </motion.div>
           
           <motion.div variants={fadeInUp}>
             <div className="video-placeholder group" data-testid="video-placeholder">
               <div className="play-button group-hover:scale-110 transition-transform duration-300">
-                <Play className="w-8 h-8 text-soft-sage ml-1" />
+                <Play className="w-8 h-8 text-sage ml-1" />
               </div>
             </div>
             <p className="text-xs text-text-muted text-center mt-4">
