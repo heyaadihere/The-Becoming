@@ -1121,7 +1121,7 @@ const BackToTop = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-soft-sage text-white flex items-center justify-center shadow-lg hover:bg-soft-sage/80 transition-colors duration-300 z-50"
+          className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-sage text-white flex items-center justify-center shadow-lg hover:bg-sage/80 transition-colors duration-300 z-50"
           data-testid="back-to-top"
         >
           <ChevronUp className="w-6 h-6" />
@@ -1138,7 +1138,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="py-16 bg-off-white border-t border-pastel-green/20">
+    <footer className="py-16 bg-sage-light/30 border-t border-sage/20">
       <div className="content-container px-6">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Logo and tagline */}
@@ -1161,7 +1161,7 @@ const Footer = () => {
                 <button
                   key={link.label}
                   onClick={() => scrollTo(link.href)}
-                  className="block text-sm text-text-secondary hover:text-soft-sage transition-colors duration-300"
+                  className="block text-sm text-text-secondary hover:text-sage transition-colors duration-300"
                 >
                   {link.label}
                 </button>
@@ -1177,14 +1177,14 @@ const Footer = () => {
             </p>
             <a 
               href="mailto:hello@thebecoming.in" 
-              className="text-soft-sage hover:text-soft-sage/70 transition-colors duration-300"
+              className="text-sage hover:text-sage/70 transition-colors duration-300"
             >
               hello@thebecoming.in
             </a>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-pastel-green/20 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="pt-8 border-t border-sage/20 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-text-muted">
             © {new Date().getFullYear()} The Becoming. All rights reserved.
           </p>
@@ -1201,7 +1201,7 @@ const Footer = () => {
               href="https://techbook.co.in/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-soft-sage hover:text-soft-sage/70 transition-colors duration-300"
+              className="text-sage hover:text-sage/70 transition-colors duration-300"
             >
               Techbook Technologies
             </a>
@@ -1222,8 +1222,8 @@ export default function LandingPage() {
         toastOptions={{
           style: {
             background: '#ffffff',
-            color: '#2d3748',
-            border: '1px solid rgba(168, 213, 186, 0.3)'
+            color: '#2d3a3a',
+            border: '1px solid rgba(164, 195, 178, 0.4)'
           }
         }}
       />
