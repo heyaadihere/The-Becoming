@@ -754,13 +754,13 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <AnimatedSection id="how-it-works" className="section-spacing bg-pale-mint">
+    <AnimatedSection id="how-it-works" className="section-spacing bg-sage-light/30">
       <div className="content-container">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sage uppercase mb-4">
           The Process
         </motion.p>
         <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-16">
-          How It <em className="text-soft-sage">Works</em>
+          How It <em className="text-sage">Works</em>
         </motion.h2>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -773,10 +773,10 @@ const HowItWorksSection = () => {
               data-testid={`step-${index + 1}`}
             >
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-pastel-green/30" />
+                <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-sage/30" />
               )}
-              <div className="becoming-card h-full bg-white">
-                <span className="font-mono text-3xl text-pastel-green mb-4 block">{step.number}</span>
+              <div className="becoming-card h-full bg-white/90">
+                <span className="font-mono text-3xl text-sage-light mb-4 block">{step.number}</span>
                 <h3 className="font-heading text-xl text-text-primary mb-3">{step.title}</h3>
                 <p className="text-sm text-text-secondary">{step.description}</p>
               </div>
