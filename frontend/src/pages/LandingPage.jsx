@@ -678,7 +678,7 @@ const CircleSection = () => {
 // Pilot Batch Section - updated to remove psychologists mention
 const PilotBatchSection = () => {
   return (
-    <AnimatedSection id="pilot" className="section-spacing bg-cream">
+    <AnimatedSection id="pilot" className="section-spacing bg-mint">
       <div className="content-container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div variants={fadeInUp} className="relative order-2 lg:order-1">
@@ -690,11 +690,11 @@ const PilotBatchSection = () => {
           </motion.div>
           
           <div className="order-1 lg:order-2">
-            <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
+            <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sage uppercase mb-4">
               Limited Seats
             </motion.p>
             <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-8">
-              The First Becoming: <em className="text-soft-sage">Pilot Batch</em>
+              The First Becoming: <em className="text-sage">Pilot Batch</em>
             </motion.h2>
             
             <motion.p variants={fadeInUp} className="text-base text-text-secondary leading-relaxed mb-8">
@@ -713,7 +713,7 @@ const PilotBatchSection = () => {
                   variants={fadeInUp}
                   className="flex items-start gap-4"
                 >
-                  <Check className="w-5 h-5 text-soft-sage mt-0.5 flex-shrink-0" />
+                  <Check className="w-5 h-5 text-sage mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-text-primary font-medium">{item.label}:</span>
                     <span className="text-text-secondary ml-2">{item.value}</span>
