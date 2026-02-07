@@ -5,13 +5,27 @@
 @tailwind utilities;
 
 :root {
-    --void: #0c0c0c;
-    --ash: #161616;
-    --sand: #d4a373;
-    --clay: #bc4749;
-    --foreground-primary: #e5e5e5;
-    --foreground-secondary: #a3a3a3;
-    --foreground-muted: #525252;
+    /* Soft Pastel Palette */
+    --pastel-green: #a8d5ba;
+    --pastel-green-light: #d4edda;
+    --pastel-blue: #a8d4e6;
+    --pastel-blue-light: #e3f2fd;
+    --pastel-lavender: #d4c4e8;
+    --pastel-lavender-light: #f3e8ff;
+    --cream: #fdfbf7;
+    --off-white: #f8f9fa;
+    --pale-mint: #f0f9f4;
+    --soft-sage: #7fb896;
+    
+    /* Text colors */
+    --text-primary: #2d3748;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    --text-light: #a0aec0;
+    
+    /* Accent */
+    --accent: #7fb896;
+    --accent-hover: #5a9a7a;
 }
 
 * {
@@ -26,14 +40,14 @@ html {
 
 body {
     font-family: 'Manrope', sans-serif;
-    background-color: var(--void);
-    color: var(--foreground-primary);
+    background-color: var(--cream);
+    color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
 }
 
-/* Grain overlay */
+/* Soft grain overlay */
 .grain-overlay {
     position: fixed;
     top: 0;
@@ -42,14 +56,14 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.03;
+    opacity: 0.015;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 /* Custom selection */
 ::selection {
-    background-color: rgba(212, 163, 115, 0.3);
-    color: #e5e5e5;
+    background-color: rgba(168, 213, 186, 0.4);
+    color: var(--text-primary);
 }
 
 /* Custom scrollbar */
@@ -58,21 +72,21 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--void);
+    background: var(--off-white);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #262626;
+    background: var(--pastel-green);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #404040;
+    background: var(--soft-sage);
 }
 
 /* Focus states */
 *:focus-visible {
-    outline: 2px solid var(--sand);
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
 
@@ -85,12 +99,12 @@ body {
     font-family: 'Manrope', sans-serif;
 }
 
-/* Glass effect */
+/* Soft glass effect */
 .glass {
-    background: rgba(22, 22, 22, 0.5);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 213, 186, 0.2);
 }
 
 /* Animated underline */
@@ -106,7 +120,7 @@ body {
     left: 0;
     width: 0;
     height: 1px;
-    background-color: var(--sand);
+    background-color: var(--accent);
     transition: width 0.5s ease;
 }
 
@@ -116,26 +130,26 @@ body {
 
 @layer base {
     :root {
-        --background: 0 0% 5%;
-        --foreground: 0 0% 90%;
-        --card: 0 0% 9%;
-        --card-foreground: 0 0% 90%;
-        --popover: 0 0% 9%;
-        --popover-foreground: 0 0% 90%;
-        --primary: 30 49% 57%;
-        --primary-foreground: 0 0% 5%;
-        --secondary: 0 0% 14%;
-        --secondary-foreground: 0 0% 90%;
-        --muted: 0 0% 14%;
-        --muted-foreground: 0 0% 64%;
-        --accent: 0 0% 14%;
-        --accent-foreground: 0 0% 90%;
-        --destructive: 0 62% 30%;
+        --background: 40 33% 98%;
+        --foreground: 220 26% 14%;
+        --card: 0 0% 100%;
+        --card-foreground: 220 26% 14%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 220 26% 14%;
+        --primary: 147 35% 58%;
+        --primary-foreground: 220 26% 14%;
+        --secondary: 200 40% 78%;
+        --secondary-foreground: 220 26% 14%;
+        --muted: 210 20% 96%;
+        --muted-foreground: 215 16% 47%;
+        --accent: 147 35% 58%;
+        --accent-foreground: 220 26% 14%;
+        --destructive: 0 62% 60%;
         --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14%;
-        --input: 0 0% 14%;
-        --ring: 30 49% 57%;
-        --radius: 0.5rem;
+        --border: 147 20% 85%;
+        --input: 147 20% 90%;
+        --ring: 147 35% 58%;
+        --radius: 0.75rem;
     }
 }
 
@@ -162,18 +176,6 @@ body {
         column-gap: inherit;
         row-gap: inherit;
         gap: inherit;
-        border-left-width: inherit;
-        border-right-width: inherit;
-        border-top-width: inherit;
-        border-bottom-width: inherit;
-        border-left-style: inherit;
-        border-right-style: inherit;
-        border-top-style: inherit;
-        border-bottom-style: inherit;
-        border-left-color: inherit;
-        border-right-color: inherit;
-        border-top-color: inherit;
-        border-bottom-color: inherit;
     }
 }
 

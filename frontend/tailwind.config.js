@@ -18,10 +18,20 @@ module.exports = {
                         sm: 'calc(var(--radius) - 4px)'
                 },
                 colors: {
-                        void: '#0c0c0c',
-                        ash: '#161616',
-                        sand: '#d4a373',
-                        clay: '#bc4749',
+                        // Soft Pastel Palette
+                        'pastel-green': '#a8d5ba',
+                        'pastel-green-light': '#d4edda',
+                        'pastel-blue': '#a8d4e6',
+                        'pastel-blue-light': '#e3f2fd',
+                        'pastel-lavender': '#d4c4e8',
+                        'pastel-lavender-light': '#f3e8ff',
+                        'cream': '#fdfbf7',
+                        'off-white': '#f8f9fa',
+                        'pale-mint': '#f0f9f4',
+                        'soft-sage': '#7fb896',
+                        'text-primary': '#2d3748',
+                        'text-secondary': '#4a5568',
+                        'text-muted': '#718096',
                         background: 'hsl(var(--background))',
                         foreground: 'hsl(var(--foreground))',
                         card: {
