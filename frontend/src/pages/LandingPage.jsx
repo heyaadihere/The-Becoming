@@ -630,13 +630,13 @@ const WhoItsForSection = () => {
 // The Circle Section
 const CircleSection = () => {
   return (
-    <AnimatedSection id="circle" className="section-spacing bg-off-white">
+    <AnimatedSection id="circle" className="section-spacing bg-sky-light/40">
       <div className="content-container text-center max-w-3xl mx-auto">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sky uppercase mb-4">
           Beyond The Experience
         </motion.p>
         <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-8">
-          Not Just an Experience. <em className="text-soft-sage">A Circle.</em>
+          Not Just an Experience. <em className="text-sky">A Circle.</em>
         </motion.h2>
         
         <motion.p variants={fadeInUp} className="text-base text-text-secondary leading-relaxed mb-12">
@@ -655,10 +655,10 @@ const CircleSection = () => {
               key={index} 
               variants={fadeInUp}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
-              className="becoming-card text-left bg-pastel-blue-light/30"
+              className="becoming-card text-left bg-white/80"
             >
-              <div className="w-8 h-8 rounded-full border-2 border-soft-sage/40 flex items-center justify-center mb-4">
-                <span className="text-soft-sage text-sm font-medium">{index + 1}</span>
+              <div className="w-8 h-8 rounded-full border-2 border-sky/50 flex items-center justify-center mb-4">
+                <span className="text-sky text-sm font-medium">{index + 1}</span>
               </div>
               <p className="text-sm text-text-secondary">{item}</p>
             </motion.div>
@@ -667,8 +667,8 @@ const CircleSection = () => {
         
         <motion.div variants={fadeInUp} className="space-y-2">
           <p className="font-heading text-2xl text-text-primary italic">It's not for now.</p>
-          <p className="font-heading text-2xl text-text-primary italic">It's for <span className="text-soft-sage">now</span> and <span className="text-pastel-blue">then</span></p>
-          <p className="font-heading text-2xl text-text-primary italic">and <span className="text-pastel-lavender">again</span>.</p>
+          <p className="font-heading text-2xl text-text-primary italic">It's for <span className="text-sage">now</span> and <span className="text-sky">then</span></p>
+          <p className="font-heading text-2xl text-text-primary italic">and <span className="text-lavender">again</span>.</p>
         </motion.div>
       </div>
     </AnimatedSection>
