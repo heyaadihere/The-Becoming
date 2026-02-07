@@ -18,20 +18,20 @@ module.exports = {
                         sm: 'calc(var(--radius) - 4px)'
                 },
                 colors: {
-                        // Soft Pastel Palette
-                        'pastel-green': '#a8d5ba',
-                        'pastel-green-light': '#d4edda',
-                        'pastel-blue': '#a8d4e6',
-                        'pastel-blue-light': '#e3f2fd',
-                        'pastel-lavender': '#d4c4e8',
-                        'pastel-lavender-light': '#f3e8ff',
-                        'cream': '#fdfbf7',
-                        'off-white': '#f8f9fa',
-                        'pale-mint': '#f0f9f4',
-                        'soft-sage': '#7fb896',
-                        'text-primary': '#2d3748',
-                        'text-secondary': '#4a5568',
-                        'text-muted': '#718096',
+                        // Richer Pastel Palette
+                        'sage': '#6b9080',
+                        'sage-light': '#a4c3b2',
+                        'sage-lighter': '#cce3de',
+                        'mint': '#eaf4f4',
+                        'sky': '#84a9c0',
+                        'sky-light': '#b8d4e3',
+                        'lavender': '#a390bc',
+                        'lavender-light': '#d4c8e0',
+                        'cream': '#f6f4f0',
+                        'warm-white': '#faf9f7',
+                        'text-primary': '#2d3a3a',
+                        'text-secondary': '#4a5959',
+                        'text-muted': '#6b7a7a',
                         background: 'hsl(var(--background))',
                         foreground: 'hsl(var(--foreground))',
                         card: {
@@ -65,48 +65,23 @@ module.exports = {
                         border: 'hsl(var(--border))',
                         input: 'hsl(var(--input))',
                         ring: 'hsl(var(--ring))',
-                        chart: {
-                                '1': 'hsl(var(--chart-1))',
-                                '2': 'hsl(var(--chart-2))',
-                                '3': 'hsl(var(--chart-3))',
-                                '4': 'hsl(var(--chart-4))',
-                                '5': 'hsl(var(--chart-5))'
-                        }
                 },
                 keyframes: {
                         'accordion-down': {
-                                from: {
-                                        height: '0'
-                                },
-                                to: {
-                                        height: 'var(--radix-accordion-content-height)'
-                                }
+                                from: { height: '0' },
+                                to: { height: 'var(--radix-accordion-content-height)' }
                         },
                         'accordion-up': {
-                                from: {
-                                        height: 'var(--radix-accordion-content-height)'
-                                },
-                                to: {
-                                        height: '0'
-                                }
+                                from: { height: 'var(--radix-accordion-content-height)' },
+                                to: { height: '0' }
                         },
                         'fade-in-up': {
-                                '0%': {
-                                        opacity: '0',
-                                        transform: 'translateY(20px)'
-                                },
-                                '100%': {
-                                        opacity: '1',
-                                        transform: 'translateY(0)'
-                                }
+                                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                                '100%': { opacity: '1', transform: 'translateY(0)' }
                         },
                         'fade-in': {
-                                '0%': {
-                                        opacity: '0'
-                                },
-                                '100%': {
-                                        opacity: '1'
-                                }
+                                '0%': { opacity: '0' },
+                                '100%': { opacity: '1' }
                         }
                 },
                 animation: {
