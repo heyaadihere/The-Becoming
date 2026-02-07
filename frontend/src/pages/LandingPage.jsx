@@ -569,13 +569,13 @@ const WhoItsForSection = () => {
   ];
 
   return (
-    <AnimatedSection id="who-its-for" className="section-spacing bg-cream relative overflow-hidden">
+    <AnimatedSection id="who-its-for" className="section-spacing bg-sage-lighter/50 relative overflow-hidden">
       <div className="content-container relative z-10">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sage uppercase mb-4">
           Is This For You?
         </motion.p>
         <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-12">
-          Who is The Becoming <em className="text-soft-sage">For</em>?
+          Who is The Becoming <em className="text-sage">For</em>?
         </motion.h2>
         
         <div className="grid lg:grid-cols-2 gap-16">
@@ -591,7 +591,7 @@ const WhoItsForSection = () => {
                   variants={fadeInUp}
                   className="flex items-center gap-4 text-text-secondary"
                 >
-                  <span className="w-2 h-2 rounded-full bg-soft-sage" />
+                  <span className="w-2 h-2 rounded-full bg-sage" />
                   <span>{item}</span>
                 </motion.li>
               ))}
@@ -614,7 +614,7 @@ const WhoItsForSection = () => {
                   key={index} 
                   variants={fadeInUp}
                   whileHover={{ x: 8, transition: { duration: 0.3 } }}
-                  className="becoming-card bg-pastel-green-light/30 cursor-pointer"
+                  className="becoming-card bg-white/80 cursor-pointer"
                 >
                   <p className="text-text-primary font-heading italic">{sign}</p>
                 </motion.li>
