@@ -496,13 +496,13 @@ const TestimonialsSection = () => {
   }, [testimonials.length]);
 
   return (
-    <section className="section-spacing bg-pastel-lavender-light/30 relative overflow-hidden">
+    <section className="section-spacing bg-lavender-light/50 relative overflow-hidden">
       <div className="content-container relative z-10">
         <motion.p 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4 text-center"
+          className="font-mono text-xs tracking-[0.3em] text-lavender uppercase mb-4 text-center"
         >
           Voices From Within
         </motion.p>
@@ -512,7 +512,7 @@ const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-16 text-center"
         >
-          What They <em className="text-soft-sage">Discovered</em>
+          What They <em className="text-lavender">Discovered</em>
         </motion.h2>
 
         <div className="max-w-3xl mx-auto">
@@ -525,11 +525,11 @@ const TestimonialsSection = () => {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <Quote className="w-12 h-12 text-pastel-green mx-auto mb-8" />
+              <Quote className="w-12 h-12 text-lavender mx-auto mb-8" />
               <p className="font-heading text-2xl lg:text-3xl text-text-primary italic mb-8 leading-relaxed">
                 "{testimonials[activeIndex].quote}"
               </p>
-              <p className="text-soft-sage font-medium">{testimonials[activeIndex].author}</p>
+              <p className="text-sage font-medium">{testimonials[activeIndex].author}</p>
               <p className="text-sm text-text-muted">{testimonials[activeIndex].role}</p>
             </motion.div>
           </AnimatePresence>
@@ -540,7 +540,7 @@ const TestimonialsSection = () => {
                 key={index}
                 onClick={() => setActiveIndex(index)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === activeIndex ? 'bg-soft-sage w-8' : 'bg-pastel-green/40 hover:bg-pastel-green/60'
+                  index === activeIndex ? 'bg-lavender w-8' : 'bg-lavender/30 hover:bg-lavender/50'
                 }`}
                 data-testid={`testimonial-dot-${index}`}
               />
