@@ -56,6 +56,19 @@ const images = {
   calm: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=800&q=80"
 };
 
+// Color classes for richer pastels
+const colors = {
+  sage: '#6b9080',
+  sageLight: '#a4c3b2',
+  sageLighter: '#cce3de',
+  mint: '#eaf4f4',
+  sky: '#84a9c0',
+  skyLight: '#b8d4e3',
+  lavender: '#a390bc',
+  lavenderLight: '#d4c8e0',
+  cream: '#f6f4f0',
+};
+
 // Section component with scroll animation
 const AnimatedSection = ({ children, className = "", id = "" }) => {
   const ref = useRef(null);
