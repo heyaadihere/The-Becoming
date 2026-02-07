@@ -418,21 +418,21 @@ const WhatIsItSection = () => {
 // Experience Section
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Nature & Stillness", description: "Reconnect with the natural world and find peace in silence", color: "bg-pastel-green-light" },
-    { title: "Mindful Movement", description: "Listen to your body and move with intention", color: "bg-pastel-blue-light" },
-    { title: "Reflection & Creativity", description: "Express what words cannot capture", color: "bg-pastel-lavender-light" },
-    { title: "Writing & Music", description: "Explore the landscapes of your inner world", color: "bg-pastel-green-light" },
-    { title: "Storytelling & Connection", description: "Share and listen to honest human stories", color: "bg-pastel-blue-light" }
+    { title: "Nature & Stillness", description: "Reconnect with the natural world and find peace in silence", color: "bg-sage-lighter" },
+    { title: "Mindful Movement", description: "Listen to your body and move with intention", color: "bg-sky-light" },
+    { title: "Reflection & Creativity", description: "Express what words cannot capture", color: "bg-lavender-light" },
+    { title: "Writing & Music", description: "Explore the landscapes of your inner world", color: "bg-sage-lighter" },
+    { title: "Storytelling & Connection", description: "Share and listen to honest human stories", color: "bg-sky-light" }
   ];
 
   return (
-    <AnimatedSection id="experience" className="section-spacing bg-off-white">
+    <AnimatedSection id="experience" className="section-spacing bg-cream">
       <div className="content-container">
-        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-soft-sage uppercase mb-4">
+        <motion.p variants={fadeInUp} className="font-mono text-xs tracking-[0.3em] text-sage uppercase mb-4">
           The Journey
         </motion.p>
         <motion.h2 variants={fadeInUp} className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-6">
-          What You Will <em className="text-soft-sage">Experience</em>
+          What You Will <em className="text-sage">Experience</em>
         </motion.h2>
         <motion.p variants={fadeInUp} className="text-base text-text-secondary max-w-2xl mb-16">
           At The Becoming, you are invited to experience life beyond autopilot.
@@ -447,7 +447,7 @@ const ExperienceSection = () => {
               className={`becoming-card group cursor-pointer ${exp.color}`}
               data-testid={`experience-card-${index}`}
             >
-              <div className="w-3 h-3 rounded-full bg-soft-sage mb-6 group-hover:scale-150 transition-transform duration-500" />
+              <div className="w-3 h-3 rounded-full bg-sage mb-6 group-hover:scale-150 transition-transform duration-500" />
               <h3 className="font-heading text-xl text-text-primary mb-3">{exp.title}</h3>
               <p className="text-sm text-text-secondary">{exp.description}</p>
             </motion.div>
