@@ -259,11 +259,13 @@ const HeroSection = ({ onBeginJourney }) => {
           muted 
           loop 
           playsInline
+          preload="auto"
           className="absolute w-full h-full object-cover"
-          poster="https://images.pexels.com/videos/3571264/free-video-3571264.jpg?auto=compress&cs=tinysrgb&w=1920"
         >
-          {/* Peaceful nature video - forest and mist */}
-          <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+          {/* Peaceful sunrise over mountains - calming and serene */}
+          <source src="https://videos.pexels.com/video-files/1918465/1918465-hd_1920_1080_24fps.mp4" type="video/mp4" />
+          {/* Fallback to aerial ocean view */}
+          <source src="https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_30fps.mp4" type="video/mp4" />
         </video>
         {/* Elegant overlay for luxurious feel */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
