@@ -7,15 +7,13 @@ import { Toaster, toast } from 'sonner';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Large, elegant logo
-const Logo = ({ className = "h-32", color = "currentColor" }) => (
-  <svg viewBox="0 0 200 200" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Elegant "B" monogram with circle */}
-    <circle cx="100" cy="100" r="90" stroke={color} strokeWidth="1" fill="none" />
-    <text x="100" y="75" textAnchor="middle" fill={color} fontSize="16" fontFamily="Raleway, sans-serif" fontWeight="300" letterSpacing="0.3em">THE</text>
-    <text x="100" y="115" textAnchor="middle" fill={color} fontSize="28" fontFamily="Playfair Display, serif" fontWeight="400" fontStyle="italic">Becoming</text>
-    <line x1="60" y1="130" x2="140" y2="130" stroke={color} strokeWidth="0.5" />
-  </svg>
+// Logo component using the uploaded image
+const Logo = ({ className = "h-16", variant = "dark" }) => (
+  <img 
+    src="/images/logo.png" 
+    alt="The Becoming" 
+    className={`${className} object-contain ${variant === 'light' ? 'brightness-0 invert' : ''}`}
+  />
 );
 
 // Section reveal animation
@@ -119,19 +117,19 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
   return (
     <AnimatePresence>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/95 backdrop-blur-sm">
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm">
         <button onClick={onClose} className="absolute top-8 right-8 p-3 text-white/60 hover:text-white transition-colors" data-testid="close-questionnaire">
           <X className="w-6 h-6" />
         </button>
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/10">
-          <motion.div className="h-full bg-muted-gold" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
+          <motion.div className="h-full bg-gradient-to-r from-accent-gold to-accent-bronze" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
         </div>
         <div className="absolute top-8 left-8 text-xs text-white/40 font-body tracking-widest uppercase">{step + 1} / {totalSteps}</div>
 
         {isComplete ? (
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md text-center text-white">
-            <div className="w-20 h-20 border border-muted-gold flex items-center justify-center mx-auto mb-10">
-              <Check className="w-8 h-8 text-muted-gold" />
+            <div className="w-20 h-20 border border-accent-gold flex items-center justify-center mx-auto mb-10">
+              <Check className="w-8 h-8 text-accent-gold" />
             </div>
             <h2 className="font-heading text-4xl mb-4">Thank you, {answers.name}</h2>
             <p className="text-white/60 text-sm font-body leading-relaxed mb-10 tracking-wide">Your responses have been received. We will be in touch if The Becoming feels right for you.</p>
@@ -141,7 +139,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
           <motion.div key={step} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.4 }} className="w-full max-w-2xl text-white">
             {currentQuestion.type === 'welcome' && (
               <div className="text-center">
-                <Logo className="h-28 mx-auto mb-12 text-white" />
+                <Logo className="h-24 mx-auto mb-12" variant="light" />
                 <h2 className="font-heading text-4xl sm:text-5xl mb-4 italic">{currentQuestion.title}</h2>
                 <p className="text-white/50 text-sm font-body tracking-wide mb-12">{currentQuestion.subtitle}</p>
                 <button onClick={handleNext} className="btn-luxe">Begin <ArrowRight className="inline ml-3 w-4 h-4" /></button>
@@ -150,13 +148,13 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
             {currentQuestion.type === 'text' && (
               <div className="space-y-8">
                 <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <input type="text" value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-muted-gold focus:outline-none transition-colors font-body" autoFocus />
+                <input type="text" value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" autoFocus />
               </div>
             )}
             {currentQuestion.type === 'textarea' && (
               <div className="space-y-8">
                 <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <textarea value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-transparent border border-white/20 px-4 py-4 text-base text-white placeholder-white/30 focus:border-muted-gold focus:outline-none transition-colors font-body min-h-[140px] resize-none" autoFocus />
+                <textarea value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-transparent border border-white/20 px-4 py-4 text-base text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body min-h-[140px] resize-none" autoFocus />
               </div>
             )}
             {currentQuestion.type === 'single' && (
@@ -166,7 +164,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                   {currentQuestion.options.map((option, idx) => (
                     <motion.div key={option} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.04 }}
                       onClick={() => handleSelectSingle(option)}
-                      className={`p-4 border cursor-pointer transition-all font-body text-sm tracking-wide ${answers[currentQuestion.field] === option ? 'bg-muted-gold/20 border-muted-gold text-white' : 'border-white/10 text-white/70 hover:border-white/30 hover:text-white'}`}>
+                      className={`p-4 border cursor-pointer transition-all font-body text-sm tracking-wide ${answers[currentQuestion.field] === option ? 'bg-accent-gold/20 border-accent-gold text-white' : 'border-white/10 text-white/70 hover:border-white/30 hover:text-white'}`}>
                       {option}
                     </motion.div>
                   ))}
@@ -182,7 +180,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                     return (
                       <motion.div key={option} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: idx * 0.03 }}
                         onClick={() => handleSelectMulti(option)}
-                        className={`p-4 border cursor-pointer transition-all font-body text-sm ${isSelected ? 'bg-muted-gold/20 border-muted-gold text-white' : 'border-white/10 text-white/60 hover:border-white/30'}`}>
+                        className={`p-4 border cursor-pointer transition-all font-body text-sm ${isSelected ? 'bg-accent-gold/20 border-accent-gold text-white' : 'border-white/10 text-white/60 hover:border-white/30'}`}>
                         {option}
                       </motion.div>
                     );
@@ -194,8 +192,8 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
               <div className="space-y-8">
                 <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
                 <div className="space-y-4">
-                  <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com" className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-muted-gold focus:outline-none transition-colors font-body" />
-                  <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone (optional)" className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-muted-gold focus:outline-none transition-colors font-body" />
+                  <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com" className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
+                  <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone (optional)" className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
                 </div>
               </div>
             )}
@@ -231,13 +229,13 @@ const Navigation = ({ onBeginJourney }) => {
 
   return (
     <motion.header initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-pearl/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
-        <Logo className={`h-14 transition-colors duration-300 ${isScrolled ? 'text-charcoal' : 'text-charcoal'}`} />
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'}`}>
+      <div className="max-w-7xl mx-auto px-8 lg:px-16 py-6 flex items-center justify-between">
+        <Logo className={`h-12 transition-all duration-300 ${isScrolled ? '' : 'brightness-0 invert'}`} />
         <nav className="hidden md:flex items-center gap-12">
           {['About', 'Experience', 'Journey'].map((item) => (
             <button key={item} onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-xs font-body tracking-[0.2em] uppercase text-soft-charcoal hover:text-muted-gold transition-colors">
+              className={`text-xs font-body tracking-[0.2em] uppercase transition-colors ${isScrolled ? 'text-deep-charcoal hover:text-accent-gold' : 'text-white/90 hover:text-white'}`}>
               {item}
             </button>
           ))}
@@ -250,11 +248,11 @@ const Navigation = ({ onBeginJourney }) => {
   );
 };
 
-// Hero Section - With calm video background
+// Hero Section - With peaceful video background
 const HeroSection = ({ onBeginJourney }) => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
-      {/* Calm video background */}
+      {/* Video background */}
       <div className="absolute inset-0">
         <video 
           autoPlay 
@@ -262,41 +260,42 @@ const HeroSection = ({ onBeginJourney }) => {
           loop 
           playsInline
           className="absolute w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1920&q=80"
+          poster="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&q=80"
         >
-          <source src="https://cdn.coverr.co/videos/coverr-calm-lake-in-the-mountains-6391/1080p.mp4" type="video/mp4" />
+          {/* Peaceful nature video */}
+          <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-big-waves-at-a-beach-3693/1080p.mp4" type="video/mp4" />
         </video>
-        {/* Elegant overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-pearl/85 via-pearl/75 to-pearl/95" />
+        {/* Elegant dark overlay for contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
       </div>
       
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-20">
+      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-          <Logo className="h-40 md:h-52 w-auto mx-auto text-charcoal mb-12" />
+          <Logo className="h-32 md:h-44 w-auto mx-auto mb-10" variant="light" />
         </motion.div>
         
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-          className="font-body text-xs tracking-[0.4em] text-muted-gold uppercase mb-8">
+          className="font-body text-xs tracking-[0.5em] text-accent-gold uppercase mb-10">
           A Curated Human Experience
         </motion.p>
         
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 1 }}
-          className="font-heading text-5xl sm:text-6xl lg:text-7xl text-charcoal mb-8 leading-[1.1]">
-          Do you need<br /><em className="text-muted-gold">a reset?</em>
+          className="font-heading text-5xl sm:text-6xl lg:text-8xl text-white mb-10 leading-[1.1]">
+          Do you need<br /><em className="text-accent-gold">a reset?</em>
         </motion.h1>
         
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
-          className="font-body text-base text-soft-charcoal max-w-xl mx-auto mb-12 leading-relaxed tracking-wide">
+          className="font-body text-lg text-white/80 max-w-2xl mx-auto mb-14 leading-relaxed tracking-wide">
           For those functioning well on the outside, yet inside feeling paused, restless, or quietly lost.
         </motion.p>
         
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button onClick={onBeginJourney} className="btn-luxe" data-testid="hero-cta">
+          className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <button onClick={onBeginJourney} className="btn-luxe text-sm px-10 py-4" data-testid="hero-cta">
             Begin Your Journey
           </button>
           <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="btn-outline">
+            className="btn-outline border-white/40 text-white hover:bg-white/10 text-sm px-10 py-4">
             Learn More
           </button>
         </motion.div>
@@ -305,36 +304,36 @@ const HeroSection = ({ onBeginJourney }) => {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2">
         <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2.5 }}>
-          <ChevronDown className="w-6 h-6 text-muted-gold" />
+          <ChevronDown className="w-8 h-8 text-accent-gold" />
         </motion.div>
       </motion.div>
     </section>
   );
 };
 
-// About Section
+// About Section - More spacious
 const AboutSection = () => {
   return (
-    <section id="about" className="py-32 bg-pearl">
-      <div className="max-w-6xl mx-auto px-8">
-        <RevealSection className="text-center mb-20">
-          <p className="font-body text-xs tracking-[0.3em] text-muted-gold uppercase mb-6">The Essence</p>
-          <h2 className="font-heading text-4xl lg:text-5xl text-charcoal mb-6 italic">
+    <section id="about" className="py-40 lg:py-52 bg-cream">
+      <div className="max-w-7xl mx-auto px-8 lg:px-16">
+        <RevealSection className="text-center mb-24">
+          <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">The Essence</p>
+          <h2 className="font-heading text-5xl lg:text-6xl text-deep-charcoal mb-8 italic">
             What is The Becoming?
           </h2>
-          <div className="elegant-divider mt-8" />
+          <div className="w-20 h-[1px] bg-accent-gold mx-auto" />
         </RevealSection>
 
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-24 items-center">
           <RevealSection delay={0.2}>
-            <div className="space-y-6 text-soft-charcoal text-base leading-relaxed font-body">
+            <div className="space-y-8 text-charcoal text-lg leading-relaxed font-body">
               <p>
                 The Becoming is a curated human experience for people who are doing what life expects of them, yet feel there must be more meaning, more depth, more truth to who they are.
               </p>
-              <div className="py-8 border-t border-b border-warm-sand space-y-3">
-                <p className="font-heading text-xl text-charcoal">It is <span className="text-muted-gold">not</span> a retreat.</p>
-                <p className="font-heading text-xl text-charcoal">It is <span className="text-muted-gold">not</span> a workshop.</p>
-                <p className="font-heading text-xl text-charcoal">It is <span className="text-muted-gold">not</span> a lecture.</p>
+              <div className="py-10 border-t border-b border-sand space-y-4">
+                <p className="font-heading text-2xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a retreat.</p>
+                <p className="font-heading text-2xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a workshop.</p>
+                <p className="font-heading text-2xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a lecture.</p>
               </div>
               <p>
                 No one can teach you how to live. Nobody is here to fix you. Instead, The Becoming creates a safe, intentional space where you step away from routines, screens and constant performance, and turn inward.
@@ -343,20 +342,20 @@ const AboutSection = () => {
           </RevealSection>
           
           <RevealSection delay={0.4}>
-            <div className="relative aspect-[4/5] bg-soft-beige">
+            <div className="relative aspect-[4/5] bg-sand">
               <img 
                 src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&q=80" 
                 alt="Meditation" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/30 to-transparent" />
             </div>
           </RevealSection>
         </div>
 
-        <RevealSection delay={0.3} className="mt-24 text-center max-w-3xl mx-auto">
-          <p className="font-heading text-2xl lg:text-3xl text-charcoal italic leading-relaxed">
-            "No promises. No fixing. No preaching. No selling. <span className="text-muted-gold">Only experiences.</span>"
+        <RevealSection delay={0.3} className="mt-32 text-center max-w-4xl mx-auto">
+          <p className="font-heading text-3xl lg:text-4xl text-deep-charcoal italic leading-relaxed">
+            "No promises. No fixing. No preaching. No selling. <span className="text-accent-gold">Only experiences.</span>"
           </p>
         </RevealSection>
       </div>
@@ -364,7 +363,7 @@ const AboutSection = () => {
   );
 };
 
-// Experience Section
+// Experience Section - More spacious
 const ExperienceSection = () => {
   const experiences = [
     { title: "Nature & Stillness", desc: "Reconnect with the natural world and find peace in silence" },
@@ -375,24 +374,24 @@ const ExperienceSection = () => {
   ];
 
   return (
-    <section id="experience" className="py-32 bg-soft-beige">
-      <div className="max-w-6xl mx-auto px-8">
-        <RevealSection className="text-center mb-20">
-          <p className="font-body text-xs tracking-[0.3em] text-muted-gold uppercase mb-6">The Journey</p>
-          <h2 className="font-heading text-4xl lg:text-5xl text-charcoal mb-4 italic">What You Will Experience</h2>
-          <p className="font-body text-soft-charcoal text-base max-w-lg mx-auto mt-6">
+    <section id="experience" className="py-40 lg:py-52 bg-soft-cream">
+      <div className="max-w-7xl mx-auto px-8 lg:px-16">
+        <RevealSection className="text-center mb-24">
+          <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">The Journey</p>
+          <h2 className="font-heading text-5xl lg:text-6xl text-deep-charcoal mb-6 italic">What You Will Experience</h2>
+          <p className="font-body text-charcoal text-lg max-w-xl mx-auto mt-8">
             At The Becoming, you are invited to experience life beyond autopilot.
           </p>
-          <div className="elegant-divider mt-8" />
+          <div className="w-20 h-[1px] bg-accent-gold mx-auto mt-10" />
         </RevealSection>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {experiences.map((exp, index) => (
             <RevealSection key={index} delay={index * 0.1}>
-              <div className="p-8 bg-pearl border border-warm-sand hover:border-muted-gold transition-all duration-500 group">
-                <span className="font-body text-xs text-muted-gold tracking-widest">0{index + 1}</span>
-                <h3 className="font-heading text-xl text-charcoal mt-4 mb-3 italic group-hover:text-muted-gold transition-colors">{exp.title}</h3>
-                <p className="font-body text-soft-charcoal text-sm leading-relaxed">{exp.desc}</p>
+              <div className="p-10 bg-cream border border-sand hover:border-accent-gold transition-all duration-500 group h-full">
+                <span className="font-body text-xs text-accent-gold tracking-widest">0{index + 1}</span>
+                <h3 className="font-heading text-2xl text-deep-charcoal mt-6 mb-4 italic group-hover:text-accent-gold transition-colors">{exp.title}</h3>
+                <p className="font-body text-charcoal leading-relaxed">{exp.desc}</p>
               </div>
             </RevealSection>
           ))}
@@ -402,7 +401,7 @@ const ExperienceSection = () => {
   );
 };
 
-// Journey/Who Section
+// Journey/Who Section - More spacious
 const JourneySection = () => {
   const forYouIf = [
     "You're functioning well outside, but feel quietly tired inside",
@@ -412,11 +411,11 @@ const JourneySection = () => {
   ];
 
   return (
-    <section id="journey" className="py-32 bg-pearl">
-      <div className="max-w-6xl mx-auto px-8">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+    <section id="journey" className="py-40 lg:py-52 bg-cream">
+      <div className="max-w-7xl mx-auto px-8 lg:px-16">
+        <div className="grid lg:grid-cols-2 gap-24 items-center">
           <RevealSection>
-            <div className="relative aspect-[4/5] bg-soft-beige">
+            <div className="relative aspect-[4/5] bg-sand">
               <img 
                 src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" 
                 alt="Mountains" 
@@ -426,21 +425,21 @@ const JourneySection = () => {
           </RevealSection>
           
           <RevealSection delay={0.2}>
-            <p className="font-body text-xs tracking-[0.3em] text-muted-gold uppercase mb-6">Is This For You?</p>
-            <h2 className="font-heading text-4xl lg:text-5xl text-charcoal mb-10 italic">
+            <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">Is This For You?</p>
+            <h2 className="font-heading text-5xl lg:text-6xl text-deep-charcoal mb-12 italic">
               Who is The Becoming For?
             </h2>
             
-            <p className="font-body text-soft-charcoal mb-8 leading-relaxed">
+            <p className="font-body text-charcoal text-lg mb-10 leading-relaxed">
               Working professionals, creators, artists, homemakers — anyone between 21-65 who feels ready for something they can't fully name yet.
             </p>
             
-            <div className="space-y-4">
-              <p className="font-heading text-lg text-charcoal italic mb-4">It may be for you if...</p>
+            <div className="space-y-5">
+              <p className="font-heading text-xl text-deep-charcoal italic mb-6">It may be for you if...</p>
               {forYouIf.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-4 py-3 border-b border-warm-sand">
-                  <span className="w-1.5 h-1.5 bg-muted-gold rounded-full mt-2 flex-shrink-0" />
-                  <p className="font-body text-soft-charcoal text-sm">{item}</p>
+                <div key={idx} className="flex items-start gap-5 py-4 border-b border-sand">
+                  <span className="w-2 h-2 bg-accent-gold rounded-full mt-2 flex-shrink-0" />
+                  <p className="font-body text-charcoal">{item}</p>
                 </div>
               ))}
             </div>
@@ -451,31 +450,31 @@ const JourneySection = () => {
   );
 };
 
-// Circle/Community Section
+// Circle/Community Section - More luxurious
 const CircleSection = () => {
   return (
-    <section className="py-32 bg-charcoal text-white">
-      <div className="max-w-4xl mx-auto px-8 text-center">
+    <section className="py-40 lg:py-52 bg-deep-charcoal text-white">
+      <div className="max-w-5xl mx-auto px-8 lg:px-16 text-center">
         <RevealSection>
-          <p className="font-body text-xs tracking-[0.3em] text-muted-gold uppercase mb-6">Beyond The Experience</p>
-          <h2 className="font-heading text-4xl lg:text-5xl mb-8 italic">
-            Not Just an Experience. <span className="text-muted-gold">A Circle.</span>
+          <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">Beyond The Experience</p>
+          <h2 className="font-heading text-5xl lg:text-6xl mb-10 italic">
+            Not Just an Experience. <span className="text-accent-gold">A Circle.</span>
           </h2>
-          <div className="w-12 h-[1px] bg-muted-gold mx-auto mb-10" />
-          <p className="font-body text-white/70 text-base leading-relaxed max-w-2xl mx-auto">
+          <div className="w-16 h-[1px] bg-accent-gold mx-auto mb-12" />
+          <p className="font-body text-white/70 text-lg leading-relaxed max-w-3xl mx-auto">
             Beyond the experience itself, The Becoming is the foundation of something larger — a community of like-minded individuals who value depth over speed, presence over performance, and humanity over hustle.
           </p>
         </RevealSection>
 
-        <RevealSection delay={0.3} className="mt-16 grid md:grid-cols-3 gap-8">
+        <RevealSection delay={0.3} className="mt-20 grid md:grid-cols-3 gap-10">
           {[
             "Stay in constant touch with you even after the experience is over",
             "Remind you of what matters, when life gets noisy again",
             "Offer a circle that continues long after the experience is done"
           ].map((item, idx) => (
-            <div key={idx} className="p-6 border border-white/10 hover:border-muted-gold/50 transition-all">
-              <span className="font-body text-xs text-muted-gold tracking-widest">0{idx + 1}</span>
-              <p className="font-body text-white/80 text-sm mt-4 leading-relaxed">{item}</p>
+            <div key={idx} className="p-8 border border-white/10 hover:border-accent-gold/50 transition-all">
+              <span className="font-body text-xs text-accent-gold tracking-widest">0{idx + 1}</span>
+              <p className="font-body text-white/80 mt-6 leading-relaxed">{item}</p>
             </div>
           ))}
         </RevealSection>
@@ -484,7 +483,7 @@ const CircleSection = () => {
   );
 };
 
-// FAQ Section
+// FAQ Section - More spacious
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const faqs = [
@@ -496,25 +495,25 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-32 bg-soft-beige">
-      <div className="max-w-3xl mx-auto px-8">
-        <RevealSection className="text-center mb-16">
-          <p className="font-body text-xs tracking-[0.3em] text-muted-gold uppercase mb-6">Questions</p>
-          <h2 className="font-heading text-4xl text-charcoal italic">Frequently Asked</h2>
-          <div className="elegant-divider mt-8" />
+    <section className="py-40 lg:py-52 bg-soft-cream">
+      <div className="max-w-4xl mx-auto px-8 lg:px-16">
+        <RevealSection className="text-center mb-20">
+          <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">Questions</p>
+          <h2 className="font-heading text-5xl text-deep-charcoal italic">Frequently Asked</h2>
+          <div className="w-20 h-[1px] bg-accent-gold mx-auto mt-10" />
         </RevealSection>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {faqs.map((faq, idx) => (
             <RevealSection key={idx} delay={idx * 0.1}>
-              <div className="border border-warm-sand bg-pearl">
+              <div className="border border-sand bg-cream">
                 <button
                   onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                  className="w-full px-6 py-5 flex items-center justify-between text-left"
+                  className="w-full px-8 py-6 flex items-center justify-between text-left"
                   data-testid={`faq-${idx}`}
                 >
-                  <span className="font-heading text-lg text-charcoal pr-4">{faq.q}</span>
-                  {openIndex === idx ? <Minus className="w-5 h-5 text-muted-gold flex-shrink-0" /> : <Plus className="w-5 h-5 text-muted-gold flex-shrink-0" />}
+                  <span className="font-heading text-xl text-deep-charcoal pr-4">{faq.q}</span>
+                  {openIndex === idx ? <Minus className="w-5 h-5 text-accent-gold flex-shrink-0" /> : <Plus className="w-5 h-5 text-accent-gold flex-shrink-0" />}
                 </button>
                 <AnimatePresence>
                   {openIndex === idx && (
@@ -525,7 +524,7 @@ const FAQSection = () => {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 pb-6 font-body text-soft-charcoal text-sm leading-relaxed">{faq.a}</p>
+                      <p className="px-8 pb-8 font-body text-charcoal leading-relaxed">{faq.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -538,19 +537,19 @@ const FAQSection = () => {
   );
 };
 
-// CTA Section
+// CTA Section - More impactful
 const CTASection = ({ onBeginJourney }) => {
   return (
-    <section className="py-32 bg-pearl relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,184,150,0.1),transparent_70%)]" />
+    <section className="py-40 lg:py-52 bg-cream relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(184,166,126,0.15),transparent_70%)]" />
       
-      <RevealSection className="relative z-10 text-center px-8 max-w-3xl mx-auto">
-        <Logo className="h-24 mx-auto text-charcoal mb-10" />
-        <h2 className="font-heading text-4xl lg:text-5xl text-charcoal mb-6 italic">Ready for your <span className="text-muted-gold">reset</span>?</h2>
-        <p className="font-body text-soft-charcoal text-base mb-10 max-w-xl mx-auto leading-relaxed">
+      <RevealSection className="relative z-10 text-center px-8 max-w-4xl mx-auto">
+        <Logo className="h-28 mx-auto mb-14" />
+        <h2 className="font-heading text-5xl lg:text-6xl text-deep-charcoal mb-8 italic">Ready for your <span className="text-accent-gold">reset</span>?</h2>
+        <p className="font-body text-charcoal text-lg mb-14 max-w-2xl mx-auto leading-relaxed">
           If this resonates with you, if you feel quietly ready, take a moment and tell us who you are.
         </p>
-        <button onClick={onBeginJourney} className="btn-luxe" data-testid="cta-button">
+        <button onClick={onBeginJourney} className="btn-luxe text-sm px-12 py-5" data-testid="cta-button">
           Begin Your Journey
         </button>
       </RevealSection>
@@ -558,33 +557,33 @@ const CTASection = ({ onBeginJourney }) => {
   );
 };
 
-// Footer
+// Footer - More refined
 const Footer = () => (
-  <footer className="py-16 bg-charcoal text-white">
-    <div className="max-w-6xl mx-auto px-8">
-      <div className="grid md:grid-cols-3 gap-12 mb-12">
+  <footer className="py-20 bg-deep-charcoal text-white">
+    <div className="max-w-7xl mx-auto px-8 lg:px-16">
+      <div className="grid md:grid-cols-3 gap-16 mb-16">
         <div>
-          <Logo className="h-20 text-white mb-6" />
-          <p className="font-body text-white/50 text-sm leading-relaxed">A curated human experience for those ready to become real again.</p>
+          <Logo className="h-16 mb-8" variant="light" />
+          <p className="font-body text-white/50 leading-relaxed">A curated human experience for those ready to become real again.</p>
         </div>
         <div>
-          <h4 className="font-body text-xs tracking-[0.2em] uppercase text-muted-gold mb-6">Navigate</h4>
-          <div className="space-y-3">
+          <h4 className="font-body text-xs tracking-[0.3em] uppercase text-accent-gold mb-8">Navigate</h4>
+          <div className="space-y-4">
             {['About', 'Experience', 'Journey'].map((item) => (
               <button key={item} onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-                className="block font-body text-sm text-white/50 hover:text-muted-gold transition-colors">{item}</button>
+                className="block font-body text-white/50 hover:text-accent-gold transition-colors">{item}</button>
             ))}
           </div>
         </div>
         <div>
-          <h4 className="font-body text-xs tracking-[0.2em] uppercase text-muted-gold mb-6">Connect</h4>
-          <a href="mailto:hello@thebecoming.in" className="font-body text-sm text-white/50 hover:text-muted-gold transition-colors">hello@thebecoming.in</a>
+          <h4 className="font-body text-xs tracking-[0.3em] uppercase text-accent-gold mb-8">Connect</h4>
+          <a href="mailto:hello@thebecoming.in" className="font-body text-white/50 hover:text-accent-gold transition-colors">hello@thebecoming.in</a>
         </div>
       </div>
-      <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="font-body text-xs text-white/30 tracking-wide">© {new Date().getFullYear()} The Becoming. All rights reserved.</p>
         <p className="font-body text-xs text-white/30 tracking-wide">
-          Powered by <a href="https://techbook.co.in/" target="_blank" rel="noopener noreferrer" className="text-muted-gold hover:text-white transition-colors">Techbook Technologies</a>
+          Powered by <a href="https://techbook.co.in/" target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-white transition-colors">Techbook Technologies</a>
         </p>
       </div>
     </div>
@@ -596,8 +595,8 @@ export default function LandingPage() {
   const [showQuestionnaire, setShowQuestionnaire] = useState(false);
 
   return (
-    <div className="min-h-screen bg-pearl" data-testid="landing-page">
-      <Toaster position="top-center" toastOptions={{ style: { background: '#2C2C2C', color: '#fff', border: '1px solid rgba(201, 184, 150, 0.3)', borderRadius: '0' } }} />
+    <div className="min-h-screen bg-cream" data-testid="landing-page">
+      <Toaster position="top-center" toastOptions={{ style: { background: '#1a1a1a', color: '#fff', border: '1px solid rgba(184, 166, 126, 0.3)', borderRadius: '0' } }} />
       <Navigation onBeginJourney={() => setShowQuestionnaire(true)} />
       <HeroSection onBeginJourney={() => setShowQuestionnaire(true)} />
       <AboutSection />
