@@ -518,26 +518,26 @@ const ExperienceSection = () => {
   ];
 
   return (
-    <section id="experience" className="py-32 bg-warm-cream">
+    <section id="experience" className="py-32 bg-soft-beige">
       <div className="max-w-7xl mx-auto px-6">
         <RevealSection className="text-center mb-20">
           <p className="font-body text-sm tracking-[0.3em] text-terracotta uppercase mb-6">The Journey</p>
           <h2 className="font-heading text-5xl lg:text-6xl text-charcoal mb-6">What You Will <em className="text-terracotta">Experience</em></h2>
-          <p className="font-body text-xl text-charcoal/60 max-w-2xl mx-auto">At The Becoming, you are invited to experience life beyond autopilot.</p>
+          <p className="font-body text-xl text-charcoal/70 max-w-2xl mx-auto">At The Becoming, you are invited to experience life beyond autopilot.</p>
         </RevealSection>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {experiences.map((exp, index) => (
             <RevealSection key={index} delay={index * 0.1}>
-              <motion.div whileHover={{ y: -10 }} className="group relative h-[400px] rounded-3xl overflow-hidden cursor-pointer">
+              <motion.div whileHover={{ y: -10 }} className="group relative h-[420px] rounded-3xl overflow-hidden cursor-pointer shadow-xl">
                 <img src={exp.image} alt={exp.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/30" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="w-14 h-14 rounded-full bg-terracotta/20 backdrop-blur-sm flex items-center justify-center mb-4 text-white">
+                  <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 text-white border border-white/30">
                     {exp.icon}
                   </div>
-                  <h3 className="font-heading text-2xl text-white mb-2">{exp.title}</h3>
-                  <p className="font-body text-white/70">{exp.desc}</p>
+                  <h3 className="font-heading text-2xl text-white mb-3 drop-shadow-lg">{exp.title}</h3>
+                  <p className="font-body text-white/90 drop-shadow-md">{exp.desc}</p>
                 </div>
               </motion.div>
             </RevealSection>
@@ -545,7 +545,7 @@ const ExperienceSection = () => {
         </div>
 
         <RevealSection delay={0.5} className="mt-20 max-w-3xl mx-auto text-center">
-          <p className="font-body text-xl text-charcoal/70 leading-relaxed">
+          <p className="font-body text-xl text-charcoal/80 leading-relaxed">
             Participants begin to listen inward and not outward. They reconnect with their inner voice and rediscover parts of themselves they might have ignored or never known.
           </p>
         </RevealSection>
