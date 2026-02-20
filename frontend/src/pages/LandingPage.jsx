@@ -528,13 +528,13 @@ const HeroSection = ({ onBeginJourney }) => {
           initial={{ opacity: 0, y: 30 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ delay: 1.5, duration: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20"
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20"
         >
           <motion.button 
             whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(184, 166, 126, 0.5)" }}
             whileTap={{ scale: 0.95 }}
             onClick={onBeginJourney} 
-            className="btn-luxe text-sm px-14 py-5" 
+            className="btn-luxe text-base md:text-lg px-16 py-6" 
             data-testid="hero-cta"
           >
             Enter The Becoming
@@ -543,7 +543,7 @@ const HeroSection = ({ onBeginJourney }) => {
             whileHover={{ scale: 1.05, backgroundColor: "rgba(26,26,26,0.15)" }}
             whileTap={{ scale: 0.95 }}
             onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-deep-charcoal/10 backdrop-blur-sm border border-deep-charcoal/30 text-deep-charcoal hover:bg-deep-charcoal/15 text-sm px-14 py-5 font-body tracking-[0.2em] uppercase transition-all"
+            className="bg-deep-charcoal/10 backdrop-blur-sm border-2 border-deep-charcoal/40 text-deep-charcoal hover:bg-deep-charcoal/15 text-base md:text-lg px-16 py-6 font-body tracking-[0.15em] uppercase transition-all"
           >
             Discover More
           </motion.button>
@@ -556,14 +556,14 @@ const HeroSection = ({ onBeginJourney }) => {
           transition={{ delay: 2.2 }}
           className="flex flex-col items-center gap-3"
         >
-          <span className="font-body text-[10px] text-deep-charcoal/50 tracking-[0.3em] uppercase">Scroll to explore</span>
+          <span className="font-body text-xs text-deep-charcoal/60 tracking-[0.3em] uppercase">Scroll to explore</span>
           <motion.div 
             animate={{ y: [0, 8, 0] }} 
             transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
             className="w-[1px] h-12 bg-gradient-to-b from-accent-bronze/80 to-transparent"
           />
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };
