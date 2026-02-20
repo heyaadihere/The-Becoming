@@ -262,8 +262,8 @@ const HeroSection = ({ onBeginJourney }) => {
           preload="auto"
           className="absolute w-full h-full object-cover"
         >
-          {/* Peaceful ocean waves video */}
-          <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+          {/* Local peaceful ocean video */}
+          <source src="/video.mp4" type="video/mp4" />
         </video>
         {/* Elegant overlay for luxurious feel */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
