@@ -435,21 +435,22 @@ const StatsBanner = () => {
   ];
 
   return (
-    <section className="py-20 bg-charcoal relative overflow-hidden">
-      <div className="absolute inset-0 opacity-20">
+    <section className="py-24 bg-charcoal relative overflow-hidden">
+      <div className="absolute inset-0 opacity-10">
         <img src={images.forest} alt="" className="w-full h-full object-cover" />
       </div>
+      <div className="absolute inset-0 bg-charcoal/80" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <RevealSection key={index} delay={index * 0.1} className="text-center">
-              <div className="w-16 h-16 rounded-full bg-terracotta/20 flex items-center justify-center mx-auto mb-4 text-terracotta">
+              <div className="w-16 h-16 rounded-full bg-terracotta/30 flex items-center justify-center mx-auto mb-4 text-terracotta">
                 {stat.icon}
               </div>
-              <p className="font-heading text-5xl lg:text-6xl text-white mb-2">
+              <p className="font-heading text-5xl lg:text-6xl text-white mb-2 drop-shadow-lg">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="font-body text-white/60">{stat.label}</p>
+              <p className="font-body text-white/80 text-lg">{stat.label}</p>
             </RevealSection>
           ))}
         </div>
