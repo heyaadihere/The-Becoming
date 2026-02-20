@@ -445,9 +445,7 @@ const Navigation = ({ onBeginJourney }) => {
 const HeroSection = ({ onBeginJourney }) => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
 
   return (
     <section ref={containerRef} className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
@@ -465,7 +463,7 @@ const HeroSection = ({ onBeginJourney }) => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(26,26,26,0.3)_100%)]" />
       </motion.div>
       
-      <motion.div style={{ opacity, y }} className="relative z-10 text-center px-6 max-w-6xl mx-auto pt-24">
+      <div className="relative z-10 text-center px-6 max-w-6xl mx-auto pt-24">
         {/* Decorative lines */}
         <motion.div 
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-20 bg-gradient-to-b from-transparent via-accent-gold to-transparent"
