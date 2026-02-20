@@ -471,12 +471,12 @@ const AboutSection = () => {
             <h2 className="font-heading text-5xl lg:text-6xl text-charcoal mb-8 leading-tight">
               What is <em className="text-terracotta">The Becoming</em>?
             </h2>
-            <div className="space-y-6 text-charcoal/70 text-lg leading-relaxed">
+            <div className="space-y-6 text-charcoal/80 text-lg leading-relaxed">
               <p>The Becoming is a curated human experience for people who are doing what life expects of them, yet feel there must be more meaning, more depth, more truth to who they are.</p>
-              <div className="flex flex-col gap-3 py-6">
-                <span className="font-heading text-2xl text-charcoal">It is <span className="text-terracotta">not</span> a retreat.</span>
-                <span className="font-heading text-2xl text-charcoal">It is <span className="text-terracotta">not</span> a workshop.</span>
-                <span className="font-heading text-2xl text-charcoal">It is <span className="text-terracotta">not</span> a lecture.</span>
+              <div className="flex flex-col gap-3 py-6 bg-soft-beige/50 rounded-2xl px-6">
+                <span className="font-heading text-2xl text-charcoal">It is <span className="text-terracotta font-semibold">not</span> a retreat.</span>
+                <span className="font-heading text-2xl text-charcoal">It is <span className="text-terracotta font-semibold">not</span> a workshop.</span>
+                <span className="font-heading text-2xl text-charcoal">It is <span className="text-terracotta font-semibold">not</span> a lecture.</span>
               </div>
               <p>No one can teach you how to live. Nobody is here to fix you. Instead, The Becoming creates a safe, intentional space where you step away from routines, screens and constant performance, and turn inward.</p>
             </div>
@@ -491,13 +491,14 @@ const AboutSection = () => {
       </div>
 
       {/* Quote Banner */}
-      <div className="py-32 bg-soft-beige relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+      <div className="py-32 bg-charcoal relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
           <img src={images.nature1} alt="" className="w-full h-full object-cover" />
         </div>
+        <div className="absolute inset-0 bg-charcoal/70" />
         <RevealSection className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <Quote className="w-16 h-16 text-terracotta/30 mx-auto mb-8" />
-          <p className="font-heading text-4xl lg:text-5xl text-charcoal italic leading-relaxed">
+          <Quote className="w-16 h-16 text-terracotta mx-auto mb-8" />
+          <p className="font-heading text-4xl lg:text-5xl text-white italic leading-relaxed drop-shadow-lg">
             "No promises. No fixing. No preaching. No selling. Only experiences."
           </p>
         </RevealSection>
