@@ -252,7 +252,7 @@ const Navigation = ({ onBeginJourney }) => {
 const HeroSection = ({ onBeginJourney }) => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
-      {/* Peaceful nature video background */}
+      {/* Peaceful ocean video background */}
       <div className="absolute inset-0">
         <video 
           autoPlay 
@@ -262,8 +262,8 @@ const HeroSection = ({ onBeginJourney }) => {
           preload="auto"
           className="absolute w-full h-full object-cover"
         >
-          {/* Peaceful aerial nature video from reliable CDN */}
-          <source src="https://static.videezy.com/system/resources/previews/000/044/030/original/lake.mp4" type="video/mp4" />
+          {/* Peaceful ocean waves video */}
+          <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
         </video>
         {/* Elegant overlay for luxurious feel */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
