@@ -67,7 +67,7 @@ const AnimatedGradient = ({ children, className = "" }) => (
   </div>
 );
 
-// Video background with overlay
+// Video background with overlay - calm water/nature video
 const VideoHero = () => {
   return (
     <div className="absolute inset-0 overflow-hidden">
@@ -77,11 +77,12 @@ const VideoHero = () => {
         loop 
         playsInline
         className="absolute w-full h-full object-cover scale-105"
-        poster={images.hero}
+        poster={images.lake}
       >
-        <source src="https://cdn.coverr.co/videos/coverr-fog-rolling-over-forested-mountains-1584/1080p.mp4" type="video/mp4" />
+        {/* Calm lake/water video for peaceful atmosphere */}
+        <source src="https://cdn.coverr.co/videos/coverr-calm-lake-in-the-mountains-6391/1080p.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/90" />
+      <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/60 to-charcoal/90" />
       <FloatingParticles />
     </div>
   );
@@ -439,18 +440,18 @@ const StatsBanner = () => {
       <div className="absolute inset-0 opacity-10">
         <img src={images.forest} alt="" className="w-full h-full object-cover" />
       </div>
-      <div className="absolute inset-0 bg-charcoal/80" />
+      <div className="absolute inset-0 bg-charcoal/90" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <RevealSection key={index} delay={index * 0.1} className="text-center">
-              <div className="w-16 h-16 rounded-full bg-terracotta/30 flex items-center justify-center mx-auto mb-4 text-terracotta">
+              <div className="w-16 h-16 rounded-full bg-terracotta/40 flex items-center justify-center mx-auto mb-4 text-terracotta">
                 {stat.icon}
               </div>
-              <p className="font-heading text-5xl lg:text-6xl text-white mb-2 drop-shadow-lg">
+              <p className="font-heading text-5xl lg:text-6xl text-white mb-2" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="font-body text-white/80 text-lg">{stat.label}</p>
+              <p className="font-body text-white text-lg" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.6)' }}>{stat.label}</p>
             </RevealSection>
           ))}
         </div>
@@ -492,13 +493,13 @@ const AboutSection = () => {
 
       {/* Quote Banner */}
       <div className="py-32 bg-charcoal relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 opacity-15">
           <img src={images.nature1} alt="" className="w-full h-full object-cover" />
         </div>
-        <div className="absolute inset-0 bg-charcoal/70" />
+        <div className="absolute inset-0 bg-charcoal/85" />
         <RevealSection className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <Quote className="w-16 h-16 text-terracotta mx-auto mb-8" />
-          <p className="font-heading text-4xl lg:text-5xl text-white italic leading-relaxed drop-shadow-lg">
+          <p className="font-heading text-4xl lg:text-5xl text-white italic leading-relaxed" style={{ textShadow: '2px 2px 10px rgba(0,0,0,0.9)' }}>
             "No promises. No fixing. No preaching. No selling. Only experiences."
           </p>
         </RevealSection>
@@ -566,11 +567,11 @@ const JourneySection = () => {
       {/* Full width image banner */}
       <div className="h-[60vh] relative overflow-hidden">
         <ParallaxImage src={images.mountains} alt="Mountains" className="absolute inset-0 h-full" />
-        <div className="absolute inset-0 bg-charcoal/70" />
+        <div className="absolute inset-0 bg-charcoal/80" />
         <div className="absolute inset-0 flex items-center justify-center">
           <RevealSection className="text-center px-6">
-            <p className="font-body text-sm tracking-[0.3em] text-terracotta uppercase mb-6 drop-shadow-lg">Is This For You?</p>
-            <h2 className="font-heading text-5xl lg:text-7xl text-white drop-shadow-xl">Who is The Becoming <em className="text-terracotta">For</em>?</h2>
+            <p className="font-body text-sm tracking-[0.3em] text-terracotta uppercase mb-6" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.9)' }}>Is This For You?</p>
+            <h2 className="font-heading text-5xl lg:text-7xl text-white" style={{ textShadow: '3px 3px 12px rgba(0,0,0,0.9)' }}>Who is The Becoming <em className="text-terracotta">For</em>?</h2>
           </RevealSection>
         </div>
       </div>
@@ -601,15 +602,16 @@ const JourneySection = () => {
 const CircleSection = () => {
   return (
     <section className="py-32 bg-charcoal relative overflow-hidden">
-      <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 opacity-20">
         <img src={images.lake} alt="" className="w-full h-full object-cover" />
       </div>
+      <div className="absolute inset-0 bg-charcoal/70" />
       <FloatingParticles />
       <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
         <RevealSection>
-          <p className="font-body text-sm tracking-[0.3em] text-terracotta uppercase mb-6">Beyond The Experience</p>
-          <h2 className="font-heading text-5xl lg:text-6xl text-white mb-8">Not Just an Experience. <em className="text-terracotta">A Circle.</em></h2>
-          <p className="font-body text-xl text-white/70 mb-16 leading-relaxed">
+          <p className="font-body text-sm tracking-[0.3em] text-terracotta uppercase mb-6" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.8)' }}>Beyond The Experience</p>
+          <h2 className="font-heading text-5xl lg:text-6xl text-white mb-8" style={{ textShadow: '2px 2px 10px rgba(0,0,0,0.9)' }}>Not Just an Experience. <em className="text-terracotta">A Circle.</em></h2>
+          <p className="font-body text-xl text-white/90 mb-16 leading-relaxed" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.7)' }}>
             Beyond the experience itself, The Becoming is the foundation of something larger – a community of like-minded individuals who value depth over speed, presence over performance, and humanity over hustle.
           </p>
         </RevealSection>
@@ -632,7 +634,7 @@ const CircleSection = () => {
         </div>
 
         <RevealSection delay={0.4}>
-          <div className="space-y-2">
+          <div className="space-y-2" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
             <p className="font-heading text-3xl text-white italic">It's not for now.</p>
             <p className="font-heading text-3xl text-white italic">It's for <span className="text-terracotta">now</span> and <span className="text-deep-sage">then</span></p>
             <p className="font-heading text-3xl text-white italic">and <span className="text-terracotta">again</span>.</p>
@@ -694,9 +696,10 @@ const CTASection = ({ onBeginReset }) => {
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-          <source src="https://cdn.coverr.co/videos/coverr-woman-meditating-by-the-ocean-at-sunset-2802/1080p.mp4" type="video/mp4" />
+          {/* Calm sunset/nature video */}
+          <source src="https://cdn.coverr.co/videos/coverr-misty-forest-in-the-morning-1573/1080p.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-charcoal/70" />
+        <div className="absolute inset-0 bg-charcoal/80" />
       </div>
       <FloatingParticles />
       
@@ -704,8 +707,8 @@ const CTASection = ({ onBeginReset }) => {
         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-terracotta to-soft-brown flex items-center justify-center mx-auto mb-10">
           <Sparkles className="w-12 h-12 text-white" />
         </div>
-        <h2 className="font-heading text-5xl lg:text-7xl text-white mb-8">Ready for your <em className="text-terracotta">reset</em>?</h2>
-        <p className="font-body text-xl text-white/70 mb-12 max-w-2xl mx-auto">
+        <h2 className="font-heading text-5xl lg:text-7xl text-white mb-8" style={{ textShadow: '3px 3px 12px rgba(0,0,0,0.9)' }}>Ready for your <em className="text-terracotta">reset</em>?</h2>
+        <p className="font-body text-xl text-white/90 mb-12 max-w-2xl mx-auto" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.7)' }}>
           If this resonates with you, if you feel quietly ready, take a moment and tell us who you are. Your journey begins with a single step.
         </p>
         <button onClick={onBeginReset} className="btn-journey text-xl px-14 py-5" data-testid="cta-button">
