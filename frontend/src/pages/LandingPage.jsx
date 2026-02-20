@@ -316,20 +316,42 @@ const HeroSection = ({ onBeginJourney }) => {
         
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <button onClick={onBeginJourney} className="btn-luxe text-sm px-12 py-5" data-testid="hero-cta">
+          <motion.button 
+            whileHover={{ scale: 1.05, boxShadow: "0 15px 40px rgba(184, 166, 126, 0.4)" }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onBeginJourney} 
+            className="btn-luxe text-sm px-12 py-5" 
+            data-testid="hero-cta">
             Begin Your Journey
-          </button>
-          <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+          </motion.button>
+          <motion.button 
+            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.3)" }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             className="bg-white/20 backdrop-blur-sm border border-white/40 text-white hover:bg-white/30 text-sm px-12 py-5 font-body tracking-[0.2em] uppercase transition-all">
             Learn More
-          </button>
+          </motion.button>
         </motion.div>
       </div>
       
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2">
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2.5 }}>
-          <ChevronDown className="w-8 h-8 text-accent-gold" />
+      {/* Scroll indicator - positioned below content */}
+      <motion.div 
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
+        transition={{ delay: 1.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+      >
+        <span className="font-body text-xs text-white/60 tracking-widest uppercase">Scroll</span>
+        <motion.div 
+          animate={{ y: [0, 10, 0] }} 
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          className="w-6 h-10 border border-white/40 rounded-full flex justify-center pt-2"
+        >
+          <motion.div 
+            animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }} 
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="w-1 h-2 bg-accent-gold rounded-full"
+          />
         </motion.div>
       </motion.div>
     </section>
