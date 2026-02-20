@@ -252,7 +252,7 @@ const Navigation = ({ onBeginJourney }) => {
 const HeroSection = ({ onBeginJourney }) => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
-      {/* Video background */}
+      {/* Peaceful nature video background */}
       <div className="absolute inset-0">
         <video 
           autoPlay 
@@ -260,13 +260,13 @@ const HeroSection = ({ onBeginJourney }) => {
           loop 
           playsInline
           className="absolute w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&q=80"
+          poster="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1920&q=80"
         >
-          {/* Peaceful nature video */}
-          <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-big-waves-at-a-beach-3693/1080p.mp4" type="video/mp4" />
+          {/* Calm mountain lake reflection - serene and peaceful */}
+          <source src="https://cdn.coverr.co/videos/coverr-a-mountain-lake-at-dawn-3838/1080p.mp4" type="video/mp4" />
         </video>
-        {/* Elegant dark overlay for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+        {/* Elegant overlay for luxurious feel */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
       </div>
       
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
