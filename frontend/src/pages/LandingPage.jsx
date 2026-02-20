@@ -577,26 +577,26 @@ const Footer = () => (
     <div className="max-w-7xl mx-auto px-8 lg:px-16">
       <div className="grid md:grid-cols-3 gap-16 mb-16">
         <div>
-          <Logo className="h-16 mb-8" variant="light" />
-          <p className="font-body text-white/50 leading-relaxed">A curated human experience for those ready to become real again.</p>
+          <Logo className="h-24 mb-8" variant="light" />
+          <p className="font-body text-white/60 text-lg leading-relaxed">A curated human experience for those ready to become real again.</p>
         </div>
         <div>
-          <h4 className="font-body text-xs tracking-[0.3em] uppercase text-accent-gold mb-8">Navigate</h4>
+          <h4 className="font-body text-sm tracking-[0.3em] uppercase text-accent-gold mb-8">Navigate</h4>
           <div className="space-y-4">
             {['About', 'Experience', 'Journey'].map((item) => (
               <button key={item} onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-                className="block font-body text-white/50 hover:text-accent-gold transition-colors">{item}</button>
+                className="block font-body text-lg text-white/60 hover:text-accent-gold transition-colors">{item}</button>
             ))}
           </div>
         </div>
         <div>
-          <h4 className="font-body text-xs tracking-[0.3em] uppercase text-accent-gold mb-8">Connect</h4>
-          <a href="mailto:hello@thebecoming.in" className="font-body text-white/50 hover:text-accent-gold transition-colors">hello@thebecoming.in</a>
+          <h4 className="font-body text-sm tracking-[0.3em] uppercase text-accent-gold mb-8">Connect</h4>
+          <a href="mailto:hello@thebecoming.in" className="font-body text-lg text-white/60 hover:text-accent-gold transition-colors">hello@thebecoming.in</a>
         </div>
       </div>
       <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="font-body text-xs text-white/30 tracking-wide">© {new Date().getFullYear()} The Becoming. All rights reserved.</p>
-        <p className="font-body text-xs text-white/30 tracking-wide">
+        <p className="font-body text-sm text-white/40 tracking-wide">© {new Date().getFullYear()} The Becoming. All rights reserved.</p>
+        <p className="font-body text-sm text-white/40 tracking-wide">
           Powered by <a href="https://techbook.co.in/" target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-white transition-colors">Techbook Technologies</a>
         </p>
       </div>
