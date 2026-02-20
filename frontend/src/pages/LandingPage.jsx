@@ -441,42 +441,28 @@ const Navigation = ({ onBeginJourney }) => {
   );
 };
 
-// Hero Section - Powerful and immersive
+// Hero Section - Powerful and immersive with serene landscape
 const HeroSection = ({ onBeginJourney }) => {
-  const videoRef = useRef(null);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
   const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
-  
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, []);
 
   return (
     <section ref={containerRef} className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
-      {/* Video background with parallax */}
+      {/* Serene landscape cover image with parallax */}
       <motion.div className="absolute inset-0" style={{ scale }}>
-        <video 
-          ref={videoRef}
-          autoPlay 
-          muted 
-          loop 
-          playsInline
-          preload="auto"
-          poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80"
+        <img 
+          src="/images/hero-cover.png"
+          alt="Serene mountain landscape at sunrise"
           className="absolute w-full h-full object-cover"
-        >
-          <source src="/video.mp4" type="video/mp4" />
-        </video>
-        {/* Cinematic overlay layers */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
-        {/* Animated grain texture */}
-        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+        />
+        {/* Soft overlay for text readability - keeping dreamy atmosphere */}
+        <div className="absolute inset-0 bg-gradient-to-b from-deep-charcoal/40 via-transparent to-deep-charcoal/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-deep-charcoal/20 via-transparent to-deep-charcoal/20" />
+        {/* Subtle vignette effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(26,26,26,0.3)_100%)]" />
       </motion.div>
       
       <motion.div style={{ opacity, y }} className="relative z-10 text-center px-6 max-w-6xl mx-auto pt-24">
