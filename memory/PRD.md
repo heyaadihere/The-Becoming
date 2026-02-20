@@ -7,7 +7,6 @@ Build a website for "The Becoming" - a curated human experience landing page wit
 - Experience section detailing what participants will experience
 - Who It's For section targeting working professionals, creators, artists, homemakers
 - The Circle section about the continuing community
-- Testimonials/Stories section
 - Multi-step questionnaire modal for sign-up
 - FAQ section
 - "Powered by Techbook Technologies" footer badge
@@ -18,14 +17,30 @@ Build a website for "The Becoming" - a curated human experience landing page wit
 - **Homemakers**: Those who feel there must be more depth to who they are
 - **Anyone Ready**: People quietly losing or quietly lost, seeking authentic connection
 
-## Core Requirements
-1. **Immersive, journey-like design** with full-screen sections and video backgrounds
-2. Warm color palette: terracotta (#c4a484), deep-sage (#7a9484), charcoal (#3a3a3a), warm-cream (#faf8f5)
-3. Calm video backgrounds (lake/nature scenes)
-4. High text contrast with text shadows for readability
-5. Multi-step questionnaire modal with progress tracking
-6. Smooth scroll navigation with parallax effects
-7. Responsive design for all screen sizes
+## Design Direction (Updated Feb 20, 2025)
+**Luxe Minimalist / Happy yet Luxurious / Pastel Approach**
+
+### Color Palette
+- **Pearl White:** #FEFEFA (primary background)
+- **Ivory:** #FFFFF0
+- **Soft Beige:** #F5F1EB (section backgrounds)
+- **Warm Sand:** #E8E0D5 (borders, dividers)
+- **Muted Gold:** #C9B896 (primary accent)
+- **Rich Gold:** #B8A67E (hover states)
+- **Deep Gold:** #9A8A6E (dark accents)
+- **Charcoal:** #2C2C2C (text)
+
+### Typography
+- **Headings:** Playfair Display (serif, elegant, timeless)
+- **Body:** Raleway (sans-serif, clean, modern)
+
+### Visual Style
+- Clean, minimal layouts
+- No video backgrounds - static with subtle gradient transitions
+- Large, prominent logo in circular design
+- Sharp-edged buttons (no rounded corners)
+- Elegant gold dividers
+- Generous white space
 
 ## Tech Stack
 - **Frontend**: React + Tailwind CSS + Framer Motion
@@ -34,26 +49,23 @@ Build a website for "The Becoming" - a curated human experience landing page wit
 
 ## What's Been Implemented
 
-**Date: Feb 20, 2025**
-- ✅ Fixed text contrast issue - added text shadows and darker overlays for readability
-- ✅ Replaced hero video with calm lake video for peaceful atmosphere
-- ✅ Replaced CTA video with misty forest video
+**Date: Feb 20, 2025 - Major Redesign**
+- ✅ Complete visual overhaul to luxe minimalist aesthetic
+- ✅ New color palette: muted gold + soft beige + pearl white
+- ✅ New typography: Playfair Display + Raleway
+- ✅ Large, prominent logo redesign
+- ✅ Removed video backgrounds for clean static design
+- ✅ Removed testimonials section
+- ✅ Clean FAQ accordion with elegant styling
+- ✅ Sharp-edged buttons and minimal UI elements
 
 **Previous Implementation:**
-- ✅ Complete landing page with full-screen immersive sections
-- ✅ Video hero with calm lake background
-- ✅ Cormorant Garamond + DM Sans typography
-- ✅ Framer Motion animations (parallax, reveal, floating particles)
 - ✅ Multi-step questionnaire modal (18 questions)
-- ✅ Animated stats banner with counters
-- ✅ Experience cards with hover effects
-- ✅ Testimonials carousel with auto-rotation
-- ✅ Journey section with parallax mountain banner
-- ✅ Circle section with community benefits
-- ✅ Sticky navigation with scroll behavior
-- ✅ "Powered by Techbook Technologies" footer badge
+- ✅ Smooth scroll navigation
+- ✅ About, Experience, Journey, Circle sections
+- ✅ Footer with Techbook Technologies badge
 - ✅ Test IDs for all interactive elements
-- ✅ Responsive design for mobile/tablet/desktop
+- ✅ Responsive design
 
 ## Backend Status
 - ✅ `/api` - Health check endpoint
@@ -66,17 +78,14 @@ Build a website for "The Becoming" - a curated human experience landing page wit
 - **Implement email notifications** - Requires Resend API key
 
 ### P1 (High Priority)
-- Embed actual founder video when available
 - Update contact email if needed
-- Replace placeholder video backgrounds with final assets
+- Finalize any imagery/photos
 
 ### P2 (Nice to Have)
 - Admin dashboard to view/manage submissions
 - SEO meta tags and Open Graph images
-- Refactor LandingPage.jsx into smaller components
 
 ## Next Action Items
 1. Implement `/api/questionnaire` to save data to MongoDB
 2. User to provide Resend API key for email notifications
-3. User to provide founder video URL when ready
-4. Consider testing agent for full flow validation
+3. User feedback on new design direction
