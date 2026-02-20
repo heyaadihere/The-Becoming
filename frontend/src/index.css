@@ -64,19 +64,19 @@ body {
 .btn-luxe {
     background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
     color: white;
-    padding: 1.1rem 2.8rem;
+    padding: 1.25rem 3rem;
     border-radius: 0;
     font-family: 'Raleway', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-weight: 600;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    font-size: 0.7rem;
+    font-size: 0.875rem;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border: none;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 6px 25px rgba(184, 166, 126, 0.35);
+    box-shadow: 0 8px 30px rgba(184, 166, 126, 0.4);
 }
 
 .btn-luxe::before {
@@ -96,7 +96,7 @@ body {
 
 .btn-luxe:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(184, 166, 126, 0.5);
+    box-shadow: 0 15px 45px rgba(184, 166, 126, 0.55);
 }
 
 .btn-outline {
