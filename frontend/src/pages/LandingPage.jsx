@@ -404,7 +404,7 @@ const Navigation = ({ onBeginJourney }) => {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
         >
-          <Logo className={`${isScrolled ? 'h-14' : 'h-20'} transition-all duration-500`} variant={isScrolled ? 'dark' : 'light'} />
+          <Logo className={`${isScrolled ? 'h-14' : 'h-20'} transition-all duration-500`} variant="dark" />
         </motion.div>
         <nav className="hidden md:flex items-center gap-12">
           {['About', 'Experience', 'Journey'].map((item, idx) => (
@@ -414,7 +414,7 @@ const Navigation = ({ onBeginJourney }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + idx * 0.1 }}
               onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-              className={`text-sm font-body tracking-[0.2em] uppercase transition-all relative group ${isScrolled ? 'text-deep-charcoal hover:text-accent-gold' : 'text-white/90 hover:text-white'}`}
+              className="text-sm font-body tracking-[0.2em] uppercase transition-all relative group text-deep-charcoal/80 hover:text-accent-gold"
               whileHover={{ y: -2 }}
             >
               {item}
