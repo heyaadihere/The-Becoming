@@ -67,6 +67,7 @@ class SignupSubmission(BaseModel):
     why_becoming: str
     current_state: str
     what_seeking: str
+    questionnaire_data: Optional[str] = None
     submitted_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     status: str = "pending"
 
