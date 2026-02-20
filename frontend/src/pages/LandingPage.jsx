@@ -260,10 +260,10 @@ const HeroSection = ({ onBeginJourney }) => {
           loop 
           playsInline
           className="absolute w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1920&q=80"
+          poster="https://images.pexels.com/videos/3571264/free-video-3571264.jpg?auto=compress&cs=tinysrgb&w=1920"
         >
-          {/* Calm mountain lake reflection - serene and peaceful */}
-          <source src="https://cdn.coverr.co/videos/coverr-a-mountain-lake-at-dawn-3838/1080p.mp4" type="video/mp4" />
+          {/* Peaceful nature video - forest and mist */}
+          <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4" />
         </video>
         {/* Elegant overlay for luxurious feel */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
