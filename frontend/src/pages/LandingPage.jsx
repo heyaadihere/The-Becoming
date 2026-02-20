@@ -566,26 +566,26 @@ const JourneySection = () => {
       {/* Full width image banner */}
       <div className="h-[60vh] relative overflow-hidden">
         <ParallaxImage src={images.mountains} alt="Mountains" className="absolute inset-0 h-full" />
-        <div className="absolute inset-0 bg-charcoal/60" />
+        <div className="absolute inset-0 bg-charcoal/70" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <RevealSection className="text-center">
-            <p className="font-body text-sm tracking-[0.3em] text-terracotta uppercase mb-6">Is This For You?</p>
-            <h2 className="font-heading text-5xl lg:text-7xl text-white">Who is The Becoming <em className="text-terracotta">For</em>?</h2>
+          <RevealSection className="text-center px-6">
+            <p className="font-body text-sm tracking-[0.3em] text-terracotta uppercase mb-6 drop-shadow-lg">Is This For You?</p>
+            <h2 className="font-heading text-5xl lg:text-7xl text-white drop-shadow-xl">Who is The Becoming <em className="text-terracotta">For</em>?</h2>
           </RevealSection>
         </div>
       </div>
 
       {/* Content */}
-      <div className="py-32 bg-soft-beige">
+      <div className="py-32 bg-warm-cream">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
           {sections.map((section, idx) => (
             <RevealSection key={idx} delay={idx * 0.2}>
               <h3 className="font-heading text-3xl text-charcoal mb-8">{section.title}</h3>
               <div className="space-y-4">
                 {section.items.map((item, i) => (
-                  <motion.div key={i} whileHover={{ x: 10 }} className="flex items-start gap-4 p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-terracotta/10 hover:border-terracotta/30 transition-all cursor-pointer">
+                  <motion.div key={i} whileHover={{ x: 10 }} className="flex items-start gap-4 p-6 rounded-2xl bg-white shadow-md border border-warm-sand/50 hover:border-terracotta/50 hover:shadow-lg transition-all cursor-pointer">
                     <div className="w-3 h-3 rounded-full bg-terracotta mt-2 flex-shrink-0" />
-                    <p className="font-body text-charcoal/80 text-lg">{item}</p>
+                    <p className="font-body text-charcoal text-lg">{item}</p>
                   </motion.div>
                 ))}
               </div>
