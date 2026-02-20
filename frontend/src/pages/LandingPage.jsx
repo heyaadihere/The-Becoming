@@ -558,12 +558,12 @@ const CTASection = ({ onBeginJourney }) => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(184,166,126,0.15),transparent_70%)]" />
       
       <RevealSection className="relative z-10 text-center px-8 max-w-4xl mx-auto">
-        <Logo className="h-28 mx-auto mb-14" />
-        <h2 className="font-heading text-5xl lg:text-6xl text-deep-charcoal mb-8 italic">Ready for your <span className="text-accent-gold">reset</span>?</h2>
-        <p className="font-body text-charcoal text-lg mb-14 max-w-2xl mx-auto leading-relaxed">
+        <Logo className="h-36 md:h-48 mx-auto mb-14" />
+        <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-8 italic">Ready for your <span className="text-accent-gold">reset</span>?</h2>
+        <p className="font-body text-charcoal text-xl md:text-2xl mb-14 max-w-2xl mx-auto leading-relaxed">
           If this resonates with you, if you feel quietly ready, take a moment and tell us who you are.
         </p>
-        <button onClick={onBeginJourney} className="btn-luxe text-sm px-12 py-5" data-testid="cta-button">
+        <button onClick={onBeginJourney} className="btn-luxe text-sm px-14 py-6" data-testid="cta-button">
           Begin Your Journey
         </button>
       </RevealSection>
