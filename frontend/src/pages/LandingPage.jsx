@@ -81,7 +81,7 @@ const VideoHero = () => {
       >
         <source src="https://cdn.coverr.co/videos/coverr-fog-rolling-over-forested-mountains-1584/1080p.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/20 to-warm-cream" />
+      <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/90" />
       <FloatingParticles />
     </div>
   );
