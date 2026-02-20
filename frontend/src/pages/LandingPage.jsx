@@ -481,7 +481,7 @@ const HeroSection = ({ onBeginJourney }) => {
           transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <FloatingElement duration={8}>
-            <Logo className="h-56 md:h-72 lg:h-96 w-auto mx-auto mb-10" variant="light" />
+            <Logo className="h-56 md:h-72 lg:h-96 w-auto mx-auto mb-10" variant="dark" />
           </FloatingElement>
         </motion.div>
         
