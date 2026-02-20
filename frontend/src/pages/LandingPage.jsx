@@ -250,13 +250,24 @@ const Navigation = ({ onBeginJourney }) => {
   );
 };
 
-// Hero Section - Clean, Minimal
+// Hero Section - With calm video background
 const HeroSection = ({ onBeginJourney }) => {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-soft-beige to-pearl relative" data-testid="hero-section">
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(201,184,150,0.15),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(201,184,150,0.1),transparent_50%)]" />
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
+      {/* Calm video background */}
+      <div className="absolute inset-0">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+          className="absolute w-full h-full object-cover"
+          poster="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1920&q=80"
+        >
+          <source src="https://cdn.coverr.co/videos/coverr-calm-lake-in-the-mountains-6391/1080p.mp4" type="video/mp4" />
+        </video>
+        {/* Elegant overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-pearl/85 via-pearl/75 to-pearl/95" />
       </div>
       
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-20">
