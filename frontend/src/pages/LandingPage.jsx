@@ -512,8 +512,8 @@ const FAQSection = () => {
     <section className="py-40 lg:py-52 bg-soft-cream">
       <div className="max-w-4xl mx-auto px-8 lg:px-16">
         <RevealSection className="text-center mb-20">
-          <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">Questions</p>
-          <h2 className="font-heading text-5xl text-deep-charcoal italic">Frequently Asked</h2>
+          <p className="font-body text-sm md:text-base tracking-[0.4em] text-accent-gold uppercase mb-8">Questions</p>
+          <h2 className="font-heading text-5xl md:text-6xl text-deep-charcoal italic">Frequently Asked</h2>
           <div className="w-20 h-[1px] bg-accent-gold mx-auto mt-10" />
         </RevealSection>
 
@@ -526,8 +526,8 @@ const FAQSection = () => {
                   className="w-full px-8 py-6 flex items-center justify-between text-left"
                   data-testid={`faq-${idx}`}
                 >
-                  <span className="font-heading text-xl text-deep-charcoal pr-4">{faq.q}</span>
-                  {openIndex === idx ? <Minus className="w-5 h-5 text-accent-gold flex-shrink-0" /> : <Plus className="w-5 h-5 text-accent-gold flex-shrink-0" />}
+                  <span className="font-heading text-xl md:text-2xl text-deep-charcoal pr-4">{faq.q}</span>
+                  {openIndex === idx ? <Minus className="w-6 h-6 text-accent-gold flex-shrink-0" /> : <Plus className="w-6 h-6 text-accent-gold flex-shrink-0" />}
                 </button>
                 <AnimatePresence>
                   {openIndex === idx && (
@@ -538,7 +538,7 @@ const FAQSection = () => {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="px-8 pb-8 font-body text-charcoal leading-relaxed">{faq.a}</p>
+                      <p className="px-8 pb-8 font-body text-charcoal text-lg md:text-xl leading-relaxed">{faq.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
