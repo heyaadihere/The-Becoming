@@ -410,14 +410,14 @@ const AboutSection = () => {
   );
 };
 
-// Experience Section - More spacious
+// Experience Section - More spacious with animations
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Nature & Stillness", desc: "Reconnect with the natural world and find peace in silence" },
-    { title: "Mindful Movement", desc: "Listen to your body and move with intention" },
-    { title: "Reflection & Creativity", desc: "Express what words cannot capture" },
-    { title: "Writing & Music", desc: "Explore the landscapes of your inner world" },
-    { title: "Storytelling & Connection", desc: "Share and listen to honest human stories" }
+    { title: "Nature & Stillness", desc: "Reconnect with the natural world and find peace in silence", icon: "🌿" },
+    { title: "Mindful Movement", desc: "Listen to your body and move with intention", icon: "🧘" },
+    { title: "Reflection & Creativity", desc: "Express what words cannot capture", icon: "✨" },
+    { title: "Writing & Music", desc: "Explore the landscapes of your inner world", icon: "🎵" },
+    { title: "Storytelling & Connection", desc: "Share and listen to honest human stories", icon: "💫" }
   ];
 
   return (
@@ -435,11 +435,24 @@ const ExperienceSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {experiences.map((exp, index) => (
             <RevealSection key={index} delay={index * 0.1}>
-              <div className="p-10 bg-cream border border-sand hover:border-accent-gold transition-all duration-500 group h-full">
-                <span className="font-body text-sm text-accent-gold tracking-widest">0{index + 1}</span>
-                <h3 className="font-heading text-2xl md:text-3xl text-deep-charcoal mt-6 mb-4 italic group-hover:text-accent-gold transition-colors">{exp.title}</h3>
-                <p className="font-body text-charcoal text-lg md:text-xl leading-relaxed">{exp.desc}</p>
-              </div>
+              <motion.div 
+                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+                transition={{ duration: 0.3 }}
+                className="p-10 bg-cream border border-sand hover:border-accent-gold transition-all duration-500 group h-full cursor-pointer relative overflow-hidden"
+              >
+                {/* Hover background effect */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="font-body text-sm text-accent-gold tracking-widest">0{index + 1}</span>
+                    <span className="text-2xl opacity-50 group-hover:opacity-100 transition-opacity">{exp.icon}</span>
+                  </div>
+                  <h3 className="font-heading text-2xl md:text-3xl text-deep-charcoal mb-4 italic group-hover:text-accent-gold transition-colors">{exp.title}</h3>
+                  <p className="font-body text-charcoal text-lg md:text-xl leading-relaxed">{exp.desc}</p>
+                </div>
+              </motion.div>
             </RevealSection>
           ))}
         </div>
