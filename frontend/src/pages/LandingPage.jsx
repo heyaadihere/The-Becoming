@@ -505,7 +505,7 @@ const ExperienceSection = () => {
   );
 };
 
-// Journey/Who Section - More spacious
+// Journey/Who Section - More spacious with animations
 const JourneySection = () => {
   const forYouIf = [
     "You're functioning well outside, but feel quietly tired inside",
@@ -519,17 +519,34 @@ const JourneySection = () => {
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
         <div className="grid lg:grid-cols-2 gap-24 items-center">
           <RevealSection>
-            <div className="relative aspect-[4/5] bg-sand">
-              <img 
+            <motion.div 
+              className="relative aspect-[4/5] bg-sand overflow-hidden"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <motion.img 
                 src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" 
                 alt="Mountains" 
                 className="w-full h-full object-cover"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.8 }}
               />
-            </div>
+              {/* Decorative elements */}
+              <div className="absolute top-4 left-4 w-20 h-20 border-t-2 border-l-2 border-accent-gold/50" />
+              <div className="absolute bottom-4 right-4 w-20 h-20 border-b-2 border-r-2 border-accent-gold/50" />
+            </motion.div>
           </RevealSection>
           
           <RevealSection delay={0.2}>
-            <p className="font-body text-sm md:text-base tracking-[0.4em] text-accent-gold uppercase mb-8">Is This For You?</p>
+            <motion.p 
+              initial={{ opacity: 0, letterSpacing: "0.2em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="font-body text-sm md:text-base text-accent-gold uppercase mb-8"
+            >
+              Is This For You?
+            </motion.p>
             <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-12 italic">
               Who is The Becoming For?
             </h2>
@@ -541,10 +558,20 @@ const JourneySection = () => {
             <div className="space-y-5">
               <p className="font-heading text-2xl text-deep-charcoal italic mb-6">It may be for you if...</p>
               {forYouIf.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-5 py-4 border-b border-sand">
-                  <span className="w-2 h-2 bg-accent-gold rounded-full mt-3 flex-shrink-0" />
-                  <p className="font-body text-charcoal text-lg md:text-xl">{item}</p>
-                </div>
+                <motion.div 
+                  key={idx} 
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.15 }}
+                  viewport={{ once: true }}
+                  className="flex items-start gap-5 py-4 border-b border-sand group hover:border-accent-gold transition-colors"
+                >
+                  <motion.span 
+                    className="w-2 h-2 bg-accent-gold rounded-full mt-3 flex-shrink-0"
+                    whileHover={{ scale: 1.5 }}
+                  />
+                  <p className="font-body text-charcoal text-lg md:text-xl group-hover:text-deep-charcoal transition-colors">{item}</p>
+                </motion.div>
               ))}
             </div>
           </RevealSection>
