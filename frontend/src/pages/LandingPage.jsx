@@ -250,16 +250,29 @@ const Navigation = ({ onBeginJourney }) => {
 
 // Hero Section - With peaceful video background
 const HeroSection = ({ onBeginJourney }) => {
+  const videoRef = useRef(null);
+  
+  useEffect(() => {
+    // Attempt to play video on mount
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Autoplay was prevented, video will show poster
+      });
+    }
+  }, []);
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
       {/* Peaceful ocean video background */}
       <div className="absolute inset-0">
         <video 
+          ref={videoRef}
           autoPlay 
           muted 
           loop 
           playsInline
           preload="auto"
+          poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80"
           className="absolute w-full h-full object-cover"
         >
           {/* Local peaceful ocean video */}
