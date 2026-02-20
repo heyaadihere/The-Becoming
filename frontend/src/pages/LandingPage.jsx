@@ -384,22 +384,22 @@ const HeroSection = ({ onBeginReset }) => {
         </motion.div>
         
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-          className="font-body text-sm tracking-[0.4em] text-white/70 uppercase mb-8">
+          className="font-body text-sm tracking-[0.4em] text-white/80 uppercase mb-8" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.8)' }}>
           A Curated Human Experience
         </motion.p>
         
         <motion.h1 initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 1 }}
-          className="font-heading text-6xl sm:text-7xl lg:text-8xl text-white mb-8 leading-[0.9]">
+          className="font-heading text-6xl sm:text-7xl lg:text-8xl text-white mb-8 leading-[0.9]" style={{ textShadow: '3px 3px 12px rgba(0,0,0,0.9)' }}>
           Do you need<br /><em className="text-terracotta">a reset?</em>
         </motion.h1>
         
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-          className="font-heading text-2xl sm:text-3xl text-white/80 mb-6 italic">
+          className="font-heading text-2xl sm:text-3xl text-white/90 mb-6 italic" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
           The Becoming is an invitation to become real again.
         </motion.p>
         
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
-          className="font-body text-lg text-white/60 max-w-2xl mx-auto mb-12">
+          className="font-body text-lg text-white/80 max-w-2xl mx-auto mb-12" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.7)' }}>
           For those functioning well on the outside, yet inside feeling paused, restless, or quietly lost. 
           A space to step away from the noise and reconnect with yourself.
         </motion.p>
@@ -532,13 +532,13 @@ const ExperienceSection = () => {
             <RevealSection key={index} delay={index * 0.1}>
               <motion.div whileHover={{ y: -10 }} className="group relative h-[420px] rounded-3xl overflow-hidden cursor-pointer shadow-xl">
                 <img src={exp.image} alt={exp.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/30" />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/80 to-charcoal/40" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 text-white border border-white/30">
+                  <div className="w-14 h-14 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center mb-4 text-white border border-white/40">
                     {exp.icon}
                   </div>
-                  <h3 className="font-heading text-2xl text-white mb-3 drop-shadow-lg">{exp.title}</h3>
-                  <p className="font-body text-white/90 drop-shadow-md">{exp.desc}</p>
+                  <h3 className="font-heading text-2xl text-white mb-3" style={{ textShadow: '2px 2px 6px rgba(0,0,0,0.9)' }}>{exp.title}</h3>
+                  <p className="font-body text-white" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.8)' }}>{exp.desc}</p>
                 </div>
               </motion.div>
             </RevealSection>
