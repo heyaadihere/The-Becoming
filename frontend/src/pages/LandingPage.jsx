@@ -278,37 +278,38 @@ const HeroSection = ({ onBeginJourney }) => {
           {/* Local peaceful ocean video */}
           <source src="/video.mp4" type="video/mp4" />
         </video>
-        {/* Elegant overlay for luxurious feel */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+        {/* Strong overlay layer for text readability */}
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50" />
       </div>
       
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-          <Logo className="h-32 md:h-44 w-auto mx-auto mb-10" variant="light" />
+          <Logo className="h-48 md:h-64 lg:h-80 w-auto mx-auto mb-12" variant="light" />
         </motion.div>
         
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-          className="font-body text-xs tracking-[0.5em] text-accent-gold uppercase mb-10">
+          className="font-body text-sm md:text-base tracking-[0.5em] text-accent-gold uppercase mb-10">
           A Curated Human Experience
         </motion.p>
         
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 1 }}
-          className="font-heading text-5xl sm:text-6xl lg:text-8xl text-white mb-10 leading-[1.1]">
+          className="font-heading text-6xl sm:text-7xl lg:text-9xl text-white mb-10 leading-[1.1]">
           Do you need<br /><em className="text-accent-gold">a reset?</em>
         </motion.h1>
         
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
-          className="font-body text-lg text-white/80 max-w-2xl mx-auto mb-14 leading-relaxed tracking-wide">
+          className="font-body text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-14 leading-relaxed tracking-wide">
           For those functioning well on the outside, yet inside feeling paused, restless, or quietly lost.
         </motion.p>
         
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <button onClick={onBeginJourney} className="btn-luxe text-sm px-10 py-4" data-testid="hero-cta">
+          <button onClick={onBeginJourney} className="btn-luxe text-sm px-12 py-5" data-testid="hero-cta">
             Begin Your Journey
           </button>
           <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="btn-outline border-white/40 text-white hover:bg-white/10 text-sm px-10 py-4">
+            className="bg-white/20 backdrop-blur-sm border border-white/40 text-white hover:bg-white/30 text-sm px-12 py-5 font-body tracking-[0.2em] uppercase transition-all">
             Learn More
           </button>
         </motion.div>
