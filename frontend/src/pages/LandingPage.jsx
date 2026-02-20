@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ChevronDown, ArrowRight, ArrowLeft, Check, Loader2, X, Plus, Minus } from 'lucide-react';
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
@@ -7,16 +7,75 @@ import { Toaster, toast } from 'sonner';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Logo component using the uploaded image
+// Logo component - uses white version on dark backgrounds, dark version on light backgrounds
 const Logo = ({ className = "h-16", variant = "dark" }) => (
   <img 
-    src="/images/logo.png" 
+    src={variant === 'light' ? '/images/logo-white.png' : '/images/logo-dark.png'}
     alt="The Becoming" 
-    className={`${className} object-contain ${variant === 'light' ? 'brightness-0 invert' : ''}`}
+    className={`${className} object-contain`}
   />
 );
 
-// Section reveal animation
+// Magnetic cursor effect hook
+const useMagnetic = () => {
+  const ref = useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const x = (e.clientX - centerX) * 0.2;
+    const y = (e.clientY - centerY) * 0.2;
+    setPosition({ x, y });
+  };
+
+  const handleMouseLeave = () => setPosition({ x: 0, y: 0 });
+
+  return { ref, position, handleMouseMove, handleMouseLeave };
+};
+
+// Parallax text effect
+const ParallaxText = ({ children, className = "" }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  
+  return (
+    <motion.div ref={ref} style={{ y }} className={className}>
+      {children}
+    </motion.div>
+  );
+};
+
+// Staggered letter animation
+const AnimatedText = ({ text, className = "", delay = 0 }) => {
+  const letters = text.split('');
+  
+  return (
+    <span className={className}>
+      {letters.map((letter, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 0.5, 
+            delay: delay + index * 0.03,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+          className="inline-block"
+          style={{ whiteSpace: letter === ' ' ? 'pre' : 'normal' }}
+        >
+          {letter === ' ' ? '\u00A0' : letter}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
+
+// Section reveal animation with enhanced effects
 const RevealSection = ({ children, className = "", delay = 0 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -24,15 +83,33 @@ const RevealSection = ({ children, className = "", delay = 0 }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 60 }}
+      initial={{ opacity: 0, y: 80 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 1.2, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={className}
     >
       {children}
     </motion.div>
   );
 };
+
+// Floating element animation
+const FloatingElement = ({ children, duration = 6, delay = 0 }) => (
+  <motion.div
+    animate={{ 
+      y: [0, -15, 0],
+      rotate: [-1, 1, -1]
+    }}
+    transition={{ 
+      duration, 
+      delay,
+      repeat: Infinity, 
+      ease: "easeInOut" 
+    }}
+  >
+    {children}
+  </motion.div>
+);
 
 // Questionnaire Modal
 const QuestionnaireModal = ({ isOpen, onClose }) => {
@@ -47,7 +124,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
   });
 
   const questions = [
-    { id: 'welcome', type: 'welcome', title: "Begin Your Journey", subtitle: "A few questions to understand where you are" },
+    { id: 'welcome', type: 'welcome', title: "Begin Your Transformation", subtitle: "A few questions to understand where you are" },
     { id: 'name', type: 'text', label: "What's your name?", hint: "First name is enough.", field: 'name', required: true },
     { id: 'energyDrain', type: 'single', label: "One thing that drains your energy lately?", field: 'energyDrain',
       options: ['Overthinking everything', 'Feeling stuck / unclear', 'Self-doubt creeping in', 'Too much noise, not enough clarity', 'Comparing myself to others', 'Running on autopilot'] },
@@ -116,45 +193,100 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
 
   return (
     <AnimatePresence>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm">
-        <button onClick={onClose} className="absolute top-8 right-8 p-3 text-white/60 hover:text-white transition-colors" data-testid="close-questionnaire">
+      <motion.div 
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md"
+      >
+        <motion.button 
+          onClick={onClose} 
+          className="absolute top-8 right-8 p-3 text-white/60 hover:text-white transition-colors" 
+          data-testid="close-questionnaire"
+          whileHover={{ scale: 1.1, rotate: 90 }}
+          whileTap={{ scale: 0.9 }}
+        >
           <X className="w-6 h-6" />
-        </button>
+        </motion.button>
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/10">
-          <motion.div className="h-full bg-gradient-to-r from-accent-gold to-accent-bronze" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
+          <motion.div className="h-full bg-gradient-to-r from-accent-gold via-accent-bronze to-accent-gold" initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ duration: 0.5 }} />
         </div>
         <div className="absolute top-8 left-8 text-xs text-white/40 font-body tracking-widest uppercase">{step + 1} / {totalSteps}</div>
 
         {isComplete ? (
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md text-center text-white">
-            <div className="w-20 h-20 border border-accent-gold flex items-center justify-center mx-auto mb-10">
-              <Check className="w-8 h-8 text-accent-gold" />
-            </div>
+            <motion.div 
+              className="w-24 h-24 border-2 border-accent-gold flex items-center justify-center mx-auto mb-10"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", duration: 0.8 }}
+            >
+              <Check className="w-10 h-10 text-accent-gold" />
+            </motion.div>
             <h2 className="font-heading text-4xl mb-4">Thank you, {answers.name}</h2>
             <p className="text-white/60 text-sm font-body leading-relaxed mb-10 tracking-wide">Your responses have been received. We will be in touch if The Becoming feels right for you.</p>
-            <button onClick={onClose} className="btn-outline border-white/30 text-white hover:bg-white/10">Return</button>
+            <motion.button 
+              onClick={onClose} 
+              className="btn-outline border-white/30 text-white hover:bg-white/10"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Return
+            </motion.button>
           </motion.div>
         ) : (
-          <motion.div key={step} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.4 }} className="w-full max-w-2xl text-white">
+          <motion.div key={step} initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.5, ease: "easeOut" }} className="w-full max-w-2xl text-white">
             {currentQuestion.type === 'welcome' && (
               <div className="text-center">
-                <Logo className="h-24 mx-auto mb-12" variant="light" />
-                <h2 className="font-heading text-4xl sm:text-5xl mb-4 italic">{currentQuestion.title}</h2>
-                <p className="text-white/50 text-sm font-body tracking-wide mb-12">{currentQuestion.subtitle}</p>
-                <button onClick={handleNext} className="btn-luxe">Begin <ArrowRight className="inline ml-3 w-4 h-4" /></button>
+                <FloatingElement>
+                  <Logo className="h-28 mx-auto mb-12" variant="light" />
+                </FloatingElement>
+                <motion.h2 
+                  className="font-heading text-4xl sm:text-5xl mb-4 italic"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  {currentQuestion.title}
+                </motion.h2>
+                <motion.p 
+                  className="text-white/50 text-sm font-body tracking-wide mb-12"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  {currentQuestion.subtitle}
+                </motion.p>
+                <motion.button 
+                  onClick={handleNext} 
+                  className="btn-luxe"
+                  whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(184, 166, 126, 0.4)" }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Begin <ArrowRight className="inline ml-3 w-4 h-4" />
+                </motion.button>
               </div>
             )}
             {currentQuestion.type === 'text' && (
               <div className="space-y-8">
                 <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <input type="text" value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" autoFocus />
+                <motion.input 
+                  type="text" 
+                  value={answers[currentQuestion.field] || ''} 
+                  onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} 
+                  placeholder={currentQuestion.placeholder || ''} 
+                  className="w-full bg-transparent border-b-2 border-white/20 px-0 py-4 text-xl text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-all font-body" 
+                  autoFocus
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.5 }}
+                />
               </div>
             )}
             {currentQuestion.type === 'textarea' && (
               <div className="space-y-8">
                 <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <textarea value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-transparent border border-white/20 px-4 py-4 text-base text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body min-h-[140px] resize-none" autoFocus />
+                <textarea value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-transparent border-2 border-white/20 px-4 py-4 text-lg text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body min-h-[140px] resize-none" autoFocus />
               </div>
             )}
             {currentQuestion.type === 'single' && (
@@ -162,9 +294,15 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                 <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
                 <div className="space-y-2 max-h-[45vh] overflow-y-auto pr-2">
                   {currentQuestion.options.map((option, idx) => (
-                    <motion.div key={option} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.04 }}
+                    <motion.div 
+                      key={option} 
+                      initial={{ opacity: 0, x: 30 }} 
+                      animate={{ opacity: 1, x: 0 }} 
+                      transition={{ delay: idx * 0.05 }}
                       onClick={() => handleSelectSingle(option)}
-                      className={`p-4 border cursor-pointer transition-all font-body text-sm tracking-wide ${answers[currentQuestion.field] === option ? 'bg-accent-gold/20 border-accent-gold text-white' : 'border-white/10 text-white/70 hover:border-white/30 hover:text-white'}`}>
+                      whileHover={{ x: 10, backgroundColor: "rgba(184, 166, 126, 0.1)" }}
+                      className={`p-4 border-2 cursor-pointer transition-all font-body text-sm tracking-wide ${answers[currentQuestion.field] === option ? 'bg-accent-gold/20 border-accent-gold text-white' : 'border-white/10 text-white/70 hover:border-white/30 hover:text-white'}`}
+                    >
                       {option}
                     </motion.div>
                   ))}
@@ -178,9 +316,16 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                   {currentQuestion.options.map((option, idx) => {
                     const isSelected = (answers[currentQuestion.field] || []).includes(option);
                     return (
-                      <motion.div key={option} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: idx * 0.03 }}
+                      <motion.div 
+                        key={option} 
+                        initial={{ opacity: 0, scale: 0.95 }} 
+                        animate={{ opacity: 1, scale: 1 }} 
+                        transition={{ delay: idx * 0.04 }}
                         onClick={() => handleSelectMulti(option)}
-                        className={`p-4 border cursor-pointer transition-all font-body text-sm ${isSelected ? 'bg-accent-gold/20 border-accent-gold text-white' : 'border-white/10 text-white/60 hover:border-white/30'}`}>
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className={`p-4 border-2 cursor-pointer transition-all font-body text-sm ${isSelected ? 'bg-accent-gold/20 border-accent-gold text-white' : 'border-white/10 text-white/60 hover:border-white/30'}`}
+                      >
                         {option}
                       </motion.div>
                     );
@@ -192,22 +337,41 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
               <div className="space-y-8">
                 <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
                 <div className="space-y-4">
-                  <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com" className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
-                  <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone (optional)" className="w-full bg-transparent border-b border-white/20 px-0 py-4 text-lg text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
+                  <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com" className="w-full bg-transparent border-b-2 border-white/20 px-0 py-4 text-xl text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
+                  <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone (optional)" className="w-full bg-transparent border-b-2 border-white/20 px-0 py-4 text-xl text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
                 </div>
               </div>
             )}
             {currentQuestion.type !== 'welcome' && (
               <div className="flex justify-between items-center mt-12">
-                <button onClick={handleBack} disabled={step === 0} className="text-white/40 hover:text-white disabled:opacity-20 transition-all flex items-center gap-2 text-sm font-body tracking-wider uppercase">
+                <motion.button 
+                  onClick={handleBack} 
+                  disabled={step === 0} 
+                  className="text-white/40 hover:text-white disabled:opacity-20 transition-all flex items-center gap-2 text-sm font-body tracking-wider uppercase"
+                  whileHover={{ x: -5 }}
+                >
                   <ArrowLeft className="w-4 h-4" /> Back
-                </button>
+                </motion.button>
                 {step === totalSteps - 1 ? (
-                  <button onClick={handleSubmit} disabled={!canProceed() || isSubmitting} className="btn-luxe flex items-center gap-2">
+                  <motion.button 
+                    onClick={handleSubmit} 
+                    disabled={!canProceed() || isSubmitting} 
+                    className="btn-luxe flex items-center gap-2"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Submitting</> : <>Complete <Check className="w-4 h-4" /></>}
-                  </button>
+                  </motion.button>
                 ) : (
-                  <button onClick={handleNext} disabled={!canProceed()} className="btn-luxe flex items-center gap-2 disabled:opacity-50">Continue <ArrowRight className="w-4 h-4" /></button>
+                  <motion.button 
+                    onClick={handleNext} 
+                    disabled={!canProceed()} 
+                    className="btn-luxe flex items-center gap-2 disabled:opacity-50"
+                    whileHover={{ scale: 1.05, x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Continue <ArrowRight className="w-4 h-4" />
+                  </motion.button>
                 )}
               </div>
             )}
@@ -221,6 +385,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
 // Navigation
 const Navigation = ({ onBeginJourney }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
@@ -228,54 +393,73 @@ const Navigation = ({ onBeginJourney }) => {
   }, []);
 
   return (
-    <motion.header initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-sm shadow-sm py-4' : 'bg-transparent py-6'}`}>
+    <motion.header 
+      initial={{ y: -100, opacity: 0 }} 
+      animate={{ y: 0, opacity: 1 }} 
+      transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-700 ${isScrolled ? 'bg-cream/95 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'}`}
+    >
       <div className="max-w-7xl mx-auto px-8 lg:px-16 flex items-center justify-between">
-        <Logo className={`${isScrolled ? 'h-16' : 'h-20'} transition-all duration-300 ${isScrolled ? '' : 'brightness-0 invert'}`} />
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Logo className={`${isScrolled ? 'h-14' : 'h-20'} transition-all duration-500`} variant={isScrolled ? 'dark' : 'light'} />
+        </motion.div>
         <nav className="hidden md:flex items-center gap-12">
           {['About', 'Experience', 'Journey'].map((item, idx) => (
             <motion.button 
               key={item} 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * idx }}
+              transition={{ delay: 0.2 + idx * 0.1 }}
               onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-              className={`text-sm font-body tracking-[0.2em] uppercase transition-colors relative group ${isScrolled ? 'text-deep-charcoal hover:text-accent-gold' : 'text-white/90 hover:text-white'}`}>
+              className={`text-sm font-body tracking-[0.2em] uppercase transition-all relative group ${isScrolled ? 'text-deep-charcoal hover:text-accent-gold' : 'text-white/90 hover:text-white'}`}
+              whileHover={{ y: -2 }}
+            >
               {item}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent-gold transition-all duration-300 group-hover:w-full" />
+              <motion.span 
+                className="absolute -bottom-1 left-0 h-[1px] bg-accent-gold"
+                initial={{ width: 0 }}
+                whileHover={{ width: "100%" }}
+                transition={{ duration: 0.3 }}
+              />
             </motion.button>
           ))}
         </nav>
         <motion.button 
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(184, 166, 126, 0.4)" }}
           whileTap={{ scale: 0.95 }}
           onClick={onBeginJourney} 
           className="btn-luxe text-xs" 
-          data-testid="nav-cta">
-          Begin
+          data-testid="nav-cta"
+        >
+          Enter The Becoming
         </motion.button>
       </div>
     </motion.header>
   );
 };
 
-// Hero Section - With peaceful video background
+// Hero Section - Powerful and immersive
 const HeroSection = ({ onBeginJourney }) => {
   const videoRef = useRef(null);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
   
   useEffect(() => {
-    // Attempt to play video on mount
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Autoplay was prevented, video will show poster
-      });
+      videoRef.current.play().catch(() => {});
     }
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
-      {/* Peaceful ocean video background */}
-      <div className="absolute inset-0">
+    <section ref={containerRef} className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
+      {/* Video background with parallax */}
+      <motion.div className="absolute inset-0" style={{ scale }}>
         <video 
           ref={videoRef}
           autoPlay 
@@ -286,130 +470,183 @@ const HeroSection = ({ onBeginJourney }) => {
           poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80"
           className="absolute w-full h-full object-cover"
         >
-          {/* Local peaceful ocean video */}
           <source src="/video.mp4" type="video/mp4" />
         </video>
-        {/* Strong overlay layer for text readability */}
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50" />
-      </div>
+        {/* Cinematic overlay layers */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
+        {/* Animated grain texture */}
+        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+      </motion.div>
       
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-          <Logo className="h-48 md:h-64 lg:h-80 w-auto mx-auto mb-12" variant="light" />
+      <motion.div style={{ opacity, y }} className="relative z-10 text-center px-6 max-w-6xl mx-auto pt-24">
+        {/* Decorative lines */}
+        <motion.div 
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-20 bg-gradient-to-b from-transparent via-accent-gold to-transparent"
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 1.5, delay: 0.5 }}
+        />
+        
+        {/* Logo with elegant entrance */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <FloatingElement duration={8}>
+            <Logo className="h-56 md:h-72 lg:h-96 w-auto mx-auto mb-10" variant="light" />
+          </FloatingElement>
         </motion.div>
         
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-          className="font-body text-sm md:text-base tracking-[0.5em] text-accent-gold uppercase mb-10">
+        {/* Tagline */}
+        <motion.p 
+          initial={{ opacity: 0, letterSpacing: "0.2em" }} 
+          animate={{ opacity: 1, letterSpacing: "0.5em" }} 
+          transition={{ delay: 0.6, duration: 1 }}
+          className="font-body text-xs md:text-sm tracking-[0.5em] text-accent-gold uppercase mb-8"
+        >
           A Curated Human Experience
         </motion.p>
         
-        <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 1 }}
-          className="font-heading text-6xl sm:text-7xl lg:text-9xl text-white mb-10 leading-[1.1]">
-          Do you need<br /><em className="text-accent-gold">a reset?</em>
+        {/* Main headline - Powerful and emotive */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 40 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ delay: 0.8, duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="font-heading text-5xl sm:text-6xl lg:text-8xl xl:text-9xl text-white mb-8 leading-[1.05]"
+        >
+          You've been waiting<br />
+          <motion.em 
+            className="text-accent-gold"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.4, duration: 0.8 }}
+          >
+            for this
+          </motion.em>
         </motion.h1>
         
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
-          className="font-body text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-14 leading-relaxed tracking-wide">
-          For those functioning well on the outside, yet inside feeling paused, restless, or quietly lost.
+        {/* Subheadline - Emotionally engaging */}
+        <motion.p 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 1.2, duration: 1 }}
+          className="font-body text-lg md:text-xl lg:text-2xl text-white/85 max-w-3xl mx-auto mb-12 leading-relaxed tracking-wide"
+        >
+          For those who have everything in place, yet feel a quiet stirring within.
+          <br className="hidden md:block" />
+          <span className="text-white/70">A sacred pause. A return to yourself.</span>
         </motion.p>
         
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24">
+        {/* CTA Buttons */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20"
+        >
           <motion.button 
-            whileHover={{ scale: 1.05, boxShadow: "0 15px 40px rgba(184, 166, 126, 0.4)" }}
+            whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(184, 166, 126, 0.5)" }}
             whileTap={{ scale: 0.95 }}
             onClick={onBeginJourney} 
-            className="btn-luxe text-sm px-12 py-5" 
-            data-testid="hero-cta">
-            Begin Your Journey
+            className="btn-luxe text-sm px-14 py-5" 
+            data-testid="hero-cta"
+          >
+            Enter The Becoming
           </motion.button>
           <motion.button 
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.3)" }}
+            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.25)" }}
             whileTap={{ scale: 0.95 }}
             onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-white/20 backdrop-blur-sm border border-white/40 text-white hover:bg-white/30 text-sm px-12 py-5 font-body tracking-[0.2em] uppercase transition-all">
-            Learn More
+            className="bg-white/15 backdrop-blur-sm border border-white/30 text-white hover:bg-white/25 text-sm px-14 py-5 font-body tracking-[0.2em] uppercase transition-all"
+          >
+            Discover More
           </motion.button>
         </motion.div>
         
-        {/* Scroll indicator - positioned at bottom */}
+        {/* Scroll indicator - Properly positioned */}
         <motion.div 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
-          transition={{ delay: 1.8 }}
-          className="flex flex-col items-center gap-2"
+          transition={{ delay: 2.2 }}
+          className="flex flex-col items-center gap-3"
         >
-          <span className="font-body text-xs text-white/60 tracking-widest uppercase">Scroll</span>
+          <span className="font-body text-[10px] text-white/50 tracking-[0.3em] uppercase">Scroll to explore</span>
           <motion.div 
-            animate={{ y: [0, 10, 0] }} 
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-6 h-10 border border-white/40 rounded-full flex justify-center pt-2"
-          >
-            <motion.div 
-              animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }} 
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-              className="w-1 h-2 bg-accent-gold rounded-full"
-            />
-          </motion.div>
+            animate={{ y: [0, 8, 0] }} 
+            transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+            className="w-[1px] h-12 bg-gradient-to-b from-accent-gold/80 to-transparent"
+          />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };
 
-// About Section - More spacious with parallax
+// About Section - Refined with parallax
 const AboutSection = () => {
+  const sectionRef = useRef(null);
   const imageRef = useRef(null);
   const isImageInView = useInView(imageRef, { once: false, margin: "-100px" });
 
   return (
-    <section id="about" className="py-40 lg:py-52 bg-cream">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <RevealSection className="text-center mb-24">
+    <section id="about" className="py-32 lg:py-48 bg-cream relative overflow-hidden" ref={sectionRef}>
+      {/* Decorative elements */}
+      <motion.div 
+        className="absolute top-20 right-20 w-72 h-72 rounded-full bg-accent-gold/5 blur-3xl"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 10, repeat: Infinity }}
+      />
+      
+      <div className="max-w-7xl mx-auto px-8 lg:px-16 relative z-10">
+        <RevealSection className="text-center mb-20">
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: 60 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            className="h-[1px] bg-accent-gold mx-auto mb-8"
+          />
           <motion.p 
             initial={{ opacity: 0, letterSpacing: "0.2em" }}
             whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="font-body text-sm md:text-base text-accent-gold uppercase mb-8"
+            className="font-body text-xs md:text-sm text-accent-gold uppercase mb-6 tracking-[0.4em]"
           >
             The Essence
           </motion.p>
-          <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-8 italic">
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl text-deep-charcoal italic leading-tight">
             What is The Becoming?
           </h2>
-          <motion.div 
-            initial={{ width: 0 }}
-            whileInView={{ width: 80 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="h-[1px] bg-accent-gold mx-auto" 
-          />
         </RevealSection>
 
-        <div className="grid lg:grid-cols-2 gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <RevealSection delay={0.2}>
-            <div className="space-y-8 text-charcoal text-xl md:text-2xl leading-relaxed font-body">
-              <p>
-                The Becoming is a curated human experience for people who are doing what life expects of them, yet feel there must be more meaning, more depth, more truth to who they are.
+            <div className="space-y-8 text-charcoal">
+              <p className="text-xl md:text-2xl leading-relaxed font-body">
+                The Becoming is a <span className="text-accent-gold font-medium">curated human experience</span> for those who have outgrown their current chapter — not broken, not lost, just quietly ready for more.
               </p>
-              <div className="py-10 border-t border-b border-sand space-y-4">
+              
+              <div className="py-10 border-y border-sand/60 space-y-4">
                 {["retreat", "workshop", "lecture"].map((word, idx) => (
                   <motion.p 
                     key={word}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.2 }}
+                    transition={{ delay: 0.1 + idx * 0.15 }}
                     viewport={{ once: true }}
-                    className="font-heading text-2xl md:text-3xl text-deep-charcoal"
+                    className="font-heading text-2xl md:text-3xl text-deep-charcoal flex items-center gap-4"
                   >
-                    It is <span className="text-accent-gold">not</span> a {word}.
+                    <span className="w-2 h-2 bg-accent-gold/50 rounded-full" />
+                    It is <span className="text-accent-gold mx-2">not</span> a {word}.
                   </motion.p>
                 ))}
               </div>
-              <p>
-                No one can teach you how to live. Nobody is here to fix you. Instead, The Becoming creates a safe, intentional space where you step away from routines, screens and constant performance, and turn inward.
+              
+              <p className="text-lg md:text-xl leading-relaxed font-body text-charcoal/80">
+                No one will teach you how to live. No one is here to fix you. We simply create space for you to remember who you are — beyond roles, beyond expectations, beyond the noise.
               </p>
             </div>
           </RevealSection>
@@ -417,85 +654,115 @@ const AboutSection = () => {
           <RevealSection delay={0.4}>
             <motion.div 
               ref={imageRef}
-              className="relative aspect-[4/5] bg-sand overflow-hidden"
+              className="relative aspect-[4/5] overflow-hidden group"
               whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6 }}
             >
               <motion.img 
                 src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&q=80" 
                 alt="Meditation" 
                 className="w-full h-full object-cover"
                 style={{
-                  scale: isImageInView ? 1 : 1.1,
-                  transition: "scale 1.5s ease-out"
+                  scale: isImageInView ? 1 : 1.15,
+                  transition: "scale 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/30 to-transparent" />
-              {/* Decorative corner */}
-              <div className="absolute top-4 right-4 w-20 h-20 border-t-2 border-r-2 border-accent-gold/50" />
-              <div className="absolute bottom-4 left-4 w-20 h-20 border-b-2 border-l-2 border-accent-gold/50" />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/40 via-transparent to-transparent" />
+              
+              {/* Decorative frame */}
+              <div className="absolute top-6 right-6 w-24 h-24 border-t-2 border-r-2 border-accent-gold/40 transition-all duration-500 group-hover:w-28 group-hover:h-28" />
+              <div className="absolute bottom-6 left-6 w-24 h-24 border-b-2 border-l-2 border-accent-gold/40 transition-all duration-500 group-hover:w-28 group-hover:h-28" />
             </motion.div>
           </RevealSection>
         </div>
 
-        <RevealSection delay={0.3} className="mt-32 text-center max-w-4xl mx-auto">
-          <motion.p 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
+        <RevealSection delay={0.3} className="mt-28 text-center max-w-4xl mx-auto">
+          <motion.div
+            className="relative"
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="font-heading text-3xl md:text-4xl lg:text-5xl text-deep-charcoal italic leading-relaxed"
           >
-            "No promises. No fixing. No preaching. No selling. <span className="text-accent-gold">Only experiences.</span>"
-          </motion.p>
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-6xl text-accent-gold/20 font-heading">"</div>
+            <p className="font-heading text-2xl md:text-3xl lg:text-4xl text-deep-charcoal italic leading-relaxed pt-8">
+              No promises. No fixing. No preaching. No selling.
+              <br />
+              <span className="text-accent-gold">Only experiences that remind you of what's real.</span>
+            </p>
+          </motion.div>
         </RevealSection>
       </div>
     </section>
   );
 };
 
-// Experience Section - More spacious with animations
+// Experience Section - Enhanced with animations
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Nature & Stillness", desc: "Reconnect with the natural world and find peace in silence", icon: "🌿" },
-    { title: "Mindful Movement", desc: "Listen to your body and move with intention", icon: "🧘" },
-    { title: "Reflection & Creativity", desc: "Express what words cannot capture", icon: "✨" },
-    { title: "Writing & Music", desc: "Explore the landscapes of your inner world", icon: "🎵" },
-    { title: "Storytelling & Connection", desc: "Share and listen to honest human stories", icon: "💫" }
+    { title: "Nature & Stillness", desc: "Step away from screens. Reconnect with earth, sky, and the rhythm of your breath.", num: "01" },
+    { title: "Mindful Movement", desc: "Your body holds wisdom. Learn to listen, move, and release what no longer serves you.", num: "02" },
+    { title: "Creative Expression", desc: "Paint, write, sculpt — express what words cannot capture.", num: "03" },
+    { title: "Music & Poetry", desc: "Let art move through you. Create or simply receive.", num: "04" },
+    { title: "Deep Conversations", desc: "Share and witness honest human stories in a circle of presence.", num: "05" }
   ];
 
   return (
-    <section id="experience" className="py-40 lg:py-52 bg-soft-cream">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <RevealSection className="text-center mb-24">
-          <p className="font-body text-sm md:text-base tracking-[0.4em] text-accent-gold uppercase mb-8">The Journey</p>
-          <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-6 italic">What You Will Experience</h2>
-          <p className="font-body text-charcoal text-xl md:text-2xl max-w-xl mx-auto mt-8">
-            At The Becoming, you are invited to experience life beyond autopilot.
+    <section id="experience" className="py-32 lg:py-48 bg-soft-cream relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div 
+          className="absolute top-1/4 left-10 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl"
+          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-8 lg:px-16 relative z-10">
+        <RevealSection className="text-center mb-20">
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: 60 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            className="h-[1px] bg-accent-gold mx-auto mb-8"
+          />
+          <p className="font-body text-xs md:text-sm tracking-[0.4em] text-accent-gold uppercase mb-6">The Journey</p>
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl text-deep-charcoal italic leading-tight mb-8">
+            What You Will Experience
+          </h2>
+          <p className="font-body text-charcoal text-lg md:text-xl max-w-2xl mx-auto">
+            At The Becoming, you are invited to experience life beyond autopilot — to feel, create, and simply be.
           </p>
-          <div className="w-20 h-[1px] bg-accent-gold mx-auto mt-10" />
         </RevealSection>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {experiences.map((exp, index) => (
             <RevealSection key={index} delay={index * 0.1}>
               <motion.div 
-                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-                transition={{ duration: 0.3 }}
-                className="p-10 bg-cream border border-sand hover:border-accent-gold transition-all duration-500 group h-full cursor-pointer relative overflow-hidden"
+                whileHover={{ y: -12, boxShadow: "0 25px 50px rgba(0,0,0,0.08)" }}
+                transition={{ duration: 0.4 }}
+                className="p-10 bg-cream border border-sand/50 hover:border-accent-gold/50 transition-all duration-500 group h-full cursor-pointer relative overflow-hidden"
               >
-                {/* Hover background effect */}
+                {/* Hover gradient */}
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 via-transparent to-accent-bronze/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                 />
+                
                 <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="font-body text-sm text-accent-gold tracking-widest">0{index + 1}</span>
-                    <span className="text-2xl opacity-50 group-hover:opacity-100 transition-opacity">{exp.icon}</span>
-                  </div>
-                  <h3 className="font-heading text-2xl md:text-3xl text-deep-charcoal mb-4 italic group-hover:text-accent-gold transition-colors">{exp.title}</h3>
-                  <p className="font-body text-charcoal text-lg md:text-xl leading-relaxed">{exp.desc}</p>
+                  <motion.span 
+                    className="font-body text-5xl font-light text-accent-gold/20 group-hover:text-accent-gold/40 transition-colors duration-500"
+                  >
+                    {exp.num}
+                  </motion.span>
+                  <h3 className="font-heading text-2xl md:text-3xl text-deep-charcoal mt-4 mb-4 italic group-hover:text-accent-gold transition-colors duration-300">
+                    {exp.title}
+                  </h3>
+                  <p className="font-body text-charcoal/80 text-base md:text-lg leading-relaxed">
+                    {exp.desc}
+                  </p>
                 </div>
+                
+                {/* Corner accent */}
+                <div className="absolute bottom-0 right-0 w-0 h-0 border-b-[40px] border-r-[40px] border-b-accent-gold/10 border-r-transparent group-hover:border-b-accent-gold/30 transition-colors duration-500" />
               </motion.div>
             </RevealSection>
           ))}
@@ -505,72 +772,79 @@ const ExperienceSection = () => {
   );
 };
 
-// Journey/Who Section - More spacious with animations
+// Journey/Who Section - More balanced alignment
 const JourneySection = () => {
   const forYouIf = [
-    "You're functioning well outside, but feel quietly tired inside",
-    "You've been chasing meaning, and suspect meaning has been chasing you",
-    "You feel there must be more depth and truth to who you are",
-    "You're ready to step away from the noise and reconnect"
+    "You're succeeding outwardly, but feel quietly exhausted inside",
+    "You sense there's a version of you waiting to emerge",
+    "You crave depth over distraction, presence over performance",
+    "You're ready to pause the world and listen inward"
   ];
 
   return (
-    <section id="journey" className="py-40 lg:py-52 bg-cream">
+    <section id="journey" className="py-32 lg:py-48 bg-cream relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <div className="grid lg:grid-cols-2 gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <RevealSection>
             <motion.div 
-              className="relative aspect-[4/5] bg-sand overflow-hidden"
+              className="relative aspect-[4/5] overflow-hidden group"
               whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6 }}
             >
               <motion.img 
                 src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" 
                 alt="Mountains" 
                 className="w-full h-full object-cover"
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.08 }}
                 transition={{ duration: 0.8 }}
               />
-              {/* Decorative elements */}
-              <div className="absolute top-4 left-4 w-20 h-20 border-t-2 border-l-2 border-accent-gold/50" />
-              <div className="absolute bottom-4 right-4 w-20 h-20 border-b-2 border-r-2 border-accent-gold/50" />
+              {/* Decorative frame */}
+              <div className="absolute top-6 left-6 w-24 h-24 border-t-2 border-l-2 border-accent-gold/40 transition-all duration-500 group-hover:w-28 group-hover:h-28" />
+              <div className="absolute bottom-6 right-6 w-24 h-24 border-b-2 border-r-2 border-accent-gold/40 transition-all duration-500 group-hover:w-28 group-hover:h-28" />
             </motion.div>
           </RevealSection>
           
           <RevealSection delay={0.2}>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: 60 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="h-[1px] bg-accent-gold mb-8"
+            />
             <motion.p 
               initial={{ opacity: 0, letterSpacing: "0.2em" }}
               whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
               transition={{ duration: 1 }}
               viewport={{ once: true }}
-              className="font-body text-sm md:text-base text-accent-gold uppercase mb-8"
+              className="font-body text-xs md:text-sm text-accent-gold uppercase mb-6 tracking-[0.4em]"
             >
               Is This For You?
             </motion.p>
-            <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-12 italic">
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-deep-charcoal mb-10 italic leading-tight">
               Who is The Becoming For?
             </h2>
             
-            <p className="font-body text-charcoal text-xl md:text-2xl mb-10 leading-relaxed">
-              Working professionals, creators, artists, homemakers — anyone between 21-65 who feels ready for something they can't fully name yet.
+            <p className="font-body text-charcoal text-lg md:text-xl mb-10 leading-relaxed">
+              Working professionals, creators, artists, seekers — anyone between 21-65 who feels ready for something they can't fully name yet.
             </p>
             
-            <div className="space-y-5">
-              <p className="font-heading text-2xl text-deep-charcoal italic mb-6">It may be for you if...</p>
+            <div className="space-y-4">
+              <p className="font-heading text-xl md:text-2xl text-deep-charcoal italic mb-6">This may be for you if...</p>
               {forYouIf.map((item, idx) => (
                 <motion.div 
                   key={idx} 
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.15 }}
+                  transition={{ delay: idx * 0.12 }}
                   viewport={{ once: true }}
-                  className="flex items-start gap-5 py-4 border-b border-sand group hover:border-accent-gold transition-colors"
+                  className="flex items-start gap-5 py-4 border-b border-sand/60 group hover:border-accent-gold/50 transition-colors duration-300"
                 >
                   <motion.span 
-                    className="w-2 h-2 bg-accent-gold rounded-full mt-3 flex-shrink-0"
+                    className="w-2 h-2 bg-accent-gold rounded-full mt-2.5 flex-shrink-0"
                     whileHover={{ scale: 1.5 }}
                   />
-                  <p className="font-body text-charcoal text-lg md:text-xl group-hover:text-deep-charcoal transition-colors">{item}</p>
+                  <p className="font-body text-charcoal/80 text-base md:text-lg group-hover:text-deep-charcoal transition-colors">{item}</p>
                 </motion.div>
               ))}
             </div>
@@ -581,67 +855,71 @@ const JourneySection = () => {
   );
 };
 
-// Circle/Community Section - More luxurious with animations
+// Circle/Community Section - More luxurious
 const CircleSection = () => {
   const items = [
-    { text: "Stay in constant touch with you even after the experience is over", icon: "🤝" },
-    { text: "Remind you of what matters, when life gets noisy again", icon: "💭" },
-    { text: "Offer a circle that continues long after the experience is done", icon: "⭕" }
+    { text: "Stay connected with you long after the experience ends", num: "01" },
+    { text: "Remind you of what matters when life gets loud again", num: "02" },
+    { text: "A circle of like-minded souls, growing together", num: "03" }
   ];
 
   return (
-    <section className="py-40 lg:py-52 bg-deep-charcoal text-white relative overflow-hidden">
-      {/* Animated background elements */}
+    <section className="py-32 lg:py-48 bg-deep-charcoal text-white relative overflow-hidden">
+      {/* Animated background orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div 
-          className="absolute top-20 left-10 w-64 h-64 bg-accent-gold/5 rounded-full blur-3xl"
-          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-20 left-10 w-80 h-80 bg-accent-gold/5 rounded-full blur-3xl"
+          animate={{ x: [0, 60, 0], y: [0, 40, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
           className="absolute bottom-20 right-10 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl"
-          animate={{ x: [0, -30, 0], y: [0, -50, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ x: [0, -40, 0], y: [0, -60, 0] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
       <div className="max-w-5xl mx-auto px-8 lg:px-16 text-center relative z-10">
         <RevealSection>
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: 60 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            className="h-[1px] bg-accent-gold mx-auto mb-8"
+          />
           <motion.p 
             initial={{ opacity: 0, letterSpacing: "0.2em" }}
             whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="font-body text-sm md:text-base text-accent-gold uppercase mb-8"
+            className="font-body text-xs md:text-sm text-accent-gold uppercase mb-6 tracking-[0.4em]"
           >
             Beyond The Experience
           </motion.p>
-          <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl mb-10 italic">
-            Not Just an Experience. <span className="text-accent-gold">A Circle.</span>
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl mb-8 italic leading-tight">
+            Not Just an Experience.
+            <br />
+            <span className="text-accent-gold">A Circle.</span>
           </h2>
-          <motion.div 
-            initial={{ width: 0 }}
-            whileInView={{ width: 64 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="h-[1px] bg-accent-gold mx-auto mb-12" 
-          />
-          <p className="font-body text-white/80 text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto">
-            Beyond the experience itself, The Becoming is the foundation of something larger — a community of like-minded individuals who value depth over speed, presence over performance, and humanity over hustle.
+          <p className="font-body text-white/70 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
+            Beyond the experience itself, The Becoming is the foundation of something larger — a community that values depth over speed, presence over performance, and humanity over hustle.
           </p>
         </RevealSection>
 
-        <RevealSection delay={0.3} className="mt-20 grid md:grid-cols-3 gap-10">
+        <RevealSection delay={0.3} className="mt-20 grid md:grid-cols-3 gap-8">
           {items.map((item, idx) => (
             <motion.div 
               key={idx} 
               whileHover={{ y: -10, borderColor: "rgba(184, 166, 126, 0.5)" }}
-              transition={{ duration: 0.3 }}
-              className="p-8 border border-white/10 transition-all cursor-pointer group"
+              transition={{ duration: 0.4 }}
+              className="p-10 border border-white/10 transition-all cursor-pointer group relative overflow-hidden"
             >
-              <span className="text-3xl mb-4 block opacity-50 group-hover:opacity-100 transition-opacity">{item.icon}</span>
-              <span className="font-body text-sm text-accent-gold tracking-widest">0{idx + 1}</span>
-              <p className="font-body text-white/80 text-lg md:text-xl mt-6 leading-relaxed group-hover:text-white transition-colors">{item.text}</p>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              />
+              <span className="font-body text-4xl font-light text-accent-gold/30 group-hover:text-accent-gold/50 transition-colors duration-500 block mb-4">{item.num}</span>
+              <p className="font-body text-white/75 text-base md:text-lg leading-relaxed group-hover:text-white transition-colors relative z-10">{item.text}</p>
             </motion.div>
           ))}
         </RevealSection>
@@ -650,7 +928,7 @@ const CircleSection = () => {
   );
 };
 
-// FAQ Section - More spacious
+// FAQ Section - Clean and balanced
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const faqs = [
@@ -662,25 +940,40 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-40 lg:py-52 bg-soft-cream">
+    <section className="py-32 lg:py-48 bg-soft-cream">
       <div className="max-w-4xl mx-auto px-8 lg:px-16">
-        <RevealSection className="text-center mb-20">
-          <p className="font-body text-sm md:text-base tracking-[0.4em] text-accent-gold uppercase mb-8">Questions</p>
-          <h2 className="font-heading text-5xl md:text-6xl text-deep-charcoal italic">Frequently Asked</h2>
-          <div className="w-20 h-[1px] bg-accent-gold mx-auto mt-10" />
+        <RevealSection className="text-center mb-16">
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: 60 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            className="h-[1px] bg-accent-gold mx-auto mb-8"
+          />
+          <p className="font-body text-xs md:text-sm tracking-[0.4em] text-accent-gold uppercase mb-6">Questions</p>
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-deep-charcoal italic">Frequently Asked</h2>
         </RevealSection>
 
-        <div className="space-y-5">
+        <div className="space-y-4">
           {faqs.map((faq, idx) => (
-            <RevealSection key={idx} delay={idx * 0.1}>
-              <div className="border border-sand bg-cream">
+            <RevealSection key={idx} delay={idx * 0.08}>
+              <motion.div 
+                className="border border-sand/60 bg-cream overflow-hidden"
+                whileHover={{ borderColor: "rgba(184, 166, 126, 0.5)" }}
+                transition={{ duration: 0.3 }}
+              >
                 <button
                   onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                  className="w-full px-8 py-6 flex items-center justify-between text-left"
+                  className="w-full px-8 py-6 flex items-center justify-between text-left group"
                   data-testid={`faq-${idx}`}
                 >
-                  <span className="font-heading text-xl md:text-2xl text-deep-charcoal pr-4">{faq.q}</span>
-                  {openIndex === idx ? <Minus className="w-6 h-6 text-accent-gold flex-shrink-0" /> : <Plus className="w-6 h-6 text-accent-gold flex-shrink-0" />}
+                  <span className="font-heading text-lg md:text-xl text-deep-charcoal pr-4 group-hover:text-accent-gold transition-colors">{faq.q}</span>
+                  <motion.div
+                    animate={{ rotate: openIndex === idx ? 45 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Plus className="w-5 h-5 text-accent-gold flex-shrink-0" />
+                  </motion.div>
                 </button>
                 <AnimatePresence>
                   {openIndex === idx && (
@@ -688,14 +981,14 @@ const FAQSection = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
                       className="overflow-hidden"
                     >
-                      <p className="px-8 pb-8 font-body text-charcoal text-lg md:text-xl leading-relaxed">{faq.a}</p>
+                      <p className="px-8 pb-8 font-body text-charcoal/80 text-base md:text-lg leading-relaxed">{faq.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             </RevealSection>
           ))}
         </div>
@@ -704,72 +997,94 @@ const FAQSection = () => {
   );
 };
 
-// CTA Section - More impactful with animations
+// CTA Section - Impactful
 const CTASection = ({ onBeginJourney }) => {
   return (
-    <section className="py-40 lg:py-52 bg-cream relative overflow-hidden">
-      {/* Animated background */}
+    <section className="py-32 lg:py-48 bg-cream relative overflow-hidden">
+      {/* Animated radial gradient */}
       <motion.div 
         className="absolute inset-0"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1.5 }}
         viewport={{ once: true }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(184,166,126,0.15),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,166,126,0.15),transparent_70%)]" />
         <motion.div 
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-gold/5 rounded-full blur-3xl"
+          animate={{ scale: [1, 1.3, 1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
       
       <RevealSection className="relative z-10 text-center px-8 max-w-4xl mx-auto">
+        <FloatingElement duration={10}>
+          <Logo className="h-40 md:h-56 mx-auto mb-12" />
+        </FloatingElement>
+        
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Logo className="h-36 md:h-48 mx-auto mb-14" />
-        </motion.div>
-        <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-8 italic">Ready for your <span className="text-accent-gold">reset</span>?</h2>
-        <p className="font-body text-charcoal text-xl md:text-2xl mb-14 max-w-2xl mx-auto leading-relaxed">
-          If this resonates with you, if you feel quietly ready, take a moment and tell us who you are.
+          initial={{ width: 0 }}
+          whileInView={{ width: 60 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+          className="h-[1px] bg-accent-gold mx-auto mb-8"
+        />
+        
+        <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl text-deep-charcoal mb-8 italic leading-tight">
+          Ready to begin your
+          <br />
+          <span className="text-accent-gold">transformation</span>?
+        </h2>
+        <p className="font-body text-charcoal/80 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+          If this resonates with you, if you feel that quiet pull — take a moment and tell us who you are.
         </p>
         <motion.button 
-          whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(184, 166, 126, 0.4)" }}
+          whileHover={{ scale: 1.05, boxShadow: "0 25px 60px rgba(184, 166, 126, 0.45)" }}
           whileTap={{ scale: 0.95 }}
           onClick={onBeginJourney} 
-          className="btn-luxe text-sm px-14 py-6" 
+          className="btn-luxe text-sm px-16 py-6" 
           data-testid="cta-button"
         >
-          Begin Your Journey
+          Enter The Becoming
         </motion.button>
       </RevealSection>
     </section>
   );
 };
 
-// Footer - More refined
+// Footer - Refined
 const Footer = () => (
   <footer className="py-20 bg-deep-charcoal text-white">
     <div className="max-w-7xl mx-auto px-8 lg:px-16">
       <div className="grid md:grid-cols-3 gap-16 mb-16">
         <div>
-          <Logo className="h-24 mb-8" variant="light" />
-          <p className="font-body text-white/60 text-lg leading-relaxed">A curated human experience for those ready to become real again.</p>
+          <Logo className="h-20 mb-8" variant="light" />
+          <p className="font-body text-white/60 text-base leading-relaxed">A curated human experience for those ready to become real again.</p>
         </div>
         <div>
-          <h4 className="font-body text-sm tracking-[0.3em] uppercase text-accent-gold mb-8">Navigate</h4>
+          <h4 className="font-body text-xs tracking-[0.3em] uppercase text-accent-gold mb-8">Navigate</h4>
           <div className="space-y-4">
             {['About', 'Experience', 'Journey'].map((item) => (
-              <button key={item} onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-                className="block font-body text-lg text-white/60 hover:text-accent-gold transition-colors">{item}</button>
+              <motion.button 
+                key={item} 
+                onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
+                className="block font-body text-base text-white/60 hover:text-accent-gold transition-colors"
+                whileHover={{ x: 5 }}
+              >
+                {item}
+              </motion.button>
             ))}
           </div>
         </div>
         <div>
-          <h4 className="font-body text-sm tracking-[0.3em] uppercase text-accent-gold mb-8">Connect</h4>
-          <a href="mailto:hello@thebecoming.in" className="font-body text-lg text-white/60 hover:text-accent-gold transition-colors">hello@thebecoming.in</a>
+          <h4 className="font-body text-xs tracking-[0.3em] uppercase text-accent-gold mb-8">Connect</h4>
+          <motion.a 
+            href="mailto:hello@thebecoming.in" 
+            className="font-body text-base text-white/60 hover:text-accent-gold transition-colors"
+            whileHover={{ x: 5 }}
+          >
+            hello@thebecoming.in
+          </motion.a>
         </div>
       </div>
       <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -785,6 +1100,14 @@ const Footer = () => (
 // Main App
 export default function LandingPage() {
   const [showQuestionnaire, setShowQuestionnaire] = useState(false);
+
+  // Smooth scroll behavior
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    return () => {
+      document.documentElement.style.scrollBehavior = 'auto';
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-cream" data-testid="landing-page">
