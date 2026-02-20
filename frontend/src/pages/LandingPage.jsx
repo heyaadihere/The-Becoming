@@ -542,10 +542,10 @@ const HeroSection = ({ onBeginJourney }) => {
             Enter The Becoming
           </motion.button>
           <motion.button 
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.25)" }}
+            whileHover={{ scale: 1.05, backgroundColor: "rgba(26,26,26,0.15)" }}
             whileTap={{ scale: 0.95 }}
             onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-white/15 backdrop-blur-sm border border-white/30 text-white hover:bg-white/25 text-sm px-14 py-5 font-body tracking-[0.2em] uppercase transition-all"
+            className="bg-deep-charcoal/10 backdrop-blur-sm border border-deep-charcoal/30 text-deep-charcoal hover:bg-deep-charcoal/15 text-sm px-14 py-5 font-body tracking-[0.2em] uppercase transition-all"
           >
             Discover More
           </motion.button>
@@ -558,11 +558,11 @@ const HeroSection = ({ onBeginJourney }) => {
           transition={{ delay: 2.2 }}
           className="flex flex-col items-center gap-3"
         >
-          <span className="font-body text-[10px] text-white/50 tracking-[0.3em] uppercase">Scroll to explore</span>
+          <span className="font-body text-[10px] text-deep-charcoal/50 tracking-[0.3em] uppercase">Scroll to explore</span>
           <motion.div 
             animate={{ y: [0, 8, 0] }} 
             transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-            className="w-[1px] h-12 bg-gradient-to-b from-accent-gold/80 to-transparent"
+            className="w-[1px] h-12 bg-gradient-to-b from-accent-bronze/80 to-transparent"
           />
         </motion.div>
       </motion.div>
