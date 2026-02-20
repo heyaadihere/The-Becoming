@@ -315,7 +315,7 @@ const HeroSection = ({ onBeginJourney }) => {
         </motion.p>
         
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24">
           <motion.button 
             whileHover={{ scale: 1.05, boxShadow: "0 15px 40px rgba(184, 166, 126, 0.4)" }}
             whileTap={{ scale: 0.95 }}
@@ -332,28 +332,28 @@ const HeroSection = ({ onBeginJourney }) => {
             Learn More
           </motion.button>
         </motion.div>
-      </div>
-      
-      {/* Scroll indicator - positioned below content */}
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
-        transition={{ delay: 1.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
-      >
-        <span className="font-body text-xs text-white/60 tracking-widest uppercase">Scroll</span>
+        
+        {/* Scroll indicator - positioned at bottom */}
         <motion.div 
-          animate={{ y: [0, 10, 0] }} 
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="w-6 h-10 border border-white/40 rounded-full flex justify-center pt-2"
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 1.8 }}
+          className="flex flex-col items-center gap-2"
         >
+          <span className="font-body text-xs text-white/60 tracking-widest uppercase">Scroll</span>
           <motion.div 
-            animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }} 
+            animate={{ y: [0, 10, 0] }} 
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-1 h-2 bg-accent-gold rounded-full"
-          />
+            className="w-6 h-10 border border-white/40 rounded-full flex justify-center pt-2"
+          >
+            <motion.div 
+              animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }} 
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              className="w-1 h-2 bg-accent-gold rounded-full"
+            />
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };
