@@ -8,8 +8,8 @@ module.exports = {
   theme: {
         extend: {
                 fontFamily: {
-                        'heading': ['Cormorant Garamond', 'serif'],
-                        'body': ['DM Sans', 'sans-serif'],
+                        'heading': ['Playfair Display', 'serif'],
+                        'body': ['Raleway', 'sans-serif'],
                 },
                 borderRadius: {
                         lg: 'var(--radius)',
@@ -17,14 +17,15 @@ module.exports = {
                         sm: 'calc(var(--radius) - 4px)'
                 },
                 colors: {
-                        'warm-cream': '#faf8f5',
-                        'soft-beige': '#f5f0e8',
-                        'warm-sand': '#e8dfd3',
-                        'terracotta': '#c4a484',
-                        'deep-sage': '#7a9484',
-                        'forest': '#5a7a6a',
-                        'charcoal': '#3a3a3a',
-                        'soft-brown': '#8b7355',
+                        'pearl': '#FEFEFA',
+                        'ivory': '#FFFFF0',
+                        'soft-beige': '#F5F1EB',
+                        'warm-sand': '#E8E0D5',
+                        'muted-gold': '#C9B896',
+                        'rich-gold': '#B8A67E',
+                        'deep-gold': '#9A8A6E',
+                        'charcoal': '#2C2C2C',
+                        'soft-charcoal': '#4A4A4A',
                         background: 'hsl(var(--background))',
                         foreground: 'hsl(var(--foreground))',
                         card: {
