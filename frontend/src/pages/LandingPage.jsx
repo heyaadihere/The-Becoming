@@ -439,21 +439,21 @@ const JourneySection = () => {
           </RevealSection>
           
           <RevealSection delay={0.2}>
-            <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">Is This For You?</p>
-            <h2 className="font-heading text-5xl lg:text-6xl text-deep-charcoal mb-12 italic">
+            <p className="font-body text-sm md:text-base tracking-[0.4em] text-accent-gold uppercase mb-8">Is This For You?</p>
+            <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-12 italic">
               Who is The Becoming For?
             </h2>
             
-            <p className="font-body text-charcoal text-lg mb-10 leading-relaxed">
+            <p className="font-body text-charcoal text-xl md:text-2xl mb-10 leading-relaxed">
               Working professionals, creators, artists, homemakers — anyone between 21-65 who feels ready for something they can't fully name yet.
             </p>
             
             <div className="space-y-5">
-              <p className="font-heading text-xl text-deep-charcoal italic mb-6">It may be for you if...</p>
+              <p className="font-heading text-2xl text-deep-charcoal italic mb-6">It may be for you if...</p>
               {forYouIf.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-5 py-4 border-b border-sand">
-                  <span className="w-2 h-2 bg-accent-gold rounded-full mt-2 flex-shrink-0" />
-                  <p className="font-body text-charcoal">{item}</p>
+                  <span className="w-2 h-2 bg-accent-gold rounded-full mt-3 flex-shrink-0" />
+                  <p className="font-body text-charcoal text-lg md:text-xl">{item}</p>
                 </div>
               ))}
             </div>
