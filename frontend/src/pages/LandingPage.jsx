@@ -331,8 +331,8 @@ const AboutSection = () => {
     <section id="about" className="py-40 lg:py-52 bg-cream">
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
         <RevealSection className="text-center mb-24">
-          <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">The Essence</p>
-          <h2 className="font-heading text-5xl lg:text-6xl text-deep-charcoal mb-8 italic">
+          <p className="font-body text-sm md:text-base tracking-[0.4em] text-accent-gold uppercase mb-8">The Essence</p>
+          <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-8 italic">
             What is The Becoming?
           </h2>
           <div className="w-20 h-[1px] bg-accent-gold mx-auto" />
@@ -340,14 +340,14 @@ const AboutSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-24 items-center">
           <RevealSection delay={0.2}>
-            <div className="space-y-8 text-charcoal text-lg leading-relaxed font-body">
+            <div className="space-y-8 text-charcoal text-xl md:text-2xl leading-relaxed font-body">
               <p>
                 The Becoming is a curated human experience for people who are doing what life expects of them, yet feel there must be more meaning, more depth, more truth to who they are.
               </p>
               <div className="py-10 border-t border-b border-sand space-y-4">
-                <p className="font-heading text-2xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a retreat.</p>
-                <p className="font-heading text-2xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a workshop.</p>
-                <p className="font-heading text-2xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a lecture.</p>
+                <p className="font-heading text-2xl md:text-3xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a retreat.</p>
+                <p className="font-heading text-2xl md:text-3xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a workshop.</p>
+                <p className="font-heading text-2xl md:text-3xl text-deep-charcoal">It is <span className="text-accent-gold">not</span> a lecture.</p>
               </div>
               <p>
                 No one can teach you how to live. Nobody is here to fix you. Instead, The Becoming creates a safe, intentional space where you step away from routines, screens and constant performance, and turn inward.
@@ -368,7 +368,7 @@ const AboutSection = () => {
         </div>
 
         <RevealSection delay={0.3} className="mt-32 text-center max-w-4xl mx-auto">
-          <p className="font-heading text-3xl lg:text-4xl text-deep-charcoal italic leading-relaxed">
+          <p className="font-heading text-3xl md:text-4xl lg:text-5xl text-deep-charcoal italic leading-relaxed">
             "No promises. No fixing. No preaching. No selling. <span className="text-accent-gold">Only experiences.</span>"
           </p>
         </RevealSection>
