@@ -490,7 +490,7 @@ const HeroSection = ({ onBeginJourney }) => {
           initial={{ opacity: 0, letterSpacing: "0.2em" }} 
           animate={{ opacity: 1, letterSpacing: "0.5em" }} 
           transition={{ delay: 0.6, duration: 1 }}
-          className="font-body text-xs md:text-sm tracking-[0.5em] text-accent-gold uppercase mb-8"
+          className="font-body text-xs md:text-sm tracking-[0.5em] text-deep-charcoal/80 uppercase mb-8 drop-shadow-sm"
         >
           A Curated Human Experience
         </motion.p>
@@ -500,11 +500,11 @@ const HeroSection = ({ onBeginJourney }) => {
           initial={{ opacity: 0, y: 40 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ delay: 0.8, duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="font-heading text-5xl sm:text-6xl lg:text-8xl xl:text-9xl text-white mb-8 leading-[1.05]"
+          className="font-heading text-5xl sm:text-6xl lg:text-8xl xl:text-9xl text-deep-charcoal mb-8 leading-[1.05] drop-shadow-sm"
         >
           You've been waiting<br />
           <motion.em 
-            className="text-accent-gold"
+            className="text-accent-bronze"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.8 }}
@@ -518,11 +518,11 @@ const HeroSection = ({ onBeginJourney }) => {
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ delay: 1.2, duration: 1 }}
-          className="font-body text-lg md:text-xl lg:text-2xl text-white/85 max-w-3xl mx-auto mb-12 leading-relaxed tracking-wide"
+          className="font-body text-lg md:text-xl lg:text-2xl text-deep-charcoal/80 max-w-3xl mx-auto mb-12 leading-relaxed tracking-wide drop-shadow-sm"
         >
           For those who have everything in place, yet feel a quiet stirring within.
           <br className="hidden md:block" />
-          <span className="text-white/70">A sacred pause. A return to yourself.</span>
+          <span className="text-deep-charcoal/60">A sacred pause. A return to yourself.</span>
         </motion.p>
         
         {/* CTA Buttons */}
