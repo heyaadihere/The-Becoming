@@ -5,15 +5,14 @@
 @tailwind utilities;
 
 :root {
-    --pearl: #FEFEFA;
-    --ivory: #FFFFF0;
-    --soft-beige: #F5F1EB;
-    --warm-sand: #E8E0D5;
-    --muted-gold: #C9B896;
-    --rich-gold: #B8A67E;
-    --deep-gold: #9A8A6E;
-    --charcoal: #2C2C2C;
-    --soft-charcoal: #4A4A4A;
+    --cream: #FAF7F2;
+    --soft-cream: #F5F1EA;
+    --sand: #E5DDD0;
+    --accent-gold: #B8A67E;
+    --accent-bronze: #A08B5B;
+    --rich-gold: #9A8456;
+    --charcoal: #4A4A4A;
+    --deep-charcoal: #1A1A1A;
 }
 
 * {
@@ -28,7 +27,7 @@ html {
 
 body {
     font-family: 'Raleway', sans-serif;
-    background-color: var(--pearl);
+    background-color: var(--cream);
     color: var(--charcoal);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -36,21 +35,21 @@ body {
 }
 
 ::selection {
-    background-color: rgba(201, 184, 150, 0.3);
-    color: var(--charcoal);
+    background-color: rgba(184, 166, 126, 0.4);
+    color: var(--deep-charcoal);
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--soft-beige);
+    background: var(--cream);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--muted-gold);
-    border-radius: 3px;
+    background: var(--accent-gold);
+    border-radius: 0;
 }
 
 .font-heading {
@@ -61,84 +60,73 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
-/* Luxe button */
+/* Luxurious button */
 .btn-luxe {
-    background: linear-gradient(135deg, var(--muted-gold) 0%, var(--rich-gold) 100%);
+    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
     color: white;
     padding: 1rem 2.5rem;
     border-radius: 0;
     font-family: 'Raleway', sans-serif;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 20px rgba(184, 166, 126, 0.3);
 }
 
 .btn-luxe:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(201, 184, 150, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(184, 166, 126, 0.5);
 }
 
 .btn-outline {
     background: transparent;
-    color: var(--charcoal);
+    color: var(--deep-charcoal);
     padding: 1rem 2.5rem;
-    border: 1px solid var(--muted-gold);
+    border: 1px solid var(--accent-gold);
     border-radius: 0;
     font-family: 'Raleway', sans-serif;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 }
 
 .btn-outline:hover {
-    background: var(--muted-gold);
+    background: var(--accent-gold);
     color: white;
-}
-
-/* Smooth section transitions */
-.section-fade {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.section-fade.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* Elegant divider */
 .elegant-divider {
-    width: 60px;
+    width: 80px;
     height: 1px;
-    background: var(--muted-gold);
+    background: var(--accent-gold);
     margin: 0 auto;
 }
 
 @layer base {
     :root {
-        --background: 60 33% 99%;
-        --foreground: 0 0% 17%;
+        --background: 40 30% 97%;
+        --foreground: 0 0% 10%;
         --card: 0 0% 100%;
-        --card-foreground: 0 0% 17%;
-        --primary: 40 30% 69%;
+        --card-foreground: 0 0% 10%;
+        --primary: 40 35% 60%;
         --primary-foreground: 0 0% 100%;
-        --secondary: 40 20% 52%;
-        --muted: 40 20% 94%;
-        --muted-foreground: 0 0% 40%;
-        --accent: 40 30% 69%;
-        --border: 40 20% 88%;
-        --input: 40 20% 92%;
-        --ring: 40 30% 69%;
+        --secondary: 40 30% 50%;
+        --muted: 40 20% 92%;
+        --muted-foreground: 0 0% 35%;
+        --accent: 40 35% 60%;
+        --border: 40 25% 85%;
+        --input: 40 20% 90%;
+        --ring: 40 35% 60%;
         --radius: 0;
     }
 }
