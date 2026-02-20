@@ -229,20 +229,31 @@ const Navigation = ({ onBeginJourney }) => {
 
   return (
     <motion.header initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8 }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-8 lg:px-16 py-6 flex items-center justify-between">
-        <Logo className={`h-12 transition-all duration-300 ${isScrolled ? '' : 'brightness-0 invert'}`} />
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-sm shadow-sm py-4' : 'bg-transparent py-6'}`}>
+      <div className="max-w-7xl mx-auto px-8 lg:px-16 flex items-center justify-between">
+        <Logo className={`${isScrolled ? 'h-16' : 'h-20'} transition-all duration-300 ${isScrolled ? '' : 'brightness-0 invert'}`} />
         <nav className="hidden md:flex items-center gap-12">
-          {['About', 'Experience', 'Journey'].map((item) => (
-            <button key={item} onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-              className={`text-xs font-body tracking-[0.2em] uppercase transition-colors ${isScrolled ? 'text-deep-charcoal hover:text-accent-gold' : 'text-white/90 hover:text-white'}`}>
+          {['About', 'Experience', 'Journey'].map((item, idx) => (
+            <motion.button 
+              key={item} 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * idx }}
+              onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
+              className={`text-sm font-body tracking-[0.2em] uppercase transition-colors relative group ${isScrolled ? 'text-deep-charcoal hover:text-accent-gold' : 'text-white/90 hover:text-white'}`}>
               {item}
-            </button>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent-gold transition-all duration-300 group-hover:w-full" />
+            </motion.button>
           ))}
         </nav>
-        <button onClick={onBeginJourney} className="btn-luxe text-xs" data-testid="nav-cta">
+        <motion.button 
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onBeginJourney} 
+          className="btn-luxe text-xs" 
+          data-testid="nav-cta">
           Begin
-        </button>
+        </motion.button>
       </div>
     </motion.header>
   );
