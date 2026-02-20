@@ -391,9 +391,9 @@ const ExperienceSection = () => {
     <section id="experience" className="py-40 lg:py-52 bg-soft-cream">
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
         <RevealSection className="text-center mb-24">
-          <p className="font-body text-xs tracking-[0.4em] text-accent-gold uppercase mb-8">The Journey</p>
-          <h2 className="font-heading text-5xl lg:text-6xl text-deep-charcoal mb-6 italic">What You Will Experience</h2>
-          <p className="font-body text-charcoal text-lg max-w-xl mx-auto mt-8">
+          <p className="font-body text-sm md:text-base tracking-[0.4em] text-accent-gold uppercase mb-8">The Journey</p>
+          <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-6 italic">What You Will Experience</h2>
+          <p className="font-body text-charcoal text-xl md:text-2xl max-w-xl mx-auto mt-8">
             At The Becoming, you are invited to experience life beyond autopilot.
           </p>
           <div className="w-20 h-[1px] bg-accent-gold mx-auto mt-10" />
@@ -403,9 +403,9 @@ const ExperienceSection = () => {
           {experiences.map((exp, index) => (
             <RevealSection key={index} delay={index * 0.1}>
               <div className="p-10 bg-cream border border-sand hover:border-accent-gold transition-all duration-500 group h-full">
-                <span className="font-body text-xs text-accent-gold tracking-widest">0{index + 1}</span>
-                <h3 className="font-heading text-2xl text-deep-charcoal mt-6 mb-4 italic group-hover:text-accent-gold transition-colors">{exp.title}</h3>
-                <p className="font-body text-charcoal leading-relaxed">{exp.desc}</p>
+                <span className="font-body text-sm text-accent-gold tracking-widest">0{index + 1}</span>
+                <h3 className="font-heading text-2xl md:text-3xl text-deep-charcoal mt-6 mb-4 italic group-hover:text-accent-gold transition-colors">{exp.title}</h3>
+                <p className="font-body text-charcoal text-lg md:text-xl leading-relaxed">{exp.desc}</p>
               </div>
             </RevealSection>
           ))}
