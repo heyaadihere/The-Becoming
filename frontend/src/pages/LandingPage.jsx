@@ -581,32 +581,68 @@ const JourneySection = () => {
   );
 };
 
-// Circle/Community Section - More luxurious
+// Circle/Community Section - More luxurious with animations
 const CircleSection = () => {
+  const items = [
+    { text: "Stay in constant touch with you even after the experience is over", icon: "🤝" },
+    { text: "Remind you of what matters, when life gets noisy again", icon: "💭" },
+    { text: "Offer a circle that continues long after the experience is done", icon: "⭕" }
+  ];
+
   return (
-    <section className="py-40 lg:py-52 bg-deep-charcoal text-white">
-      <div className="max-w-5xl mx-auto px-8 lg:px-16 text-center">
+    <section className="py-40 lg:py-52 bg-deep-charcoal text-white relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          className="absolute top-20 left-10 w-64 h-64 bg-accent-gold/5 rounded-full blur-3xl"
+          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl"
+          animate={{ x: [0, -30, 0], y: [0, -50, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      <div className="max-w-5xl mx-auto px-8 lg:px-16 text-center relative z-10">
         <RevealSection>
-          <p className="font-body text-sm md:text-base tracking-[0.4em] text-accent-gold uppercase mb-8">Beyond The Experience</p>
+          <motion.p 
+            initial={{ opacity: 0, letterSpacing: "0.2em" }}
+            whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            className="font-body text-sm md:text-base text-accent-gold uppercase mb-8"
+          >
+            Beyond The Experience
+          </motion.p>
           <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl mb-10 italic">
             Not Just an Experience. <span className="text-accent-gold">A Circle.</span>
           </h2>
-          <div className="w-16 h-[1px] bg-accent-gold mx-auto mb-12" />
+          <motion.div 
+            initial={{ width: 0 }}
+            whileInView={{ width: 64 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="h-[1px] bg-accent-gold mx-auto mb-12" 
+          />
           <p className="font-body text-white/80 text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto">
             Beyond the experience itself, The Becoming is the foundation of something larger — a community of like-minded individuals who value depth over speed, presence over performance, and humanity over hustle.
           </p>
         </RevealSection>
 
         <RevealSection delay={0.3} className="mt-20 grid md:grid-cols-3 gap-10">
-          {[
-            "Stay in constant touch with you even after the experience is over",
-            "Remind you of what matters, when life gets noisy again",
-            "Offer a circle that continues long after the experience is done"
-          ].map((item, idx) => (
-            <div key={idx} className="p-8 border border-white/10 hover:border-accent-gold/50 transition-all">
+          {items.map((item, idx) => (
+            <motion.div 
+              key={idx} 
+              whileHover={{ y: -10, borderColor: "rgba(184, 166, 126, 0.5)" }}
+              transition={{ duration: 0.3 }}
+              className="p-8 border border-white/10 transition-all cursor-pointer group"
+            >
+              <span className="text-3xl mb-4 block opacity-50 group-hover:opacity-100 transition-opacity">{item.icon}</span>
               <span className="font-body text-sm text-accent-gold tracking-widest">0{idx + 1}</span>
-              <p className="font-body text-white/80 text-lg md:text-xl mt-6 leading-relaxed">{item}</p>
-            </div>
+              <p className="font-body text-white/80 text-lg md:text-xl mt-6 leading-relaxed group-hover:text-white transition-colors">{item.text}</p>
+            </motion.div>
           ))}
         </RevealSection>
       </div>
