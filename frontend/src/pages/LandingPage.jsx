@@ -704,21 +704,46 @@ const FAQSection = () => {
   );
 };
 
-// CTA Section - More impactful
+// CTA Section - More impactful with animations
 const CTASection = ({ onBeginJourney }) => {
   return (
     <section className="py-40 lg:py-52 bg-cream relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(184,166,126,0.15),transparent_70%)]" />
+      {/* Animated background */}
+      <motion.div 
+        className="absolute inset-0"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(184,166,126,0.15),transparent_70%)]" />
+        <motion.div 
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
       
       <RevealSection className="relative z-10 text-center px-8 max-w-4xl mx-auto">
-        <Logo className="h-36 md:h-48 mx-auto mb-14" />
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Logo className="h-36 md:h-48 mx-auto mb-14" />
+        </motion.div>
         <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-deep-charcoal mb-8 italic">Ready for your <span className="text-accent-gold">reset</span>?</h2>
         <p className="font-body text-charcoal text-xl md:text-2xl mb-14 max-w-2xl mx-auto leading-relaxed">
           If this resonates with you, if you feel quietly ready, take a moment and tell us who you are.
         </p>
-        <button onClick={onBeginJourney} className="btn-luxe text-sm px-14 py-6" data-testid="cta-button">
+        <motion.button 
+          whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(184, 166, 126, 0.4)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onBeginJourney} 
+          className="btn-luxe text-sm px-14 py-6" 
+          data-testid="cta-button"
+        >
           Begin Your Journey
-        </button>
+        </motion.button>
       </RevealSection>
     </section>
   );
