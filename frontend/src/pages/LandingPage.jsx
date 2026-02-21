@@ -338,7 +338,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                 <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
                 <div className="space-y-4">
                   <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com" className="w-full bg-transparent border-b-2 border-sand px-0 py-4 text-xl text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
-                  <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone (optional)" className="w-full bg-transparent border-b-2 border-white/20 px-0 py-4 text-xl text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
+                  <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone (optional)" className="w-full bg-transparent border-b-2 border-sand px-0 py-4 text-xl text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
                 </div>
               </div>
             )}
@@ -347,7 +347,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                 <motion.button 
                   onClick={handleBack} 
                   disabled={step === 0} 
-                  className="text-white/40 hover:text-white disabled:opacity-20 transition-all flex items-center gap-2 text-sm font-body tracking-wider uppercase"
+                  className="text-charcoal/50 hover:text-deep-charcoal disabled:opacity-20 transition-all flex items-center gap-2 text-sm font-body tracking-wider uppercase"
                   whileHover={{ x: -5 }}
                 >
                   <ArrowLeft className="w-4 h-4" /> Back
