@@ -954,19 +954,8 @@ const CircleSection = () => {
 
   return (
     <section className="py-32 lg:py-48 bg-deep-charcoal text-white relative overflow-hidden">
-      {/* Animated background orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          className="absolute top-20 left-10 w-80 h-80 bg-accent-gold/5 rounded-full blur-3xl"
-          animate={{ x: [0, 60, 0], y: [0, 40, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute bottom-20 right-10 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl"
-          animate={{ x: [0, -40, 0], y: [0, -60, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+      {/* Subtle animated background for dark section */}
+      <AnimatedBackground variant="dark" />
 
       <div className="max-w-5xl mx-auto px-8 lg:px-16 text-center relative z-10">
         <RevealSection>
