@@ -245,17 +245,6 @@ const FloatingParticles = ({ count = 25 }) => {
     </div>
   );
 };
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 // Magnetic cursor effect hook
 const useMagnetic = () => {
