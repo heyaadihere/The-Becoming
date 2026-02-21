@@ -197,26 +197,26 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gradient-to-br from-soft-cream via-cream to-sand/90 backdrop-blur-sm"
       >
         <motion.button 
           onClick={onClose} 
-          className="absolute top-8 right-8 p-3 text-white/60 hover:text-white transition-colors" 
+          className="absolute top-8 right-8 p-3 text-charcoal/60 hover:text-deep-charcoal transition-colors" 
           data-testid="close-questionnaire"
           whileHover={{ scale: 1.1, rotate: 90 }}
           whileTap={{ scale: 0.9 }}
         >
           <X className="w-6 h-6" />
         </motion.button>
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/10">
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-sand">
           <motion.div className="h-full bg-gradient-to-r from-accent-gold via-accent-bronze to-accent-gold" initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ duration: 0.5 }} />
         </div>
-        <div className="absolute top-8 left-8 text-xs text-white/40 font-body tracking-widest uppercase">{step + 1} / {totalSteps}</div>
+        <div className="absolute top-8 left-8 text-xs text-charcoal/50 font-body tracking-widest uppercase">{step + 1} / {totalSteps}</div>
 
         {isComplete ? (
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md text-center text-white">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md text-center text-deep-charcoal">
             <motion.div 
-              className="w-24 h-24 border-2 border-accent-gold flex items-center justify-center mx-auto mb-10"
+              className="w-24 h-24 border-2 border-accent-gold flex items-center justify-center mx-auto mb-10 bg-cream"
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", duration: 0.8 }}
