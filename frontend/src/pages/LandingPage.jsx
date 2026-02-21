@@ -308,6 +308,9 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gradient-to-br from-soft-cream via-cream to-sand/90 backdrop-blur-sm"
       >
+        {/* Subtle animated background for form */}
+        <FloatingParticles count={20} />
+        <AnimatedBackground variant="light" />
         <motion.button 
           onClick={onClose} 
           className="absolute top-8 right-8 p-3 text-charcoal/60 hover:text-deep-charcoal transition-colors" 
