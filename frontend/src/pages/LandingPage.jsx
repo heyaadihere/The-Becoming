@@ -1018,8 +1018,11 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-32 lg:py-48 bg-soft-cream">
-      <div className="max-w-4xl mx-auto px-8 lg:px-16">
+    <section className="py-32 lg:py-48 bg-soft-cream relative overflow-hidden">
+      {/* Subtle animated background */}
+      <AnimatedBackground variant="light" />
+      
+      <div className="max-w-4xl mx-auto px-8 lg:px-16 relative z-10">
         <RevealSection className="text-center mb-16">
           <motion.div
             initial={{ width: 0 }}
