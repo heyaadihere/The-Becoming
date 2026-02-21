@@ -223,11 +223,11 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
             >
               <Check className="w-10 h-10 text-accent-gold" />
             </motion.div>
-            <h2 className="font-heading text-4xl mb-4">Thank you, {answers.name}</h2>
-            <p className="text-white/60 text-sm font-body leading-relaxed mb-10 tracking-wide">Your responses have been received. We will be in touch if The Becoming feels right for you.</p>
+            <h2 className="font-heading text-4xl mb-4 text-deep-charcoal">Thank you, {answers.name}</h2>
+            <p className="text-charcoal/70 text-sm font-body leading-relaxed mb-10 tracking-wide">Your responses have been received. We will be in touch if The Becoming feels right for you.</p>
             <motion.button 
               onClick={onClose} 
-              className="btn-outline border-white/30 text-white hover:bg-white/10"
+              className="btn-outline border-accent-gold text-deep-charcoal hover:bg-accent-gold/10"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -235,14 +235,14 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
             </motion.button>
           </motion.div>
         ) : (
-          <motion.div key={step} initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.5, ease: "easeOut" }} className="w-full max-w-2xl text-white">
+          <motion.div key={step} initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.5, ease: "easeOut" }} className="w-full max-w-2xl text-deep-charcoal">
             {currentQuestion.type === 'welcome' && (
               <div className="text-center">
                 <FloatingElement>
-                  <Logo className="h-28 mx-auto mb-12" variant="light" />
+                  <Logo className="h-28 mx-auto mb-12" variant="dark" />
                 </FloatingElement>
                 <motion.h2 
-                  className="font-heading text-4xl sm:text-5xl mb-4 italic"
+                  className="font-heading text-4xl sm:text-5xl mb-4 italic text-deep-charcoal"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
@@ -250,7 +250,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                   {currentQuestion.title}
                 </motion.h2>
                 <motion.p 
-                  className="text-white/50 text-sm font-body tracking-wide mb-12"
+                  className="text-charcoal/60 text-sm font-body tracking-wide mb-12"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
@@ -269,13 +269,13 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
             )}
             {currentQuestion.type === 'text' && (
               <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
+                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
                 <motion.input 
                   type="text" 
                   value={answers[currentQuestion.field] || ''} 
                   onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} 
                   placeholder={currentQuestion.placeholder || ''} 
-                  className="w-full bg-transparent border-b-2 border-white/20 px-0 py-4 text-xl text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-all font-body" 
+                  className="w-full bg-transparent border-b-2 border-sand px-0 py-4 text-xl text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-all font-body" 
                   autoFocus
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
@@ -285,13 +285,13 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
             )}
             {currentQuestion.type === 'textarea' && (
               <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <textarea value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-transparent border-2 border-white/20 px-4 py-4 text-lg text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body min-h-[140px] resize-none" autoFocus />
+                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
+                <textarea value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-white/50 border-2 border-sand px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-colors font-body min-h-[140px] resize-none" autoFocus />
               </div>
             )}
             {currentQuestion.type === 'single' && (
               <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
+                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
                 <div className="space-y-2 max-h-[45vh] overflow-y-auto pr-2">
                   {currentQuestion.options.map((option, idx) => (
                     <motion.div 
@@ -300,8 +300,8 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                       animate={{ opacity: 1, x: 0 }} 
                       transition={{ delay: idx * 0.05 }}
                       onClick={() => handleSelectSingle(option)}
-                      whileHover={{ x: 10, backgroundColor: "rgba(184, 166, 126, 0.1)" }}
-                      className={`p-4 border-2 cursor-pointer transition-all font-body text-sm tracking-wide ${answers[currentQuestion.field] === option ? 'bg-accent-gold/20 border-accent-gold text-white' : 'border-white/10 text-white/70 hover:border-white/30 hover:text-white'}`}
+                      whileHover={{ x: 10, backgroundColor: "rgba(184, 166, 126, 0.15)" }}
+                      className={`p-4 border-2 cursor-pointer transition-all font-body text-sm tracking-wide ${answers[currentQuestion.field] === option ? 'bg-accent-gold/20 border-accent-gold text-deep-charcoal' : 'border-sand bg-white/30 text-charcoal hover:border-accent-gold/50 hover:text-deep-charcoal'}`}
                     >
                       {option}
                     </motion.div>
@@ -311,7 +311,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
             )}
             {currentQuestion.type === 'multi' && (
               <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
+                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
                 <div className="grid grid-cols-2 gap-2 max-h-[45vh] overflow-y-auto pr-2">
                   {currentQuestion.options.map((option, idx) => {
                     const isSelected = (answers[currentQuestion.field] || []).includes(option);
@@ -324,7 +324,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                         onClick={() => handleSelectMulti(option)}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className={`p-4 border-2 cursor-pointer transition-all font-body text-sm ${isSelected ? 'bg-accent-gold/20 border-accent-gold text-white' : 'border-white/10 text-white/60 hover:border-white/30'}`}
+                        className={`p-4 border-2 cursor-pointer transition-all font-body text-sm ${isSelected ? 'bg-accent-gold/20 border-accent-gold text-deep-charcoal' : 'border-sand bg-white/30 text-charcoal hover:border-accent-gold/50'}`}
                       >
                         {option}
                       </motion.div>
@@ -335,9 +335,9 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
             )}
             {currentQuestion.type === 'contact' && (
               <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-white/40 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
+                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
                 <div className="space-y-4">
-                  <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com" className="w-full bg-transparent border-b-2 border-white/20 px-0 py-4 text-xl text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
+                  <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com" className="w-full bg-transparent border-b-2 border-sand px-0 py-4 text-xl text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
                   <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone (optional)" className="w-full bg-transparent border-b-2 border-white/20 px-0 py-4 text-xl text-white placeholder-white/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
                 </div>
               </div>
