@@ -799,14 +799,8 @@ const ExperienceSection = () => {
 
   return (
     <section id="experience" className="py-32 lg:py-48 bg-soft-cream relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div 
-          className="absolute top-1/4 left-10 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl"
-          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+      {/* Subtle animated background */}
+      <AnimatedBackground variant="light" />
       
       <div className="max-w-7xl mx-auto px-8 lg:px-16 relative z-10">
         <RevealSection className="text-center mb-20">
