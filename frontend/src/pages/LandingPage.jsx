@@ -688,12 +688,8 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="py-32 lg:py-48 bg-cream relative overflow-hidden" ref={sectionRef}>
-      {/* Decorative elements */}
-      <motion.div 
-        className="absolute top-20 right-20 w-72 h-72 rounded-full bg-accent-gold/5 blur-3xl"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
+      {/* Subtle animated background */}
+      <AnimatedBackground variant="light" />
       
       <div className="max-w-7xl mx-auto px-8 lg:px-16 relative z-10">
         <RevealSection className="text-center mb-20">
