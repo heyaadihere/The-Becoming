@@ -1082,21 +1082,10 @@ const FAQSection = () => {
 const CTASection = ({ onBeginJourney }) => {
   return (
     <section className="py-32 lg:py-48 bg-cream relative overflow-hidden">
-      {/* Animated radial gradient */}
-      <motion.div 
-        className="absolute inset-0"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        viewport={{ once: true }}
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,166,126,0.15),transparent_70%)]" />
-        <motion.div 
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-gold/5 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
+      {/* Subtle animated background */}
+      <AnimatedBackground variant="light" />
+      {/* Additional center glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,166,126,0.1),transparent_60%)]" />
       
       <RevealSection className="relative z-10 text-center px-8 max-w-4xl mx-auto">
         <FloatingElement duration={10}>
