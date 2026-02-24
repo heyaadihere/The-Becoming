@@ -25,44 +25,207 @@ const heroImages = [
 ];
 
 // Animated background for sections
-const AnimatedBackground = ({ variant = "light" }) => {
+// Different background animations for each section
+const FloatingOrbsBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
   const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full"
+        className="absolute w-[400px] h-[400px] rounded-full"
         style={{
           left: "5%", top: "10%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.15) 0%, transparent 70%)`,
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.08) 0%, transparent 70%)`,
+          filter: "blur(60px)",
+        }}
+        animate={{ x: [0, 60, 0], y: [0, 40, 0], scale: [1, 1.15, 1] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-[300px] h-[300px] rounded-full"
+        style={{
+          right: "10%", bottom: "20%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.06) 0%, transparent 70%)`,
+          filter: "blur(50px)",
+        }}
+        animate={{ x: [0, -40, 0], y: [0, -30, 0] }}
+        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+      />
+    </div>
+  );
+};
+
+const GentleWavesBackground = ({ variant = "light" }) => {
+  const isLight = variant === "light";
+  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        className="absolute w-full h-[2px]"
+        style={{
+          top: "30%",
+          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.15), transparent)`,
+        }}
+        animate={{ x: ["-100%", "100%"] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div
+        className="absolute w-full h-[1px]"
+        style={{
+          top: "60%",
+          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.1), transparent)`,
+        }}
+        animate={{ x: ["100%", "-100%"] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div
+        className="absolute w-[200px] h-[200px] rounded-full"
+        style={{
+          right: "5%", top: "15%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.05) 0%, transparent 70%)`,
           filter: "blur(40px)",
         }}
-        animate={{ x: [0, 80, 0], y: [0, 50, 0], scale: [1, 1.2, 1] }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
+  );
+};
+
+const FloatingGeometryBackground = ({ variant = "light" }) => {
+  const isLight = variant === "light";
+  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        className="absolute w-32 h-32 border rounded-full"
+        style={{ left: "10%", top: "20%", borderColor: `rgba(${baseColor}, 0.1)` }}
+        animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div
+        className="absolute w-20 h-20 border"
+        style={{ right: "15%", top: "40%", borderColor: `rgba(${baseColor}, 0.08)` }}
+        animate={{ rotate: [0, 90, 0], y: [0, 20, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full"
+        className="absolute w-16 h-16"
+        style={{ 
+          left: "20%", bottom: "25%", 
+          borderLeft: `1px solid rgba(${baseColor}, 0.1)`,
+          borderBottom: `1px solid rgba(${baseColor}, 0.1)`,
+        }}
+        animate={{ rotate: [45, 135, 45] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
+  );
+};
+
+const RisingParticlesBackground = ({ variant = "light" }) => {
+  const isLight = variant === "light";
+  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(5)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 rounded-full"
+          style={{
+            left: `${15 + i * 18}%`,
+            bottom: "0%",
+            background: `rgba(${baseColor}, 0.2)`,
+          }}
+          animate={{ y: [0, -500], opacity: [0, 0.6, 0] }}
+          transition={{ 
+            duration: 12 + i * 2, 
+            repeat: Infinity, 
+            ease: "easeOut",
+            delay: i * 3 
+          }}
+        />
+      ))}
+      <motion.div
+        className="absolute w-[250px] h-[250px] rounded-full"
         style={{
-          right: "10%", top: "50%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.12) 0%, transparent 70%)`,
+          left: "50%", top: "50%", transform: "translate(-50%, -50%)",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.04) 0%, transparent 70%)`,
+          filter: "blur(50px)",
+        }}
+        animate={{ scale: [1, 1.3, 1] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
+  );
+};
+
+const ShimmerBackground = ({ variant = "light" }) => {
+  const isLight = variant === "light";
+  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        className="absolute w-[600px] h-[600px]"
+        style={{
+          left: "-10%", top: "-10%",
+          background: `conic-gradient(from 0deg, transparent, rgba(${baseColor}, 0.03), transparent, rgba(${baseColor}, 0.03), transparent)`,
           filter: "blur(30px)",
         }}
-        animate={{ x: [0, -60, 0], y: [0, -40, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-      />
-      {/* Geometric shapes */}
-      <motion.div
-        className="absolute w-24 h-24 border rounded-full"
-        style={{ left: "15%", top: "30%", borderColor: `rgba(${baseColor}, 0.2)` }}
         animate={{ rotate: [0, 360] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute w-16 h-16 border"
-        style={{ right: "20%", bottom: "30%", borderColor: `rgba(${baseColor}, 0.15)`, transform: "rotate(45deg)" }}
-        animate={{ rotate: [45, 135, 45], scale: [1, 1.15, 1] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute w-24 h-[1px]"
+        style={{
+          right: "20%", top: "40%",
+          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.2), transparent)`,
+        }}
+        animate={{ scaleX: [0, 1, 0], x: [0, 100, 200] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
+  );
+};
+
+const PulsingDotsBackground = ({ variant = "light" }) => {
+  const isLight = variant === "light";
+  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(3)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-2 h-2 rounded-full"
+          style={{
+            left: `${25 + i * 25}%`,
+            top: `${30 + i * 15}%`,
+            background: `rgba(${baseColor}, 0.15)`,
+          }}
+          animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ 
+            duration: 4, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: i * 1.5 
+          }}
+        />
+      ))}
+      <motion.div
+        className="absolute w-[350px] h-[350px] rounded-full"
+        style={{
+          right: "-5%", bottom: "-10%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.05) 0%, transparent 60%)`,
+          filter: "blur(40px)",
+        }}
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );
