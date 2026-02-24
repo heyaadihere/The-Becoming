@@ -1267,7 +1267,7 @@ const JourneySection = () => {
             
             <FadeUpText delay={0.2}>
               <p className="font-sans text-charcoal/80 text-lg mb-8">
-                The Becoming welcomes individuals aged 21-65 who are ready to embark on a journey of growth and self-discovery.
+                The Becoming welcomes individuals who are ready to embark on a journey of growth and self-discovery.
               </p>
             </FadeUpText>
             
