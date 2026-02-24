@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ArrowLeft, Check, Loader2, X, ChevronLeft, ChevronRight, Phone, Mail, Instagram, Linkedin, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
 
