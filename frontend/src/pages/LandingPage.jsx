@@ -1280,74 +1280,176 @@ const ExperienceSection = () => {
   );
 };
 
-// Journey Section - Who it's for with bold YOU
+// Journey Section - Who is The Becoming for
 const JourneySection = () => {
-  const forYou = [
-    "Are ready to embrace growth and transformation",
-    "Seek deeper meaning and purpose in life",
-    "Want to learn, unlearn, and discover new perspectives",
-    "Crave authentic connections with like-minded souls",
-    "Are open to exploring your inner landscape",
-    "Feel ready to step into your fullest potential"
+  const targetAudience = [
+    { 
+      title: "Working Professionals", 
+      desc: "High-functioning externally but feeling paused or restless inside, seeking deeper meaning beyond the daily grind.",
+      icon: "01"
+    },
+    { 
+      title: "Creators & Freelancers", 
+      desc: "Independent spirits who understand the value of self-investment and are ready to unlock new dimensions of creativity.",
+      icon: "02"
+    },
+    { 
+      title: "Artists", 
+      desc: "Creative souls seeking inspiration, connection, and the courage to express their authentic voice.",
+      icon: "03"
+    },
+    { 
+      title: "Homemakers", 
+      desc: "Those who nurture others and are ready to rediscover and nurture themselves.",
+      icon: "04"
+    }
   ];
 
   return (
-    <section id="journey" className="py-24 lg:py-32 bg-cream relative overflow-hidden">
+    <section id="journey" className="py-16 md:py-24 lg:py-32 bg-cream relative overflow-hidden">
       <FloatingGeometryBackground variant="light" />
       
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
-          <SlideIn direction="left" className="flex">
-            <motion.div 
-              className="relative w-full overflow-hidden group"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-10 md:mb-16">
+          <FadeUpText>
+            <motion.p 
+              className="font-sans text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] text-accent-gold uppercase mb-3 md:mb-4"
+              initial={{ opacity: 0, letterSpacing: "0.1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
             >
-              <motion.img 
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" 
-                alt="Mountain journey" 
-                className="w-full h-full object-cover"
-                initial={{ scale: 1.1 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-cream/30 to-transparent" />
-              {/* Animated corner accents */}
+              Who Is This For?
+            </motion.p>
+          </FadeUpText>
+          <FadeUpText delay={0.1}>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal mb-4 md:mb-6">
+              Whom is The Becoming For?
+            </h2>
+          </FadeUpText>
+          <FadeUpText delay={0.2}>
+            <p className="font-sans text-sm md:text-base lg:text-lg text-charcoal/80 max-w-2xl mx-auto px-2">
+              The Becoming welcomes those who are ready to embark on a journey of growth and self-discovery.
+            </p>
+          </FadeUpText>
+        </div>
+
+        <AnimatedDivider className="mb-10 md:mb-16 max-w-md mx-auto" />
+
+        {/* Target Audience Grid */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-12 md:mb-16" staggerDelay={0.1}>
+          {targetAudience.map((audience, idx) => (
+            <StaggerItem key={idx}>
               <motion.div 
-                className="absolute top-4 left-4 w-12 h-12 border-l-2 border-t-2 border-accent-gold/50"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              />
-              <motion.div 
-                className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-accent-gold/50"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.7, duration: 0.5 }}
-              />
-            </motion.div>
-          </SlideIn>
-          
-          <SlideIn direction="right" className="flex flex-col justify-center">
-            <FadeUpText>
-              <motion.p 
-                className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
-                initial={{ opacity: 0, letterSpacing: "0.1em" }}
-                whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
+                className="p-6 md:p-8 bg-white/50 border border-sand hover:border-accent-gold/50 transition-all h-full group cursor-pointer relative overflow-hidden"
+                whileHover={{ y: -5, boxShadow: "0 15px 40px rgba(184, 166, 126, 0.15)" }}
+                transition={{ duration: 0.3 }}
               >
-                Is This For You?
-              </motion.p>
-            </FadeUpText>
-            <FadeUpText delay={0.1}>
-              <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal mb-8">
-                This May Be For <motion.span 
-                  className="text-accent-gold inline-block"
-                  initial={{ opacity: 0, scale: 0.5 }}
+                {/* Hover gradient */}
+                <motion.div className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative z-10">
+                  <motion.span 
+                    className="font-sans text-3xl md:text-4xl text-accent-gold/20 block mb-3"
+                    whileHover={{ scale: 1.1, color: "rgba(184, 166, 126, 0.4)" }}
+                  >
+                    {audience.icon}
+                  </motion.span>
+                  <h3 className="font-serif text-xl md:text-2xl text-deep-charcoal mb-2 group-hover:text-accent-gold transition-colors duration-300">
+                    {audience.title}
+                  </h3>
+                  <p className="font-sans text-sm md:text-base text-charcoal/70">
+                    {audience.desc}
+                  </p>
+                </div>
+                
+                {/* Animated underline */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 h-[2px] bg-accent-gold"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.4 }}
+                />
+              </motion.div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* And Maybe YOU - Highlighted Call to Action */}
+        <ScaleIn>
+          <motion.div 
+            className="text-center py-12 md:py-16 px-6 md:px-12 bg-gradient-to-br from-soft-cream to-cream border border-accent-gold/30 relative overflow-hidden"
+            whileHover={{ boxShadow: "0 20px 60px rgba(184, 166, 126, 0.2)" }}
+          >
+            {/* Decorative elements */}
+            <motion.div 
+              className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-accent-gold/30"
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+            <motion.div 
+              className="absolute bottom-4 right-4 w-16 h-16 border-r-2 border-b-2 border-accent-gold/30"
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+            />
+            
+            <motion.p 
+              className="font-sans text-sm md:text-base tracking-[0.2em] text-accent-gold uppercase mb-4"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+            >
+              And Most Importantly
+            </motion.p>
+            
+            <motion.h3 
+              className="font-serif text-4xl md:text-5xl lg:text-6xl text-deep-charcoal mb-4"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              Maybe{" "}
+              <motion.span 
+                className="text-accent-gold inline-block"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                YOU
+              </motion.span>
+            </motion.h3>
+            
+            <motion.p 
+              className="font-sans text-base md:text-lg text-charcoal/80 max-w-xl mx-auto mb-6"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              If something within you resonates with these words, perhaps this journey is calling you.
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+            >
+              <motion.button 
+                onClick={() => document.querySelector('[data-testid="hero-cta"]')?.click()}
+                className="btn-primary text-sm md:text-base px-8 md:px-12 py-3 md:py-4"
+                whileHover={{ scale: 1.05 }}
+              >
+                Begin Your Journey
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        </ScaleIn>
+      </div>
+    </section>
+  );
+};
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.5, duration: 0.5, type: "spring" }}
