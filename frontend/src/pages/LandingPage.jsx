@@ -858,41 +858,75 @@ const Navigation = ({ onBeginJourney }) => {
   );
 };
 
-// Hero Section with Image Carousel
+// Hero Section with Image Carousel and Dynamic Content
 const HeroSection = ({ onBeginJourney }) => {
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // 4 different hero content versions that change with images
+  const heroSlides = [
+    {
+      image: heroImages[0]?.url || "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80",
+      tagline: "A Curated Human Experience",
+      headline: "You've always known",
+      highlight: "there's more to who you are",
+      subtext: "This is where you stop searching and start becoming."
+    },
+    {
+      image: heroImages[1]?.url || "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=80",
+      tagline: "Embrace Your Transformation",
+      headline: "The journey within",
+      highlight: "begins with a single step",
+      subtext: "Discover the path to your authentic self."
+    },
+    {
+      image: heroImages[2]?.url || "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600&q=80",
+      tagline: "Awaken Your Potential",
+      headline: "Where learning meets",
+      highlight: "transformation",
+      subtext: "A sacred space for growth, discovery, and connection."
+    },
+    {
+      image: heroImages[3]?.url || "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1600&q=80",
+      tagline: "Find Your True Self",
+      headline: "Not just an experience",
+      highlight: "but a becoming",
+      subtext: "Join a community of souls ready to evolve together."
+    }
+  ];
   
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
     return () => clearInterval(timer);
   }, []);
+
+  const currentContent = heroSlides[currentSlide];
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
       {/* Image Carousel Background */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentImage}
+          key={currentSlide}
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5 }}
           className="absolute inset-0"
         >
-          <img src={heroImages[currentImage].url} alt={heroImages[currentImage].alt} className="w-full h-full object-cover" />
+          <img src={currentContent.image} alt="The Becoming" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/40 to-cream/70" />
         </motion.div>
       </AnimatePresence>
 
       {/* Image indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {heroImages.map((_, idx) => (
+        {heroSlides.map((_, idx) => (
           <button
             key={idx}
-            onClick={() => setCurrentImage(idx)}
-            className={`w-2 h-2 rounded-full transition-all ${idx === currentImage ? 'bg-accent-gold w-6' : 'bg-deep-charcoal/30'}`}
+            onClick={() => setCurrentSlide(idx)}
+            className={`w-2 h-2 rounded-full transition-all ${idx === currentSlide ? 'bg-accent-gold w-6' : 'bg-charcoal/30'}`}
           />
         ))}
       </div>
@@ -904,27 +938,28 @@ const HeroSection = ({ onBeginJourney }) => {
             <Logo className="h-40 md:h-52 lg:h-64 w-auto mx-auto mb-6" variant="dark" />
           </motion.div>
           
-          <motion.p 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-            className="font-sans text-base md:text-lg tracking-[0.3em] text-accent-gold uppercase mb-4"
-          >
-            A Curated Human Experience
-          </motion.p>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-4 leading-tight"
-          >
-            You've always known<br />
-            <span className="text-accent-gold italic">there's more to who you are</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
-            className="font-sans text-base md:text-lg text-charcoal max-w-2xl mx-auto mb-8"
-          >
-            This is where you stop searching and start becoming.
-          </motion.p>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.p className="font-sans text-base md:text-lg tracking-[0.3em] text-accent-gold uppercase mb-4">
+                {currentContent.tagline}
+              </motion.p>
+              
+              <motion.h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-4 leading-tight">
+                {currentContent.headline}<br />
+                <span className="text-accent-gold italic">{currentContent.highlight}</span>
+              </motion.h1>
+              
+              <motion.p className="font-sans text-base md:text-lg text-charcoal max-w-2xl mx-auto mb-8">
+                {currentContent.subtext}
+              </motion.p>
+            </motion.div>
+          </AnimatePresence>
           
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <motion.button onClick={onBeginJourney} className="btn-primary text-base px-10 py-4" whileHover={{ scale: 1.05 }} data-testid="hero-cta">
