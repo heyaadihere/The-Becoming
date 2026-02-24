@@ -598,6 +598,32 @@ const ExperienceSection = () => {
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
             What You Will Experience
           </h2>
+          {/* Animated tagline */}
+          <motion.p
+            className="font-serif text-2xl md:text-3xl text-charcoal/80 italic"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              No promises.
+            </motion.span>{" "}
+            <motion.span
+              className="text-accent-gold"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 1 }}
+              viewport={{ once: true }}
+            >
+              Only experiences.
+            </motion.span>
+          </motion.p>
         </RevealSection>
 
         {/* Pyramid Structure */}
@@ -795,7 +821,7 @@ const ContactSection = () => {
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <Logo className="h-20 mb-6" variant="light" />
+            <Logo className="h-32 md:h-40 mb-8" variant="light" />
             <p className="font-sans text-white/70 mb-8">
               A curated human experience for those ready to embrace growth and transformation.
             </p>
