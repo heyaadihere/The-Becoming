@@ -789,11 +789,11 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <Mail className="w-5 h-5 text-accent-gold" />
-                      <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com *" className="flex-1 bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans" />
+                      <input type="email" value={answers.email || ''} onChange={(e) => { setAnswers({ ...answers, email: e.target.value }); setFieldError(''); }} placeholder="your@email.com *" className={`flex-1 bg-white/50 border-b-2 px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && !answers.email?.includes('@') ? 'border-red-400' : 'border-sand'}`} />
                     </div>
                     <div className="flex items-center gap-3">
                       <Phone className="w-5 h-5 text-accent-gold" />
-                      <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone number *" className="flex-1 bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans" />
+                      <input type="tel" value={answers.phone || ''} onChange={(e) => { setAnswers({ ...answers, phone: e.target.value }); setFieldError(''); }} placeholder="Phone number *" className={`flex-1 bg-white/50 border-b-2 px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && (!answers.phone || answers.phone.length < 10) ? 'border-red-400' : 'border-sand'}`} />
                     </div>
                     <div className="flex items-center gap-3">
                       <Phone className="w-5 h-5 text-charcoal/40" />
@@ -805,7 +805,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                         {[{ name: 'Instagram', icon: Instagram }, { name: 'LinkedIn', icon: Linkedin }].map(({ name, icon: Icon }) => (
                           <button
                             key={name}
-                            onClick={() => setAnswers({ ...answers, socialMedia: name })}
+                            onClick={() => { setAnswers({ ...answers, socialMedia: name }); setFieldError(''); }}
                             className={`flex items-center gap-2 px-4 py-2 border-2 font-sans text-sm transition-all ${answers.socialMedia === name ? 'border-accent-gold bg-accent-gold/15' : 'border-sand hover:border-accent-gold/50'}`}
                           >
                             <Icon className="w-4 h-4" /> {name}
@@ -815,12 +815,13 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                       <input 
                         type="text" 
                         value={answers.socialHandle || ''} 
-                        onChange={(e) => setAnswers({ ...answers, socialHandle: e.target.value })} 
+                        onChange={(e) => { setAnswers({ ...answers, socialHandle: e.target.value }); setFieldError(''); }} 
                         placeholder={answers.socialMedia ? `Your ${answers.socialMedia} handle *` : "Select a platform first"} 
-                        className="w-full bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans"
+                        className={`w-full bg-white/50 border-b-2 px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && !answers.socialHandle ? 'border-red-400' : 'border-sand'}`}
                         disabled={!answers.socialMedia}
                       />
                     </div>
+                    {fieldError && <p className="text-red-500 font-sans text-sm" data-testid="field-error">{fieldError}</p>}
                   </div>
                 </div>
               )}
