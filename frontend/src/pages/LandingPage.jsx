@@ -982,11 +982,11 @@ const HeroSection = ({ onBeginJourney }) => {
         ))}
       </div>
       
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
+      <div className="relative z-10 text-center px-4 md:px-6 max-w-5xl mx-auto pt-24 md:pt-20">
         {/* Text container with subtle backdrop for readability */}
-        <div className="bg-cream/70 backdrop-blur-sm rounded-3xl py-12 px-8 md:px-16">
+        <div className="bg-cream/75 backdrop-blur-sm rounded-2xl md:rounded-3xl py-8 md:py-12 px-5 md:px-16">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
-            <Logo className="h-40 md:h-52 lg:h-64 w-auto mx-auto mb-6" variant="dark" />
+            <Logo className="h-24 sm:h-32 md:h-52 lg:h-64 w-auto mx-auto mb-4 md:mb-6" variant="dark" />
           </motion.div>
           
           <AnimatePresence mode="wait">
@@ -997,26 +997,26 @@ const HeroSection = ({ onBeginJourney }) => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8 }}
             >
-              <motion.p className="font-sans text-base md:text-lg tracking-[0.3em] text-accent-gold uppercase mb-4">
+              <motion.p className="font-sans text-xs sm:text-sm md:text-lg tracking-[0.15em] md:tracking-[0.3em] text-accent-gold uppercase mb-3 md:mb-4">
                 {currentContent.tagline}
               </motion.p>
               
-              <motion.h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-4 leading-tight">
+              <motion.h1 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-3 md:mb-4 leading-tight">
                 {currentContent.headline}<br />
                 <span className="text-accent-gold italic">{currentContent.highlight}</span>
               </motion.h1>
               
-              <motion.p className="font-sans text-base md:text-lg text-charcoal max-w-2xl mx-auto mb-8">
+              <motion.p className="font-sans text-sm md:text-base lg:text-lg text-charcoal max-w-2xl mx-auto mb-6 md:mb-8 px-2">
                 {currentContent.subtext}
               </motion.p>
             </motion.div>
           </AnimatePresence>
           
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <motion.button onClick={onBeginJourney} className="btn-primary text-base px-10 py-4" whileHover={{ scale: 1.05 }} data-testid="hero-cta">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
+            <motion.button onClick={onBeginJourney} className="btn-primary text-sm md:text-base px-6 md:px-10 py-3 md:py-4 w-full sm:w-auto" whileHover={{ scale: 1.05 }} data-testid="hero-cta">
               Enter The Becoming
             </motion.button>
-            <motion.button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="btn-secondary text-base px-10 py-4" whileHover={{ scale: 1.05 }}>
+            <motion.button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="btn-secondary text-sm md:text-base px-6 md:px-10 py-3 md:py-4 w-full sm:w-auto" whileHover={{ scale: 1.05 }}>
               Discover More
             </motion.button>
           </motion.div>
