@@ -1164,12 +1164,12 @@ const ExperienceSection = () => {
       <GentleWavesBackground variant="light" />
       
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-        {/* Image strip at the top */}
-        <div className="flex gap-2 mb-16 overflow-hidden">
+        {/* Image strip at the top - hide on mobile, show as scroll on tablet+ */}
+        <div className="hidden sm:flex gap-2 mb-16 overflow-hidden">
           {experiences.map((exp, idx) => (
             <motion.div 
               key={idx} 
-              className="flex-1 h-32 overflow-hidden"
+              className="flex-1 h-24 md:h-32 overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
