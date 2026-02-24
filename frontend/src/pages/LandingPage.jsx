@@ -1101,11 +1101,11 @@ const AboutSection = () => {
 // Experience Section - Pyramid Structure with Learning
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Learning & Unlearning", desc: "The foundation of growth - opening your mind to new perspectives and releasing what no longer serves you." },
-    { title: "Self-Discovery", desc: "Exploring your inner landscape, understanding your patterns, and embracing your authentic self." },
-    { title: "Creative Expression", desc: "Channeling your emotions and insights through art, music, writing, and movement." },
-    { title: "Mindful Connection", desc: "Building meaningful relationships with yourself, others, and the world around you." },
-    { title: "Transformation", desc: "The culmination of your journey - stepping into the person you're becoming." }
+    { title: "Learning & Unlearning", desc: "The foundation of growth - opening your mind to new perspectives and releasing what no longer serves you.", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&q=80" },
+    { title: "Self-Discovery", desc: "Exploring your inner landscape, understanding your patterns, and embracing your authentic self.", image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80" },
+    { title: "Creative Expression", desc: "Channeling your emotions and insights through art, music, writing, and movement.", image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&q=80" },
+    { title: "Mindful Connection", desc: "Building meaningful relationships with yourself, others, and the world around you.", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80" },
+    { title: "Transformation", desc: "The culmination of your journey - stepping into the person you're becoming.", image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=400&q=80" }
   ];
 
   return (
@@ -1113,6 +1113,22 @@ const ExperienceSection = () => {
       <GentleWavesBackground variant="light" />
       
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
+        {/* Image strip at the top */}
+        <div className="flex gap-2 mb-16 overflow-hidden">
+          {experiences.map((exp, idx) => (
+            <motion.div 
+              key={idx} 
+              className="flex-1 h-32 overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+            >
+              <img src={exp.image} alt={exp.title} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+            </motion.div>
+          ))}
+        </div>
+
         <div className="text-center mb-16">
           <FadeUpText>
             <motion.p 
