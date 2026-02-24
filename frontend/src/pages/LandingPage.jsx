@@ -962,29 +962,54 @@ const ExperienceSection = () => {
               Only experiences.
             </motion.span>
           </motion.p>
-        </RevealSection>
+        </div>
 
-        {/* Pyramid Structure */}
+        <AnimatedDivider className="mb-12 max-w-sm mx-auto" />
+
+        {/* Pyramid Structure with enhanced animations */}
         <div className="max-w-4xl mx-auto">
           {experiences.map((exp, idx) => {
-            const width = 100 - (idx * 15);
+            const width = 100 - (idx * 12);
             return (
-              <RevealSection key={idx} delay={idx * 0.1}>
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: idx * 0.12, ease: "easeOut" }}
+              >
                 <motion.div 
                   className="mx-auto mb-4 p-6 bg-white/60 border border-sand hover:border-accent-gold/50 transition-all cursor-pointer relative overflow-hidden group"
                   style={{ width: `${width}%` }}
-                  whileHover={{ scale: 1.02, boxShadow: "0 10px 40px rgba(184, 166, 126, 0.15)" }}
+                  whileHover={{ scale: 1.03, boxShadow: "0 15px 50px rgba(184, 166, 126, 0.2)" }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <div className="absolute top-0 left-0 w-1 h-full bg-accent-gold/30 group-hover:bg-accent-gold transition-colors" />
-                  <div className="flex items-start gap-4">
-                    <span className="font-sans text-2xl text-accent-gold/50 font-light">{idx + 1}</span>
+                  {/* Animated side bar */}
+                  <motion.div 
+                    className="absolute top-0 left-0 w-1 bg-accent-gold/30 group-hover:bg-accent-gold transition-colors"
+                    initial={{ height: 0 }}
+                    whileInView={{ height: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.1 + 0.3 }}
+                  />
+                  {/* Shimmer effect on hover */}
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-accent-gold/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+                  />
+                  <div className="flex items-start gap-4 relative z-10">
+                    <motion.span 
+                      className="font-sans text-3xl text-accent-gold/40 font-light"
+                      whileHover={{ scale: 1.2, color: "rgba(184, 166, 126, 0.8)" }}
+                    >
+                      {idx + 1}
+                    </motion.span>
                     <div>
-                      <h3 className="font-serif text-lg md:text-xl text-deep-charcoal mb-2">{exp.title}</h3>
+                      <h3 className="font-serif text-lg md:text-xl text-deep-charcoal mb-2 group-hover:text-accent-gold transition-colors duration-300">{exp.title}</h3>
                       <p className="font-sans text-charcoal/70 text-sm md:text-base">{exp.desc}</p>
                     </div>
                   </div>
                 </motion.div>
-              </RevealSection>
+              </motion.div>
             );
           })}
         </div>
@@ -1010,13 +1035,13 @@ const JourneySection = () => {
       
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
-          <RevealSection className="flex">
+          <SlideIn direction="left" className="flex">
             <motion.div 
-              className="relative w-full overflow-hidden"
+              className="relative w-full overflow-hidden group"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5 }}
             >
-              <img 
+              <motion.img 
                 src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" 
                 alt="Mountain journey" 
                 className="w-full h-full object-cover"
