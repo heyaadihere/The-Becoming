@@ -123,9 +123,10 @@ export default function ContactPage() {
               {/* Image */}
               <div className="relative flex-1 min-h-[400px] lg:min-h-[500px] overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1518173946687-a4c036bc3e77?w=1200&q=80" 
+                  src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80" 
                   alt="Serene nature" 
                   className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80'; }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-cream/60 to-transparent" />
               </div>
