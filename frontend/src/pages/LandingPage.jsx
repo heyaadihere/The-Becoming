@@ -1132,19 +1132,19 @@ const AboutSection = () => {
               title: "A Space for Growth", 
               desc: "Where learning meets transformation, and every moment becomes an opportunity for discovery.", 
               icon: "01",
-              image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80"
+              image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&q=90"
             },
             { 
               title: "A Journey Within", 
               desc: "An invitation to explore your depths, reconnect with your essence, and embrace your potential.", 
               icon: "02",
-              image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=400&q=80"
+              image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&q=90"
             },
             { 
               title: "A Circle of Connection", 
               desc: "A community of like-minded souls, sharing experiences and growing together.", 
               icon: "03",
-              image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80"
+              image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=90"
             }
           ].map((item, idx) => (
             <StaggerItem key={idx}>
@@ -1212,11 +1212,11 @@ const AboutSection = () => {
 // Experience Section - Pyramid Structure with Learning
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Learning & Unlearning", desc: "The foundation of growth - opening your mind to new perspectives and releasing what no longer serves you.", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&q=80" },
-    { title: "Self-Discovery", desc: "Exploring your inner landscape, understanding your patterns, and embracing your authentic self.", image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80" },
-    { title: "Creative Expression", desc: "Channeling your emotions and insights through art, music, writing, and movement.", image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&q=80" },
+    { title: "Learning & Unlearning", desc: "The foundation of growth - opening your mind to new perspectives and releasing what no longer serves you.", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=90" },
+    { title: "Self-Discovery", desc: "Exploring your inner landscape, understanding your patterns, and embracing your authentic self.", image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=90" },
+    { title: "Creative Expression", desc: "Channeling your emotions and insights through art, music, writing, and movement.", image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=90" },
     { title: "Mindful Connection", desc: "Building meaningful relationships with yourself, others, and the world around you.", image: "https://images.unsplash.com/photo-1740065592719-052d3e5ec6fb?w=800&q=90" },
-    { title: "Transformation", desc: "The culmination of your journey - stepping into the person you're becoming.", image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=400&q=80" }
+    { title: "Transformation", desc: "The culmination of your journey - stepping into the person you're becoming.", image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=800&q=90" }
   ];
 
   return (
