@@ -1557,7 +1557,7 @@ const CTASection = ({ onBeginJourney }) => {
   );
 };
 
-// Contact Section with required fields
+// Contact Section with required fields - Warm cream theme
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
@@ -1580,28 +1580,32 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="py-20 bg-deep-charcoal text-white relative overflow-hidden">
-      <PulsingDotsBackground variant="dark" />
+    <section className="py-20 bg-soft-cream relative overflow-hidden">
+      <PulsingDotsBackground variant="light" />
       
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-stretch">
           <div className="flex flex-col">
-            <Logo className="h-48 md:h-56 lg:h-64 mb-10" variant="light" />
-            <p className="font-sans text-white/70 mb-8">
+            <Logo className="h-48 md:h-56 lg:h-64 mb-10" variant="dark" />
+            <p className="font-sans text-charcoal/80 mb-8">
               A curated human experience for those ready to embrace growth and transformation.
             </p>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-accent-gold" />
-                <span className="font-sans text-white/80">hello@thebecoming.in</span>
+                <div className="w-10 h-10 bg-accent-gold/10 flex items-center justify-center rounded-full">
+                  <Mail className="w-5 h-5 text-accent-gold" />
+                </div>
+                <span className="font-sans text-deep-charcoal">hello@thebecoming.in</span>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-accent-gold" />
-                <span className="font-sans text-white/80">[Contact Number]</span>
+                <div className="w-10 h-10 bg-accent-gold/10 flex items-center justify-center rounded-full">
+                  <Phone className="w-5 h-5 text-accent-gold" />
+                </div>
+                <span className="font-sans text-deep-charcoal">[Contact Number]</span>
               </div>
             </div>
-            <div className="mt-auto pt-8 border-t border-white/10">
-              <p className="font-sans text-white/50 text-sm">
+            <div className="mt-auto pt-8 border-t border-sand">
+              <p className="font-sans text-charcoal/60 text-sm">
                 <a href="#" className="hover:text-accent-gold transition-colors">Privacy Policy</a> · 
                 <a href="#" className="hover:text-accent-gold transition-colors ml-2">Terms of Service</a>
               </p>
@@ -1609,14 +1613,14 @@ const ContactSection = () => {
           </div>
 
           <div className="flex flex-col">
-            <h3 className="font-serif text-2xl mb-6">Send us a message</h3>
+            <h3 className="font-serif text-2xl text-deep-charcoal mb-6">Send us a message</h3>
             <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
               <input
                 type="text"
                 placeholder="Your Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans"
+                className="w-full bg-white/60 border border-sand px-4 py-3 text-deep-charcoal placeholder-charcoal/40 focus:border-accent-gold focus:outline-none font-sans"
               />
               <input
                 type="email"
@@ -1624,7 +1628,7 @@ const ContactSection = () => {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 required
-                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans"
+                className="w-full bg-white/60 border border-sand px-4 py-3 text-deep-charcoal placeholder-charcoal/40 focus:border-accent-gold focus:outline-none font-sans"
               />
               <input
                 type="tel"
@@ -1632,7 +1636,7 @@ const ContactSection = () => {
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 required
-                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans"
+                className="w-full bg-white/60 border border-sand px-4 py-3 text-deep-charcoal placeholder-charcoal/40 focus:border-accent-gold focus:outline-none font-sans"
               />
               <textarea
                 placeholder="Your Message *"
@@ -1640,7 +1644,7 @@ const ContactSection = () => {
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 required
                 rows={4}
-                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans resize-none flex-1"
+                className="w-full bg-white/60 border border-sand px-4 py-3 text-deep-charcoal placeholder-charcoal/40 focus:border-accent-gold focus:outline-none font-sans resize-none flex-1"
               />
               <motion.button 
                 type="submit" 
@@ -1653,16 +1657,26 @@ const ContactSection = () => {
             </form>
           </div>
         </div>
+      </div>
+    </section>
+  );
+};
 
-        <div className="mt-16 pt-8 border-t border-white/10 text-center">
-          <p className="font-sans text-white/50 text-sm">
+// Footer Section - Warm cream theme
+const FooterSection = () => {
+  return (
+    <footer className="py-8 bg-cream border-t border-sand">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <Logo className="h-16" variant="dark" />
+          <p className="font-sans text-charcoal/60 text-sm text-center md:text-right">
             © {new Date().getFullYear()} The Becoming. All rights reserved. 
             <span className="mx-2">·</span>
             Powered by <a href="https://techbook.co.in/" target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:underline">Techbook Technologies</a>
           </p>
         </div>
       </div>
-    </section>
+    </footer>
   );
 };
 
@@ -1672,15 +1686,17 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-cream" data-testid="landing-page">
-      <Toaster position="top-center" toastOptions={{ style: { background: '#1a1a1a', color: '#fff', border: '1px solid rgba(184, 166, 126, 0.3)' } }} />
+      <Toaster position="top-center" toastOptions={{ style: { background: '#FAF7F2', color: '#1a1a1a', border: '1px solid rgba(184, 166, 126, 0.3)' } }} />
       <Navigation onBeginJourney={() => setShowQuestionnaire(true)} />
       <HeroSection onBeginJourney={() => setShowQuestionnaire(true)} />
       <AboutSection />
       <ExperienceSection />
       <JourneySection />
-      <FAQSection />
+      <AccommodationSection />
       <CTASection onBeginJourney={() => setShowQuestionnaire(true)} />
+      <FAQSection />
       <ContactSection />
+      <FooterSection />
       <QuestionnaireModal isOpen={showQuestionnaire} onClose={() => setShowQuestionnaire(false)} />
     </div>
   );
