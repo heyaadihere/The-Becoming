@@ -115,23 +115,23 @@ export default function ContactPage() {
             
             {/* Left Side - Image & Info */}
             <motion.div 
-              className="flex flex-col"
+              className="flex flex-col relative"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
               {/* Image */}
-              <div className="relative flex-1 min-h-[300px] lg:min-h-0 mb-8 lg:mb-0 overflow-hidden">
+              <div className="relative flex-1 min-h-[400px] lg:min-h-[500px] overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1518173946687-a4c036bc3e77?w=800&q=80" 
+                  src="https://images.unsplash.com/photo-1518173946687-a4c036bc3e77?w=1200&q=80" 
                   alt="Serene nature" 
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-cream/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-cream/60 to-transparent" />
               </div>
               
-              {/* Contact Info */}
-              <div className="lg:absolute lg:bottom-0 lg:left-0 lg:right-0 p-8 bg-cream/90 backdrop-blur-sm">
+              {/* Contact Info Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-8 bg-cream/95 backdrop-blur-sm">
                 <h3 className="font-serif text-2xl text-deep-charcoal mb-6">Get in Touch</h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
