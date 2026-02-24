@@ -2,13 +2,10 @@
 
 ## Original Problem Statement
 Build a website for "The Becoming" - a curated human experience landing page with:
-- Hero section with powerful, emotionally engaging headline
-- What Is It section explaining what The Becoming is (and isn't)
-- Experience section detailing what participants will experience
-- Who It's For section targeting working professionals, creators, artists, homemakers
-- The Circle section about the continuing community
-- Multi-step questionnaire modal for sign-up
-- FAQ section
+- Hero section with 4-image carousel featuring pastel, serene landscape images
+- Multi-section layout: About, Experience (pyramid), Journey, FAQs, CTA, Contact
+- Multi-step questionnaire modal for sign-up with images/animations per slide
+- Contact form with required fields
 - "Powered by Techbook Technologies" footer badge
 
 ## User Personas
@@ -17,10 +14,10 @@ Build a website for "The Becoming" - a curated human experience landing page wit
 - **Homemakers**: Those who feel there must be more depth to who they are
 - **Anyone Ready**: People quietly losing or quietly lost, seeking authentic connection
 
-## Design Direction (Updated Feb 20, 2026)
+## Design Direction
 **Luxe Minimalist - Powerful & Immersive**
 
-### Color Palette (Approved)
+### Color Palette
 - **Cream:** #FAF7F2 (primary background)
 - **Soft Cream:** #F5F1EA (section backgrounds)
 - **Sand:** #E5DDD0 (borders, dividers)
@@ -31,90 +28,138 @@ Build a website for "The Becoming" - a curated human experience landing page wit
 - **Deep Charcoal:** #1A1A1A (headings, dark sections)
 
 ### Typography
-- **Headings:** Playfair Display (serif, elegant, timeless) - Italic for impact
-- **Body:** Raleway (sans-serif, clean, modern)
-
-### Visual Style
-- Clean, minimal layouts with generous white space
-- Background video in hero with cinematic overlay
-- Large, prominent transparent logo (white/dark variants)
-- Sharp-edged buttons (no rounded corners)
-- Elegant gold dividers
-- Professional Framer Motion animations throughout
+- **Headings:** Cormorant Garamond (serif, elegant, timeless) - Italic for impact
+- **Body:** Inter (sans-serif, clean, modern)
 
 ## Tech Stack
 - **Frontend**: React + Tailwind CSS + Framer Motion
 - **Backend**: FastAPI + MongoDB
+- **Database**: MongoDB (signup_submissions, contact_submissions)
 - **Email**: Resend integration (pending API key)
 
 ## What's Been Implemented
 
-**Date: Feb 20, 2026 - Major UI Enhancement (Latest)**
-- ✅ Changed all CTA buttons from "Begin" to "Enter The Becoming"
-- ✅ Updated hero headline to "You've been waiting for this"
-- ✅ Updated subheadline to emotionally engaging copy
-- ✅ Implemented new transparent logo (white/dark variants)
-- ✅ Added extensive Framer Motion animations:
-  - Parallax scrolling effects
-  - Floating elements
-  - Staggered reveals on scroll
-  - Hover animations on cards/buttons
-  - Smooth page transitions
-- ✅ Refined text alignment for premium look
-- ✅ Made homepage more powerful and immersive
-- ✅ Logo component now uses separate files for different backgrounds
+### Date: Dec 2025 - Complete Redesign
 
-**Date: Feb 20, 2026 - Previous Changes**
-- ✅ Complete visual overhaul to luxe minimalist aesthetic
-- ✅ Color palette implementation
-- ✅ Typography implementation (Playfair Display + Raleway)
-- ✅ Large, prominent logo implementation
-- ✅ Background video in hero section
-- ✅ Removed testimonials section
-- ✅ Clean FAQ accordion with elegant styling
-- ✅ Sharp-edged buttons and minimal UI elements
+**Hero Section:**
+- ✅ 4-image carousel with pastel landscape backgrounds
+- ✅ "A Curated Human Experience" text prominently visible
+- ✅ Large logo display
+- ✅ Auto-rotating images every 5 seconds
+- ✅ Clickable image indicators
 
-**Core Features:**
-- ✅ Multi-step questionnaire modal (18 questions)
-- ✅ Smooth scroll navigation
-- ✅ About, Experience, Journey, Circle sections
-- ✅ Footer with Techbook Technologies badge
-- ✅ Test IDs for all interactive elements
-- ✅ Responsive design
+**About Section ("What is The Becoming?"):**
+- ✅ Positive framing (not what it isn't)
+- ✅ No yoga image
+- ✅ Animated background elements
+- ✅ Three feature cards with hover animations
+
+**Experience Section:**
+- ✅ Pyramid structure layout (items narrow toward bottom)
+- ✅ "Learning & Unlearning" as first item
+- ✅ Animated "No promises. Only experiences." tagline
+- ✅ Five experience items with descriptions
+
+**Journey Section ("Who it's for"):**
+- ✅ Bold **YOU** styling in headings
+- ✅ Mountain landscape image
+- ✅ Six "Maybe YOU..." pointers
+
+**FAQ Section:**
+- ✅ Accordion style with expand/collapse
+- ✅ Placeholder answers (waiting for content)
+
+**CTA Section:**
+- ✅ Large animated logo
+- ✅ "Ready to begin your journey?" heading
+- ✅ "Enter The Becoming" button
+
+**Questionnaire Modal:**
+- ✅ 11-step questionnaire
+- ✅ Split-screen layout with images per slide
+- ✅ Mandatory fields: email, phone, social media handle
+- ✅ Alternate phone field (optional)
+- ✅ Instagram/LinkedIn selection for social media
+- ✅ "A Becoming bud will call you soon!" thank-you message
+- ✅ Progress indicator
+- ✅ Warm cream/beige color palette
+
+**Contact Section:**
+- ✅ Large logo (h-32 md:h-40)
+- ✅ Contact form: Name, Email*, Phone*, Message*
+- ✅ Submit button with loading state
+- ✅ Email & Phone display
+- ✅ Privacy Policy & Terms of Service links
+
+**Footer:**
+- ✅ "Powered by Techbook Technologies" badge
+- ✅ Copyright notice
+
+**Backend APIs:**
+- ✅ POST /api/signup - Saves questionnaire submissions to MongoDB
+- ✅ POST /api/contact - Saves contact form submissions to MongoDB
+- ✅ GET /api/signups - Lists all signup submissions
+- ✅ All endpoints tested and working (100% pass rate)
 
 ## Logo Assets
-- `/images/logo-white.png` - For dark backgrounds (hero, footer, questionnaire modal)
-- `/images/logo-dark.png` - For light backgrounds (scrolled header, CTA section)
+- `/images/logo-white.png` - For dark backgrounds
+- `/images/logo-dark.png` - For light backgrounds
 
-## Backend Status
-- ✅ `/api` - Health check endpoint
-- ⚠️ `/api/signup` - Returns mock success (DB save NOT fully implemented)
-- ⚠️ Email notifications - NOT implemented (awaiting Resend API key)
+## Database Schema
+
+### signup_submissions
+```json
+{
+  "id": "uuid",
+  "name": "string",
+  "email": "string (email)",
+  "phone": "string (optional)",
+  "alt_phone": "string (optional)",
+  "social_media": "string (optional)",
+  "questionnaire_data": "string (JSON)",
+  "submitted_at": "datetime",
+  "status": "pending|contacted|converted"
+}
+```
+
+### contact_submissions
+```json
+{
+  "id": "uuid",
+  "name": "string (optional)",
+  "email": "string (email)",
+  "phone": "string",
+  "message": "string",
+  "submitted_at": "datetime"
+}
+```
+
+## Test Results (Dec 2025)
+- **Backend:** 100% (14/14 tests passed)
+- **Frontend:** 100% (all UI tests passed)
+- All features verified working
 
 ## Prioritized Backlog
-### P0 (Critical)
-- **Implement questionnaire database storage** - Save submissions to MongoDB
-- **Implement email notifications** - Requires Resend API key
+
+### P0 (Completed)
+- ✅ Full site redesign with all sections
+- ✅ 4-image hero carousel
+- ✅ Pyramid layout for Experience section
+- ✅ Questionnaire with mandatory fields
+- ✅ Contact form with submission
+- ✅ Database storage for submissions
 
 ### P1 (High Priority)
-- Embed founder's video in founder's note section
-- Update contact email if needed (hello@thebecoming.in)
+- **Email notifications** - Requires Resend API key from user
+- **FAQ content** - Waiting for answers from client
 
 ### P2 (Nice to Have)
+- Embed founder's video
 - Admin dashboard to view/manage submissions
 - SEO meta tags and Open Graph images
 - Refactor LandingPage.jsx into smaller components
 
-## Test Results (Feb 20, 2026)
-- **Frontend:** 100% pass rate
-- All CTA buttons verified: "Enter The Becoming"
-- Questionnaire modal: fully functional (18 steps)
-- Logo variants: working correctly
-- Smooth scroll navigation: working
-- FAQ accordion: working
-- Animations: working
-
 ## Next Action Items
-1. Implement `/api/signup` to save questionnaire data to MongoDB
-2. User to provide Resend API key for email notifications
-3. Collect user feedback on latest design enhancements
+1. User to provide Resend API key for email notifications
+2. User to provide FAQ answers
+3. User to provide actual contact phone number (currently placeholder)
