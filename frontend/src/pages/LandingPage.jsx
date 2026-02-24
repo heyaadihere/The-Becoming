@@ -1127,7 +1127,7 @@ const AboutSection = () => {
 
         <ScaleIn className="text-center">
           <motion.div
-            className="py-12 border-t border-b border-sand relative"
+            className="py-8 md:py-12 border-t border-b border-sand relative"
           >
             <motion.div
               className="absolute left-1/2 -translate-x-1/2 -top-3 w-6 h-6 bg-cream flex items-center justify-center"
@@ -1140,7 +1140,7 @@ const AboutSection = () => {
             </motion.div>
             <AnimatedText 
               text="Only experiences that remind you of what's real." 
-              className="font-serif text-2xl md:text-3xl text-deep-charcoal italic"
+              className="font-serif text-lg md:text-2xl lg:text-3xl text-deep-charcoal italic px-4"
             />
           </motion.div>
         </ScaleIn>
