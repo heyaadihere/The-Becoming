@@ -1160,12 +1160,12 @@ const ExperienceSection = () => {
   ];
 
   return (
-    <section id="experience" className="py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
+    <section id="experience" className="py-16 md:py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
       <GentleWavesBackground variant="light" />
       
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
         {/* Image strip at the top - hide on mobile, show as scroll on tablet+ */}
-        <div className="hidden sm:flex gap-2 mb-16 overflow-hidden">
+        <div className="hidden sm:flex gap-2 mb-10 md:mb-16 overflow-hidden">
           {experiences.map((exp, idx) => (
             <motion.div 
               key={idx} 
@@ -1180,10 +1180,10 @@ const ExperienceSection = () => {
           ))}
         </div>
 
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <FadeUpText>
             <motion.p 
-              className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
+              className="font-sans text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] text-accent-gold uppercase mb-3 md:mb-4"
               initial={{ opacity: 0, letterSpacing: "0.1em" }}
               whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
               viewport={{ once: true }}
@@ -1193,13 +1193,13 @@ const ExperienceSection = () => {
             </motion.p>
           </FadeUpText>
           <FadeUpText delay={0.1}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal mb-4 md:mb-6">
               What You Will Experience
             </h2>
           </FadeUpText>
           {/* Animated tagline with typewriter effect */}
           <motion.p
-            className="font-serif text-2xl md:text-3xl text-charcoal/80 italic"
+            className="font-serif text-lg md:text-2xl lg:text-3xl text-charcoal/80 italic px-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
