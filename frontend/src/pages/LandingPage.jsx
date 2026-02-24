@@ -471,7 +471,7 @@ const HeroSection = ({ onBeginJourney }) => {
           className="absolute inset-0"
         >
           <img src={heroImages[currentImage].url} alt={heroImages[currentImage].alt} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-cream/40 via-transparent to-cream/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/40 to-cream/70" />
         </motion.div>
       </AnimatePresence>
 
@@ -487,40 +487,43 @@ const HeroSection = ({ onBeginJourney }) => {
       </div>
       
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
-          <Logo className="h-48 md:h-64 lg:h-80 w-auto mx-auto mb-8" variant="dark" />
-        </motion.div>
-        
-        <motion.p 
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-          className="font-sans text-lg md:text-xl tracking-[0.3em] text-accent-gold uppercase mb-6"
-        >
-          A Curated Human Experience
-        </motion.p>
-        
-        <motion.h1 
-          initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
-          className="font-serif text-4xl md:text-5xl lg:text-6xl text-deep-charcoal mb-6 leading-tight"
-        >
-          You've always known<br />
-          <span className="text-accent-gold italic">there's more to who you are</span>
-        </motion.h1>
-        
-        <motion.p 
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
-          className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto mb-10"
-        >
-          This is where you stop searching and start becoming.
-        </motion.p>
-        
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <motion.button onClick={onBeginJourney} className="btn-primary text-base px-10 py-4" whileHover={{ scale: 1.05 }} data-testid="hero-cta">
-            Enter The Becoming
-          </motion.button>
-          <motion.button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="btn-secondary text-base px-10 py-4" whileHover={{ scale: 1.05 }}>
-            Discover More
-          </motion.button>
-        </motion.div>
+        {/* Text container with subtle backdrop for readability */}
+        <div className="bg-cream/70 backdrop-blur-sm rounded-3xl py-12 px-8 md:px-16">
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
+            <Logo className="h-40 md:h-52 lg:h-64 w-auto mx-auto mb-6" variant="dark" />
+          </motion.div>
+          
+          <motion.p 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+            className="font-sans text-base md:text-lg tracking-[0.3em] text-accent-gold uppercase mb-4"
+          >
+            A Curated Human Experience
+          </motion.p>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
+            className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-4 leading-tight"
+          >
+            You've always known<br />
+            <span className="text-accent-gold italic">there's more to who you are</span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
+            className="font-sans text-base md:text-lg text-charcoal max-w-2xl mx-auto mb-8"
+          >
+            This is where you stop searching and start becoming.
+          </motion.p>
+          
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.button onClick={onBeginJourney} className="btn-primary text-base px-10 py-4" whileHover={{ scale: 1.05 }} data-testid="hero-cta">
+              Enter The Becoming
+            </motion.button>
+            <motion.button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="btn-secondary text-base px-10 py-4" whileHover={{ scale: 1.05 }}>
+              Discover More
+            </motion.button>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
