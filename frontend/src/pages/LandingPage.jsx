@@ -898,7 +898,7 @@ const AboutSection = () => {
               className="font-serif text-2xl md:text-3xl text-deep-charcoal italic"
             />
           </motion.div>
-        </RevealSection>
+        </ScaleIn>
       </div>
     </section>
   );
@@ -919,12 +919,24 @@ const ExperienceSection = () => {
       <GentleWavesBackground variant="light" />
       
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-        <RevealSection className="text-center mb-16">
-          <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">The Journey</p>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
-            What You Will Experience
-          </h2>
-          {/* Animated tagline */}
+        <div className="text-center mb-16">
+          <FadeUpText>
+            <motion.p 
+              className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
+              initial={{ opacity: 0, letterSpacing: "0.1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              The Journey
+            </motion.p>
+          </FadeUpText>
+          <FadeUpText delay={0.1}>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
+              What You Will Experience
+            </h2>
+          </FadeUpText>
+          {/* Animated tagline with typewriter effect */}
           <motion.p
             className="font-serif text-2xl md:text-3xl text-charcoal/80 italic"
             initial={{ opacity: 0, y: 20 }}
@@ -933,18 +945,18 @@ const ExperienceSection = () => {
             viewport={{ once: true }}
           >
             <motion.span
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
               viewport={{ once: true }}
             >
               No promises.
             </motion.span>{" "}
             <motion.span
               className="text-accent-gold"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1 }}
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 1 }}
               viewport={{ once: true }}
             >
               Only experiences.
