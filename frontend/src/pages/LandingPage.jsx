@@ -539,7 +539,7 @@ const AboutSection = () => {
             What is The Becoming?
           </h2>
           <p className="font-sans text-lg text-charcoal/80 max-w-3xl mx-auto">
-            The Becoming is a <span className="text-accent-gold font-medium">transformative human experience</span> — 
+            The Becoming is a <span className="text-accent-gold font-medium">transformative human experience</span> - 
             a sacred space for those ready to embrace growth, learning, and self-discovery.
           </p>
         </RevealSection>
@@ -581,11 +581,11 @@ const AboutSection = () => {
 // Experience Section - Pyramid Structure with Learning
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Learning & Unlearning", desc: "The foundation of growth — opening your mind to new perspectives and releasing what no longer serves you." },
+    { title: "Learning & Unlearning", desc: "The foundation of growth - opening your mind to new perspectives and releasing what no longer serves you." },
     { title: "Self-Discovery", desc: "Exploring your inner landscape, understanding your patterns, and embracing your authentic self." },
     { title: "Creative Expression", desc: "Channeling your emotions and insights through art, music, writing, and movement." },
     { title: "Mindful Connection", desc: "Building meaningful relationships with yourself, others, and the world around you." },
-    { title: "Transformation", desc: "The culmination of your journey — stepping into the person you're becoming." }
+    { title: "Transformation", desc: "The culmination of your journey - stepping into the person you're becoming." }
   ];
 
   return (
