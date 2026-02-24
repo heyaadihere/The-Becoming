@@ -836,7 +836,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                       {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Submitting</> : <>Submit <Check className="w-4 h-4" /></>}
                     </motion.button>
                   ) : (
-                    <motion.button onClick={handleNext} disabled={!canProceed()} className="btn-primary flex items-center gap-2 disabled:opacity-50" whileHover={{ scale: 1.05 }}>
+                    <motion.button onClick={handleNext} className="btn-primary flex items-center gap-2" whileHover={{ scale: 1.05 }}>
                       Continue <ArrowRight className="w-4 h-4" />
                     </motion.button>
                   )}
