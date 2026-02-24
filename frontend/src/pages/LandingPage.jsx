@@ -696,7 +696,7 @@ const HeroSection = ({ onBeginJourney }) => {
 const AboutSection = () => {
   return (
     <section id="about" className="py-24 lg:py-32 bg-cream relative overflow-hidden">
-      <AnimatedBackground variant="light" />
+      <FloatingOrbsBackground variant="light" />
       
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
         <RevealSection className="text-center mb-16">
