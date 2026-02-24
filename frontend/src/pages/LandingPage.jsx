@@ -1045,38 +1045,92 @@ const JourneySection = () => {
                 src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" 
                 alt="Mountain journey" 
                 className="w-full h-full object-cover"
+                initial={{ scale: 1.1 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-cream/30 to-transparent" />
+              {/* Animated corner accents */}
+              <motion.div 
+                className="absolute top-4 left-4 w-12 h-12 border-l-2 border-t-2 border-accent-gold/50"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              />
+              <motion.div 
+                className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-accent-gold/50"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.7, duration: 0.5 }}
+              />
             </motion.div>
-          </RevealSection>
+          </SlideIn>
           
-          <RevealSection delay={0.2} className="flex flex-col justify-center">
-            <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">Is This For You?</p>
-            <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal mb-8">
-              This May Be For <span className="text-accent-gold">YOU</span>
-            </h2>
+          <SlideIn direction="right" className="flex flex-col justify-center">
+            <FadeUpText>
+              <motion.p 
+                className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
+                initial={{ opacity: 0, letterSpacing: "0.1em" }}
+                whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+              >
+                Is This For You?
+              </motion.p>
+            </FadeUpText>
+            <FadeUpText delay={0.1}>
+              <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal mb-8">
+                This May Be For <motion.span 
+                  className="text-accent-gold inline-block"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, duration: 0.5, type: "spring" }}
+                >YOU</motion.span>
+              </h2>
+            </FadeUpText>
             
-            <p className="font-sans text-charcoal/80 text-lg mb-8">
-              The Becoming welcomes individuals aged 21-65 who are ready to embark on a journey of growth and self-discovery.
-            </p>
+            <FadeUpText delay={0.2}>
+              <p className="font-sans text-charcoal/80 text-lg mb-8">
+                The Becoming welcomes individuals aged 21-65 who are ready to embark on a journey of growth and self-discovery.
+              </p>
+            </FadeUpText>
             
             <div className="space-y-4">
-              <p className="font-serif text-xl text-deep-charcoal">Maybe <span className="font-bold text-accent-gold">YOU</span>...</p>
-              {forYou.map((item, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-start gap-4 py-3 border-b border-sand/60"
-                >
-                  <span className="w-2 h-2 bg-accent-gold rounded-full mt-2 flex-shrink-0" />
-                  <p className="font-sans text-charcoal/80">{item}</p>
-                </motion.div>
-              ))}
+              <motion.p 
+                className="font-serif text-xl text-deep-charcoal"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+              >
+                Maybe <motion.span 
+                  className="font-bold text-accent-gold inline-block"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >YOU</motion.span>...
+              </motion.p>
+              <StaggerContainer staggerDelay={0.08}>
+                {forYou.map((item, idx) => (
+                  <StaggerItem key={idx}>
+                    <motion.div 
+                      className="flex items-start gap-4 py-3 border-b border-sand/60 group cursor-pointer"
+                      whileHover={{ x: 10, backgroundColor: "rgba(184, 166, 126, 0.05)" }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <motion.span 
+                        className="w-2 h-2 bg-accent-gold rounded-full mt-2 flex-shrink-0"
+                        whileHover={{ scale: 1.5 }}
+                      />
+                      <p className="font-sans text-charcoal/80 group-hover:text-deep-charcoal transition-colors">{item}</p>
+                    </motion.div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
             </div>
-          </RevealSection>
+          </SlideIn>
         </div>
       </div>
     </section>
