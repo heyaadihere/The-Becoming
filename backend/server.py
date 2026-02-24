@@ -75,10 +75,25 @@ class SignupSubmissionCreate(BaseModel):
     name: str
     email: EmailStr
     phone: Optional[str] = None
-    why_becoming: str
-    current_state: str
-    what_seeking: str
+    alt_phone: Optional[str] = None
+    social_media: Optional[str] = None
     questionnaire_data: Optional[str] = None
+
+class ContactSubmission(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: Optional[str] = None
+    email: EmailStr
+    phone: str
+    message: str
+    submitted_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class ContactSubmissionCreate(BaseModel):
+    name: Optional[str] = None
+    email: EmailStr
+    phone: str
+    message: str
 
 # Routes
 @api_router.get("/")
