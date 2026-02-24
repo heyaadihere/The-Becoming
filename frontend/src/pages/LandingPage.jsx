@@ -1228,21 +1228,69 @@ const CTASection = ({ onBeginJourney }) => {
     <section className="py-24 lg:py-32 bg-cream relative overflow-hidden">
       <ShimmerBackground variant="light" />
       
-      <RevealSection className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity }}>
-          <Logo className="h-48 md:h-64 mx-auto mb-10" />
-        </motion.div>
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <ScaleIn>
+          <motion.div 
+            animate={{ y: [0, -15, 0] }} 
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, type: "spring" }}
+            >
+              <Logo className="h-48 md:h-64 mx-auto mb-10" />
+            </motion.div>
+          </motion.div>
+        </ScaleIn>
         
-        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
-          Ready to begin <span className="text-accent-gold italic">your journey</span>?
-        </h2>
-        <p className="font-sans text-charcoal/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-          If something within you resonates with this experience, take the first step. We'd love to hear from you.
-        </p>
-        <motion.button onClick={onBeginJourney} className="btn-primary text-base px-12 py-5" whileHover={{ scale: 1.05 }} data-testid="cta-button">
-          Enter The Becoming
-        </motion.button>
-      </RevealSection>
+        <FadeUpText delay={0.2}>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
+            Ready to begin{" "}
+            <motion.span 
+              className="text-accent-gold italic inline-block"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
+              your journey
+            </motion.span>?
+          </h2>
+        </FadeUpText>
+        <FadeUpText delay={0.3}>
+          <p className="font-sans text-charcoal/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+            If something within you resonates with this experience, take the first step. We'd love to hear from you.
+          </p>
+        </FadeUpText>
+        <FadeUpText delay={0.4}>
+          <motion.button 
+            onClick={onBeginJourney} 
+            className="btn-primary text-base px-12 py-5 relative overflow-hidden group" 
+            whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(184, 166, 126, 0.3)" }} 
+            whileTap={{ scale: 0.98 }}
+            data-testid="cta-button"
+          >
+            <motion.span 
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+            />
+            <span className="relative z-10">Enter The Becoming</span>
+          </motion.button>
+        </FadeUpText>
+        
+        {/* Decorative elements */}
+        <motion.div 
+          className="absolute top-20 left-10 w-20 h-20 border border-accent-gold/20 rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-16 h-16 border border-accent-gold/15"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
     </section>
   );
 };
