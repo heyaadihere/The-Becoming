@@ -602,6 +602,9 @@ const Navigation = ({ onBeginJourney }) => {
               {item}
             </button>
           ))}
+          <Link to="/contact" className="font-sans text-sm tracking-wide text-deep-charcoal/80 hover:text-accent-gold transition-colors">
+            Contact
+          </Link>
         </nav>
         <motion.button onClick={onBeginJourney} className="btn-primary text-sm" whileHover={{ scale: 1.05 }} data-testid="nav-cta">
           Enter The Becoming
