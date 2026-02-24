@@ -1309,6 +1309,96 @@ const JourneySection = () => {
   );
 };
 
+// Accommodation Section - Before FAQ
+const AccommodationSection = () => {
+  const accommodationImages = [
+    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80",
+    "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80",
+    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80",
+    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80"
+  ];
+
+  return (
+    <section className="py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
+      <GentleWavesBackground variant="light" />
+      
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
+        <div className="text-center mb-16">
+          <FadeUpText>
+            <motion.p 
+              className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
+              initial={{ opacity: 0, letterSpacing: "0.1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              Your Sanctuary
+            </motion.p>
+          </FadeUpText>
+          <FadeUpText delay={0.1}>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
+              Accommodation
+            </h2>
+          </FadeUpText>
+          <FadeUpText delay={0.2}>
+            <p className="font-sans text-lg text-charcoal/80 max-w-2xl mx-auto">
+              Rest and rejuvenate in thoughtfully designed spaces that nurture your journey of transformation.
+            </p>
+          </FadeUpText>
+        </div>
+
+        <AnimatedDivider className="mb-12 max-w-sm mx-auto" />
+
+        {/* Image Gallery */}
+        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12" staggerDelay={0.1}>
+          {accommodationImages.map((img, idx) => (
+            <StaggerItem key={idx}>
+              <motion.div 
+                className="relative aspect-[4/5] overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.4 }}
+              >
+                <img 
+                  src={img} 
+                  alt={`Accommodation ${idx + 1}`} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <motion.div 
+                  className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-white/0 group-hover:border-white/60 transition-all duration-300"
+                />
+                <motion.div 
+                  className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-white/0 group-hover:border-white/60 transition-all duration-300"
+                />
+              </motion.div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* Features */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { title: "Serene Surroundings", desc: "Nestled in nature, away from the chaos of everyday life." },
+            { title: "Comfortable Spaces", desc: "Thoughtfully designed rooms for rest and reflection." },
+            { title: "Nourishing Meals", desc: "Wholesome cuisine that feeds body and soul." }
+          ].map((feature, idx) => (
+            <FadeUpText key={idx} delay={idx * 0.1}>
+              <motion.div 
+                className="text-center p-6 bg-white/40 border border-sand hover:border-accent-gold/50 transition-all"
+                whileHover={{ y: -5 }}
+              >
+                <span className="text-3xl text-accent-gold/40 font-serif block mb-3">0{idx + 1}</span>
+                <h3 className="font-serif text-xl text-deep-charcoal mb-2">{feature.title}</h3>
+                <p className="font-sans text-charcoal/70 text-sm">{feature.desc}</p>
+              </motion.div>
+            </FadeUpText>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // FAQ Section - Placeholder for Mitin's answers
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -1321,7 +1411,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-cream relative overflow-hidden">
       <RisingParticlesBackground variant="light" />
       
       <div className="max-w-3xl mx-auto px-6 lg:px-12 relative z-10">
@@ -1334,11 +1424,11 @@ const FAQSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 1 }}
             >
-              Questions
+              Have Questions?
             </motion.p>
           </FadeUpText>
           <FadeUpText delay={0.1}>
-            <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal">Frequently Asked</h2>
+            <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal">Frequently Asked Questions</h2>
           </FadeUpText>
         </div>
 
