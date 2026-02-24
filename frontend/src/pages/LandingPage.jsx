@@ -31,7 +31,7 @@ const heroImages = [
 // Floating Orbs - Soft glowing spheres that drift gracefully
 const FloatingOrbsBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
-  // More vibrant gold: 201, 169, 98 instead of 184, 166, 126
+  // More vibrant gold: 201, 169, 98 instead of 201, 169, 98
   const baseColor = isLight ? "201, 169, 98" : "255, 255, 255";
   
   return (
@@ -136,7 +136,7 @@ const GentleWavesBackground = ({ variant = "light" }) => {
 // Floating Geometry - Elegant shapes that rotate and drift
 const FloatingGeometryBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
-  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  const baseColor = isLight ? "201, 169, 98" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -190,7 +190,7 @@ const FloatingGeometryBackground = ({ variant = "light" }) => {
 // Rising Particles - Elegant dots that float upward
 const RisingParticlesBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
-  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  const baseColor = isLight ? "201, 169, 98" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -245,7 +245,7 @@ const RisingParticlesBackground = ({ variant = "light" }) => {
 // Shimmer Background - Rotating gradient with sparkles
 const ShimmerBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
-  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  const baseColor = isLight ? "201, 169, 98" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -308,7 +308,7 @@ const ShimmerBackground = ({ variant = "light" }) => {
 // Pulsing Dots Background - Rhythmic dots with glowing orbs
 const PulsingDotsBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
-  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  const baseColor = isLight ? "201, 169, 98" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -1092,7 +1092,7 @@ const AboutSection = () => {
             <StaggerItem key={idx}>
               <motion.div 
                 className="bg-white/50 border border-sand hover:border-accent-gold/50 transition-all h-full group cursor-pointer relative overflow-hidden"
-                whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(184, 166, 126, 0.15)" }}
+                whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(201, 169, 98, 0.15)" }}
                 transition={{ duration: 0.3 }}
               >
                 {/* Image */}
@@ -1107,7 +1107,7 @@ const AboutSection = () => {
                 <div className="p-6">
                   <motion.span 
                     className="font-sans text-4xl text-accent-gold/20 block mb-3 relative z-10"
-                    whileHover={{ scale: 1.1, color: "rgba(184, 166, 126, 0.4)" }}
+                    whileHover={{ scale: 1.1, color: "rgba(201, 169, 98, 0.4)" }}
                     transition={{ duration: 0.3 }}
                   >
                     {item.icon}
@@ -1245,7 +1245,7 @@ const ExperienceSection = () => {
                 <motion.div 
                   className="mx-auto mb-3 md:mb-4 p-4 md:p-6 bg-white/60 border border-sand hover:border-accent-gold/50 transition-all cursor-pointer relative overflow-hidden group"
                   style={{ width: window.innerWidth < 640 ? '100%' : `${width}%` }}
-                  whileHover={{ scale: 1.02, boxShadow: "0 10px 40px rgba(184, 166, 126, 0.15)" }}
+                  whileHover={{ scale: 1.02, boxShadow: "0 10px 40px rgba(201, 169, 98, 0.15)" }}
                   transition={{ duration: 0.3 }}
                 >
                   {/* Animated side bar */}
@@ -1263,7 +1263,7 @@ const ExperienceSection = () => {
                   <div className="flex items-start gap-3 md:gap-4 relative z-10">
                     <motion.span 
                       className="font-sans text-xl md:text-3xl text-accent-gold/40 font-light flex-shrink-0"
-                      whileHover={{ scale: 1.2, color: "rgba(184, 166, 126, 0.8)" }}
+                      whileHover={{ scale: 1.2, color: "rgba(201, 169, 98, 0.8)" }}
                     >
                       {idx + 1}
                     </motion.span>
@@ -1345,7 +1345,7 @@ const JourneySection = () => {
             <StaggerItem key={idx}>
               <motion.div 
                 className="p-6 md:p-8 bg-white/50 border border-sand hover:border-accent-gold/50 transition-all h-full group cursor-pointer relative overflow-hidden"
-                whileHover={{ y: -5, boxShadow: "0 15px 40px rgba(184, 166, 126, 0.15)" }}
+                whileHover={{ y: -5, boxShadow: "0 15px 40px rgba(201, 169, 98, 0.15)" }}
                 transition={{ duration: 0.3 }}
               >
                 {/* Hover gradient */}
@@ -1354,7 +1354,7 @@ const JourneySection = () => {
                 <div className="relative z-10">
                   <motion.span 
                     className="font-sans text-3xl md:text-4xl text-accent-gold/20 block mb-3"
-                    whileHover={{ scale: 1.1, color: "rgba(184, 166, 126, 0.4)" }}
+                    whileHover={{ scale: 1.1, color: "rgba(201, 169, 98, 0.4)" }}
                   >
                     {audience.icon}
                   </motion.span>
@@ -1382,7 +1382,7 @@ const JourneySection = () => {
         <ScaleIn>
           <motion.div 
             className="text-center py-12 md:py-16 px-6 md:px-12 bg-gradient-to-br from-soft-cream to-cream border border-accent-gold/30 relative overflow-hidden"
-            whileHover={{ boxShadow: "0 20px 60px rgba(184, 166, 126, 0.2)" }}
+            whileHover={{ boxShadow: "0 20px 60px rgba(201, 169, 98, 0.2)" }}
           >
             {/* Decorative elements */}
             <motion.div 
@@ -1583,7 +1583,7 @@ const FAQSection = () => {
             <StaggerItem key={idx}>
               <motion.div 
                 className="border border-sand bg-white/50 overflow-hidden group"
-                whileHover={{ borderColor: "rgba(184, 166, 126, 0.5)" }}
+                whileHover={{ borderColor: "rgba(201, 169, 98, 0.5)" }}
                 transition={{ duration: 0.3 }}
               >
                 <button
@@ -1674,7 +1674,7 @@ const CTASection = ({ onBeginJourney }) => {
           <motion.button 
             onClick={onBeginJourney} 
             className="btn-primary text-base px-12 py-5 relative overflow-hidden group" 
-            whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(184, 166, 126, 0.3)" }} 
+            whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(201, 169, 98, 0.3)" }} 
             whileTap={{ scale: 0.98 }}
             data-testid="cta-button"
           >
@@ -1830,7 +1830,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-cream" data-testid="landing-page">
-      <Toaster position="top-center" toastOptions={{ style: { background: '#FAF7F2', color: '#1a1a1a', border: '1px solid rgba(184, 166, 126, 0.3)' } }} />
+      <Toaster position="top-center" toastOptions={{ style: { background: '#FAF7F2', color: '#1a1a1a', border: '1px solid rgba(201, 169, 98, 0.3)' } }} />
       <Navigation onBeginJourney={() => setShowQuestionnaire(true)} />
       <HeroSection onBeginJourney={() => setShowQuestionnaire(true)} />
       <AboutSection />
