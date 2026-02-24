@@ -1193,12 +1193,12 @@ const ExperienceSection = () => {
 // Journey Section - Who it's for with bold YOU
 const JourneySection = () => {
   const forYou = [
-    "are ready to embrace growth and transformation",
-    "seek deeper meaning and purpose in life",
-    "want to learn, unlearn, and discover new perspectives",
-    "crave authentic connections with like-minded souls",
-    "are open to exploring your inner landscape",
-    "feel ready to step into your fullest potential"
+    "Are ready to embrace growth and transformation",
+    "Seek deeper meaning and purpose in life",
+    "Want to learn, unlearn, and discover new perspectives",
+    "Crave authentic connections with like-minded souls",
+    "Are open to exploring your inner landscape",
+    "Feel ready to step into your fullest potential"
   ];
 
   return (
