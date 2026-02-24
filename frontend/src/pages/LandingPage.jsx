@@ -983,10 +983,12 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="py-20 bg-deep-charcoal text-white">
-      <div className="max-w-6xl mx-auto px-6 lg:px-12">
-        <div className="grid md:grid-cols-2 gap-12">
-          <div>
+    <section className="py-20 bg-deep-charcoal text-white relative overflow-hidden">
+      <PulsingDotsBackground variant="dark" />
+      
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
+        <div className="grid md:grid-cols-2 gap-12 items-stretch">
+          <div className="flex flex-col">
             <Logo className="h-48 md:h-56 lg:h-64 mb-10" variant="light" />
             <p className="font-sans text-white/70 mb-8">
               A curated human experience for those ready to embrace growth and transformation.
@@ -1001,7 +1003,7 @@ const ContactSection = () => {
                 <span className="font-sans text-white/80">[Contact Number]</span>
               </div>
             </div>
-            <div className="mt-8 pt-8 border-t border-white/10">
+            <div className="mt-auto pt-8 border-t border-white/10">
               <p className="font-sans text-white/50 text-sm">
                 <a href="#" className="hover:text-accent-gold transition-colors">Privacy Policy</a> · 
                 <a href="#" className="hover:text-accent-gold transition-colors ml-2">Terms of Service</a>
@@ -1009,9 +1011,9 @@ const ContactSection = () => {
             </div>
           </div>
 
-          <div>
+          <div className="flex flex-col">
             <h3 className="font-serif text-2xl mb-6">Send us a message</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
               <input
                 type="text"
                 placeholder="Your Name"
@@ -1041,7 +1043,7 @@ const ContactSection = () => {
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 required
                 rows={4}
-                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans resize-none"
+                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans resize-none flex-1"
               />
               <motion.button 
                 type="submit" 
