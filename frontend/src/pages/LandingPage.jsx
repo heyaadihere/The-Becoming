@@ -1153,34 +1153,70 @@ const FAQSection = () => {
       <RisingParticlesBackground variant="light" />
       
       <div className="max-w-3xl mx-auto px-6 lg:px-12 relative z-10">
-        <RevealSection className="text-center mb-12">
-          <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">Questions</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal">Frequently Asked</h2>
-        </RevealSection>
+        <div className="text-center mb-12">
+          <FadeUpText>
+            <motion.p 
+              className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
+              initial={{ opacity: 0, letterSpacing: "0.1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              Questions
+            </motion.p>
+          </FadeUpText>
+          <FadeUpText delay={0.1}>
+            <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal">Frequently Asked</h2>
+          </FadeUpText>
+        </div>
 
-        <div className="space-y-3">
+        <AnimatedDivider className="mb-10 max-w-xs mx-auto" />
+
+        <StaggerContainer className="space-y-3" staggerDelay={0.1}>
           {faqs.map((faq, idx) => (
-            <RevealSection key={idx} delay={idx * 0.08}>
-              <div className="border border-sand bg-white/50 overflow-hidden">
+            <StaggerItem key={idx}>
+              <motion.div 
+                className="border border-sand bg-white/50 overflow-hidden group"
+                whileHover={{ borderColor: "rgba(184, 166, 126, 0.5)" }}
+                transition={{ duration: 0.3 }}
+              >
                 <button
                   onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
                   className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-accent-gold/5 transition-colors"
                   data-testid={`faq-${idx}`}
                 >
-                  <span className="font-serif text-lg text-deep-charcoal pr-4">{faq.q}</span>
-                  <motion.span animate={{ rotate: openIndex === idx ? 45 : 0 }} className="text-accent-gold text-2xl">+</motion.span>
+                  <span className="font-serif text-lg text-deep-charcoal pr-4 group-hover:text-accent-gold transition-colors">{faq.q}</span>
+                  <motion.span 
+                    animate={{ rotate: openIndex === idx ? 45 : 0, scale: openIndex === idx ? 1.2 : 1 }} 
+                    className="text-accent-gold text-2xl"
+                    transition={{ duration: 0.3 }}
+                  >
+                    +
+                  </motion.span>
                 </button>
                 <AnimatePresence>
                   {openIndex === idx && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }}>
-                      <p className="px-6 pb-5 font-sans text-charcoal/70">{faq.a}</p>
+                    <motion.div 
+                      initial={{ height: 0, opacity: 0 }} 
+                      animate={{ height: "auto", opacity: 1 }} 
+                      exit={{ height: 0, opacity: 0 }} 
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                    >
+                      <motion.p 
+                        className="px-6 pb-5 font-sans text-charcoal/70"
+                        initial={{ y: -10 }}
+                        animate={{ y: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        {faq.a}
+                      </motion.p>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
-            </RevealSection>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
