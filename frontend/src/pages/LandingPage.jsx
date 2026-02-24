@@ -1408,14 +1408,14 @@ const AccommodationSection = () => {
   ];
 
   return (
-    <section className="py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
+    <section className="py-16 md:py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
       <GentleWavesBackground variant="light" />
       
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="text-center mb-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
+        <div className="text-center mb-10 md:mb-16">
           <FadeUpText>
             <motion.p 
-              className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
+              className="font-sans text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] text-accent-gold uppercase mb-3 md:mb-4"
               initial={{ opacity: 0, letterSpacing: "0.1em" }}
               whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
               viewport={{ once: true }}
@@ -1425,21 +1425,21 @@ const AccommodationSection = () => {
             </motion.p>
           </FadeUpText>
           <FadeUpText delay={0.1}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal mb-4 md:mb-6">
               Accommodation
             </h2>
           </FadeUpText>
           <FadeUpText delay={0.2}>
-            <p className="font-sans text-lg text-charcoal/80 max-w-2xl mx-auto">
+            <p className="font-sans text-sm md:text-base lg:text-lg text-charcoal/80 max-w-2xl mx-auto px-2">
               Rest and rejuvenate in thoughtfully designed spaces that nurture your journey of transformation.
             </p>
           </FadeUpText>
         </div>
 
-        <AnimatedDivider className="mb-12 max-w-sm mx-auto" />
+        <AnimatedDivider className="mb-8 md:mb-12 max-w-sm mx-auto" />
 
         {/* Image Gallery */}
-        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12" staggerDelay={0.1}>
+        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-8 md:mb-12" staggerDelay={0.1}>
           {accommodationImages.map((img, idx) => (
             <StaggerItem key={idx}>
               <motion.div 
@@ -1454,10 +1454,10 @@ const AccommodationSection = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <motion.div 
-                  className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-white/0 group-hover:border-white/60 transition-all duration-300"
+                  className="absolute top-2 md:top-3 left-2 md:left-3 w-6 md:w-8 h-6 md:h-8 border-l-2 border-t-2 border-white/0 group-hover:border-white/60 transition-all duration-300"
                 />
                 <motion.div 
-                  className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-white/0 group-hover:border-white/60 transition-all duration-300"
+                  className="absolute bottom-2 md:bottom-3 right-2 md:right-3 w-6 md:w-8 h-6 md:h-8 border-r-2 border-b-2 border-white/0 group-hover:border-white/60 transition-all duration-300"
                 />
               </motion.div>
             </StaggerItem>
@@ -1465,7 +1465,7 @@ const AccommodationSection = () => {
         </StaggerContainer>
 
         {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
           {[
             { title: "Serene Surroundings", desc: "Nestled in nature, away from the chaos of everyday life." },
             { title: "Comfortable Spaces", desc: "Thoughtfully designed rooms for rest and reflection." },
