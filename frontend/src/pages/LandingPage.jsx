@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
-import { ChevronDown, ArrowRight, ArrowLeft, Check, Loader2, X, Plus, Minus } from 'lucide-react';
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, ArrowLeft, Check, Loader2, X, ChevronLeft, ChevronRight, Phone, Mail, Instagram, Linkedin, MessageCircle } from 'lucide-react';
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Logo component - uses white version on dark backgrounds, dark version on light backgrounds
+// Logo component
 const Logo = ({ className = "h-16", variant = "dark" }) => (
   <img 
     src={variant === 'light' ? '/images/logo-white.png' : '/images/logo-dark.png'}
@@ -16,296 +16,59 @@ const Logo = ({ className = "h-16", variant = "dark" }) => (
   />
 );
 
-// Animated abstract background shapes - more visible
+// Hero images for carousel
+const heroImages = [
+  { url: "/images/hero-cover.png", alt: "Serene mountain landscape" },
+  { url: "https://images.unsplash.com/photo-1758637689126-2598f5b17ceb?w=1920&q=80", alt: "Misty mountains at sunrise" },
+  { url: "https://images.unsplash.com/photo-1767591467577-6d10030bc9ce?w=1920&q=80", alt: "Snowy trees at dawn" },
+  { url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80", alt: "Nature landscape" }
+];
+
+// Animated background for sections
 const AnimatedBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
-  const goldColor = "184, 166, 126";
-  const whiteColor = "255, 255, 255";
-  const baseColor = isLight ? goldColor : whiteColor;
+  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Large floating gradient orbs */}
       <motion.div
         className="absolute w-[500px] h-[500px] rounded-full"
         style={{
-          left: "5%",
-          top: "10%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.18) 0%, rgba(${baseColor}, 0.08) 40%, transparent 70%)`,
+          left: "5%", top: "10%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.15) 0%, transparent 70%)`,
           filter: "blur(40px)",
         }}
-        animate={{
-          x: [0, 80, 0],
-          y: [0, 50, 0],
-          scale: [1, 1.2, 1],
-        }}
+        animate={{ x: [0, 80, 0], y: [0, 50, 0], scale: [1, 1.2, 1] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute w-[400px] h-[400px] rounded-full"
         style={{
-          right: "10%",
-          top: "50%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.15) 0%, rgba(${baseColor}, 0.05) 50%, transparent 70%)`,
+          right: "10%", top: "50%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.12) 0%, transparent 70%)`,
           filter: "blur(30px)",
         }}
-        animate={{
-          x: [0, -60, 0],
-          y: [0, -40, 0],
-          scale: [1, 1.15, 1],
-        }}
+        animate={{ x: [0, -60, 0], y: [0, -40, 0] }}
         transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 3 }}
       />
+      {/* Geometric shapes */}
       <motion.div
-        className="absolute w-[350px] h-[350px] rounded-full"
-        style={{
-          left: "50%",
-          bottom: "10%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.12) 0%, transparent 60%)`,
-          filter: "blur(25px)",
-        }}
-        animate={{
-          x: [0, 40, -30, 0],
-          y: [0, -30, 20, 0],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 5 }}
-      />
-      
-      {/* Abstract geometric shapes */}
-      <motion.div
-        className="absolute w-32 h-32 border rounded-full"
-        style={{
-          left: "15%",
-          top: "30%",
-          borderColor: `rgba(${baseColor}, 0.25)`,
-          borderWidth: "1px",
-        }}
-        animate={{
-          rotate: [0, 360],
-          scale: [1, 1.1, 1],
-        }}
+        className="absolute w-24 h-24 border rounded-full"
+        style={{ left: "15%", top: "30%", borderColor: `rgba(${baseColor}, 0.2)` }}
+        animate={{ rotate: [0, 360] }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute w-20 h-20 border rounded-full"
-        style={{
-          right: "20%",
-          top: "25%",
-          borderColor: `rgba(${baseColor}, 0.2)`,
-          borderWidth: "1px",
-        }}
-        animate={{
-          rotate: [360, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
         className="absolute w-16 h-16 border"
-        style={{
-          left: "70%",
-          bottom: "30%",
-          borderColor: `rgba(${baseColor}, 0.2)`,
-          borderWidth: "1px",
-          transform: "rotate(45deg)",
-        }}
-        animate={{
-          rotate: [45, 135, 45],
-          scale: [1, 1.15, 1],
-        }}
+        style={{ right: "20%", bottom: "30%", borderColor: `rgba(${baseColor}, 0.15)`, transform: "rotate(45deg)" }}
+        animate={{ rotate: [45, 135, 45], scale: [1, 1.15, 1] }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
-      
-      {/* Flowing curved lines */}
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <motion.path
-          d="M-10,50 Q25,20 50,50 T110,50"
-          stroke={`rgba(${baseColor}, 0.2)`}
-          strokeWidth="0.15"
-          fill="none"
-          animate={{ 
-            d: [
-              "M-10,50 Q25,20 50,50 T110,50", 
-              "M-10,50 Q25,80 50,50 T110,50", 
-              "M-10,50 Q25,20 50,50 T110,50"
-            ] 
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.path
-          d="M-10,30 Q40,60 70,30 T110,30"
-          stroke={`rgba(${baseColor}, 0.15)`}
-          strokeWidth="0.12"
-          fill="none"
-          animate={{ 
-            d: [
-              "M-10,30 Q40,60 70,30 T110,30", 
-              "M-10,30 Q40,0 70,30 T110,30", 
-              "M-10,30 Q40,60 70,30 T110,30"
-            ] 
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
-        <motion.path
-          d="M-10,70 Q30,100 60,70 T110,70"
-          stroke={`rgba(${baseColor}, 0.15)`}
-          strokeWidth="0.12"
-          fill="none"
-          animate={{ 
-            d: [
-              "M-10,70 Q30,100 60,70 T110,70", 
-              "M-10,70 Q30,40 60,70 T110,70", 
-              "M-10,70 Q30,100 60,70 T110,70"
-            ] 
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-        />
-      </svg>
-      
-      {/* Small floating dots */}
-      {[...Array(8)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            width: 6 + (i % 3) * 2,
-            height: 6 + (i % 3) * 2,
-            left: `${15 + i * 10}%`,
-            top: `${20 + (i % 4) * 20}%`,
-            background: `rgba(${baseColor}, 0.3)`,
-          }}
-          animate={{
-            y: [0, -20, 0],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            delay: i * 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
     </div>
   );
 };
 
-// Floating particles for form/modal - more visible
-const FloatingParticles = ({ count = 25 }) => {
-  const particles = Array.from({ length: count }, (_, i) => ({
-    id: i,
-    size: Math.random() * 6 + 3,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    duration: Math.random() * 8 + 10,
-    delay: Math.random() * 5,
-  }));
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            width: p.size,
-            height: p.size,
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            background: `radial-gradient(circle, rgba(184, 166, 126, 0.5) 0%, rgba(184, 166, 126, 0.2) 100%)`,
-          }}
-          animate={{
-            y: [0, -40, 0],
-            x: [0, Math.random() * 30 - 15, 0],
-            opacity: [0.3, 0.7, 0.3],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-      
-      {/* Additional abstract shapes for form */}
-      <motion.div
-        className="absolute w-64 h-64 border border-accent-gold/20 rounded-full"
-        style={{ left: "10%", top: "20%" }}
-        animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }}
-        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        className="absolute w-48 h-48 border border-accent-gold/15 rounded-full"
-        style={{ right: "15%", bottom: "25%" }}
-        animate={{ rotate: [360, 0], scale: [1, 1.15, 1] }}
-        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-      />
-    </div>
-  );
-};
-
-// Magnetic cursor effect hook
-const useMagnetic = () => {
-  const ref = useRef(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const x = (e.clientX - centerX) * 0.2;
-    const y = (e.clientY - centerY) * 0.2;
-    setPosition({ x, y });
-  };
-
-  const handleMouseLeave = () => setPosition({ x: 0, y: 0 });
-
-  return { ref, position, handleMouseMove, handleMouseLeave };
-};
-
-// Parallax text effect
-const ParallaxText = ({ children, className = "" }) => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  
-  return (
-    <motion.div ref={ref} style={{ y }} className={className}>
-      {children}
-    </motion.div>
-  );
-};
-
-// Staggered letter animation
-const AnimatedText = ({ text, className = "", delay = 0 }) => {
-  const letters = text.split('');
-  
-  return (
-    <span className={className}>
-      {letters.map((letter, index) => (
-        <motion.span
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            duration: 0.5, 
-            delay: delay + index * 0.03,
-            ease: [0.25, 0.46, 0.45, 0.94]
-          }}
-          className="inline-block"
-          style={{ whiteSpace: letter === ' ' ? 'pre' : 'normal' }}
-        >
-          {letter === ' ' ? '\u00A0' : letter}
-        </motion.span>
-      ))}
-    </span>
-  );
-};
-
-// Section reveal animation with enhanced effects
+// Section reveal animation
 const RevealSection = ({ children, className = "", delay = 0 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -313,9 +76,9 @@ const RevealSection = ({ children, className = "", delay = 0 }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 80 }}
+      initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1.2, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 1, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={className}
     >
       {children}
@@ -323,89 +86,95 @@ const RevealSection = ({ children, className = "", delay = 0 }) => {
   );
 };
 
-// Floating element animation
-const FloatingElement = ({ children, duration = 6, delay = 0 }) => (
-  <motion.div
-    animate={{ 
-      y: [0, -15, 0],
-      rotate: [-1, 1, -1]
-    }}
-    transition={{ 
-      duration, 
-      delay,
-      repeat: Infinity, 
-      ease: "easeInOut" 
-    }}
-  >
-    {children}
-  </motion.div>
-);
+// Animated text component
+const AnimatedText = ({ text, className = "" }) => {
+  const words = text.split(' ');
+  return (
+    <span className={className}>
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: i * 0.1 }}
+          viewport={{ once: true }}
+          className="inline-block mr-2"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
 
-// Questionnaire Modal
+// Questionnaire Modal with images and animations
 const QuestionnaireModal = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [answers, setAnswers] = useState({
-    name: '', email: '', phone: '', energyDrain: '', cravings: [], currentPhase: '',
-    selfPerception: '', lookingForward: '', nextVersion: '', growthStyle: '',
-    whyNow: '', showUp: '', timing: '', stayPreference: '', sport: '', creative: '',
-    social: '', finalStatement: ''
+    name: '', email: '', phone: '', altPhone: '', socialMedia: '', socialHandle: '',
+    whatBringsYou: '', currentPhase: '', seekingGrowth: '', readyFor: '', showUpAs: '',
+    timing: '', stayPreference: '', creativeExpression: '', finalThought: ''
   });
 
+  const stepImages = [
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80",
+    "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",
+    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80",
+    "https://images.unsplash.com/photo-1518173946687-a4c036bc3e77?w=800&q=80",
+  ];
+
   const questions = [
-    { id: 'welcome', type: 'welcome', title: "Begin Your Transformation", subtitle: "A few questions to understand where you are" },
-    { id: 'name', type: 'text', label: "What's your name?", hint: "First name is enough.", field: 'name', required: true },
-    { id: 'energyDrain', type: 'single', label: "One thing that drains your energy lately?", field: 'energyDrain',
-      options: ['Overthinking everything', 'Feeling stuck / unclear', 'Self-doubt creeping in', 'Too much noise, not enough clarity', 'Comparing myself to others', 'Running on autopilot'] },
-    { id: 'cravings', type: 'multi', label: "What are you craving more of right now?", hint: "Pick up to 3 that resonate.", field: 'cravings', max: 3,
-      options: ['Mental clarity', 'Confidence & self-trust', 'Emotional balance', 'Direction / purpose', 'Better relationships', 'Discipline / consistency', 'Peace / stillness', 'Momentum / action'] },
-    { id: 'currentPhase', type: 'single', label: "Which best describes your current phase?", field: 'currentPhase',
-      options: ['Reinventing myself', 'Feeling lost but curious', 'Growing, but inconsistently', 'Stable, yet restless', 'Transitioning (career / life / identity)', 'Honestly… figuring things out'] },
-    { id: 'selfPerception', type: 'single', label: "When it comes to yourself, you often…", field: 'selfPerception',
-      options: ['Know what to do but don\'t act', 'Doubt your decisions', 'Feel capable but scattered', 'Feel stuck in patterns', 'Feel disconnected from yourself', 'Feel ready for something bigger'] },
-    { id: 'lookingForward', type: 'textarea', label: "What are you looking forward to becoming?", hint: "Take a second. There's no right answer.", field: 'lookingForward', placeholder: "Share your thoughts..." },
-    { id: 'nextVersion', type: 'textarea', label: "When you imagine your next version… who do you see?", hint: "Dream a little.", field: 'nextVersion', placeholder: "Describe your future self..." },
-    { id: 'growthStyle', type: 'single', label: "How do you usually approach personal growth?", field: 'growthStyle',
-      options: ['I consume a lot but struggle to apply', 'I start strong, then fade', 'I\'m consistent but plateaued', 'I\'m new to this space', 'I\'m deeply invested in growth', 'I grow through experiences, not theory'] },
-    { id: 'whyNow', type: 'single', label: "Why does this feel like the right time?", field: 'whyNow',
-      options: ['Something needs to change', 'I\'m tired of repeating patterns', 'I want deeper self-awareness', 'I feel ready for expansion', 'Curiosity / intuition', 'Perfect timing'] },
-    { id: 'showUp', type: 'single', label: "If invited, how would you show up?", field: 'showUp',
-      options: ['Curious but cautious', 'Fully open & engaged', 'Observing & absorbing', 'Ready to be challenged', 'Honestly… not sure yet'] },
-    { id: 'timing', type: 'single', label: "How soon can you join us?", field: 'timing', options: ['April 2026', 'June 2026', 'September 2026'] },
-    { id: 'stayPreference', type: 'single', label: "Your type of stay:", field: 'stayPreference', options: ['Double sharing', 'Triple sharing', 'Open to either'] },
-    { id: 'sport', type: 'text', label: "Do you play any sport?", hint: "If yes, what?", field: 'sport', placeholder: "e.g., Tennis, Yoga, Swimming..." },
-    { id: 'creative', type: 'text', label: "Do you engage with poetry or play any musical instrument?", hint: "If yes, what?", field: 'creative', placeholder: "e.g., Guitar, Writing poetry..." },
-    { id: 'contact', type: 'contact', label: "Almost there", hint: "How can we reach you?" },
-    { id: 'social', type: 'text', label: "Drop your Instagram or LinkedIn", hint: "We look at alignment, not follower counts.", field: 'social', placeholder: "@yourhandle or profile link" },
-    { id: 'finalStatement', type: 'single', label: "Last one — Which statement feels most like you?", field: 'finalStatement',
-      options: ['I know I\'m capable of more', 'I feel like I\'ve outgrown my current self', 'I want clarity more than motivation', 'I want internal change, not external hacks', 'I\'m searching for something I can\'t fully name'] }
+    { id: 'welcome', type: 'welcome', title: "Welcome to The Becoming", subtitle: "A space for growth, discovery, and transformation" },
+    { id: 'name', type: 'text', label: "What should we call you?", hint: "Your first name is perfect.", field: 'name', required: true },
+    { id: 'whatBringsYou', type: 'single', label: "What brings you here today?", field: 'whatBringsYou',
+      options: ['Seeking clarity and direction', 'Ready for personal growth', 'Looking for meaningful connections', 'Curious about self-discovery', 'Ready to learn and evolve', 'Following my intuition'] },
+    { id: 'currentPhase', type: 'single', label: "Where are you in your journey right now?", field: 'currentPhase',
+      options: ['Beginning a new chapter', 'Growing and expanding', 'Seeking deeper meaning', 'Ready for transformation', 'Open to possibilities', 'Trusting the process'] },
+    { id: 'seekingGrowth', type: 'multi', label: "What kind of growth are you seeking?", hint: "Select all that resonate with you.", field: 'seekingGrowth', max: 4,
+      options: ['Learning new perspectives', 'Emotional intelligence', 'Creative expression', 'Deeper self-awareness', 'Meaningful connections', 'Inner peace', 'Clarity of purpose', 'Personal transformation'] },
+    { id: 'readyFor', type: 'textarea', label: "What are you ready to embrace?", hint: "Share what feels true for you.", field: 'readyFor', placeholder: "I'm ready to..." },
+    { id: 'showUpAs', type: 'single', label: "How would you like to show up?", field: 'showUpAs',
+      options: ['Open and curious', 'Ready to participate fully', 'Observing and absorbing', 'Eager to connect', 'Present and mindful'] },
+    { id: 'timing', type: 'single', label: "When would you like to join us?", field: 'timing', 
+      options: ['April 2026', 'June 2026', 'September 2026', 'I\'m flexible'] },
+    { id: 'creativeExpression', type: 'text', label: "Do you have any creative interests?", hint: "Music, art, writing, or anything that moves you.", field: 'creativeExpression', placeholder: "e.g., Playing guitar, writing poetry..." },
+    { id: 'contact', type: 'contact', label: "Let's stay connected", hint: "How can we reach you?" },
+    { id: 'finalThought', type: 'textarea', label: "Anything else you'd like to share?", hint: "We're listening.", field: 'finalThought', placeholder: "Share your thoughts..." }
   ];
 
   const totalSteps = questions.length;
   const progress = ((step + 1) / totalSteps) * 100;
   const currentQuestion = questions[step];
+  const currentImage = stepImages[step % stepImages.length];
 
   const handleNext = () => { if (step < totalSteps - 1) setStep(step + 1); };
   const handleBack = () => { if (step > 0) setStep(step - 1); };
   const handleSelectSingle = (option) => setAnswers({ ...answers, [currentQuestion.field]: option });
   const handleSelectMulti = (option) => {
     const current = answers[currentQuestion.field] || [];
-    if (current.includes(option)) setAnswers({ ...answers, [currentQuestion.field]: current.filter(o => o !== option) });
-    else if (current.length < (currentQuestion.max || 10)) setAnswers({ ...answers, [currentQuestion.field]: [...current, option] });
+    if (Array.isArray(current)) {
+      if (current.includes(option)) setAnswers({ ...answers, [currentQuestion.field]: current.filter(o => o !== option) });
+      else if (current.length < (currentQuestion.max || 10)) setAnswers({ ...answers, [currentQuestion.field]: [...current, option] });
+    } else {
+      setAnswers({ ...answers, [currentQuestion.field]: [option] });
+    }
   };
 
   const handleSubmit = async () => {
+    if (!answers.email || !answers.phone || !answers.socialHandle) {
+      toast.error('Please provide email, phone, and at least one social media handle.');
+      return;
+    }
     setIsSubmitting(true);
     try {
-      const payload = {
-        name: answers.name, email: answers.email, phone: answers.phone || '',
-        why_becoming: `Energy drain: ${answers.energyDrain}\nCravings: ${answers.cravings.join(', ')}\nWhy now: ${answers.whyNow}`,
-        current_state: `Phase: ${answers.currentPhase}\nSelf-perception: ${answers.selfPerception}\nGrowth style: ${answers.growthStyle}`,
-        what_seeking: `Looking forward to: ${answers.lookingForward}\nNext version: ${answers.nextVersion}\nFinal statement: ${answers.finalStatement}`,
+      await axios.post(`${API}/signup`, {
+        name: answers.name, email: answers.email, phone: answers.phone,
+        alt_phone: answers.altPhone, social_media: `${answers.socialMedia}: ${answers.socialHandle}`,
         questionnaire_data: JSON.stringify(answers)
-      };
-      await axios.post(`${API}/signup`, payload);
+      });
       setIsComplete(true);
     } catch (error) { toast.error('Something went wrong. Please try again.'); }
     finally { setIsSubmitting(false); }
@@ -415,7 +184,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
     if (currentQuestion.type === 'welcome') return true;
     if (currentQuestion.type === 'text' && currentQuestion.required) return answers[currentQuestion.field]?.trim().length > 0;
     if (currentQuestion.type === 'single') return answers[currentQuestion.field]?.length > 0;
-    if (currentQuestion.type === 'contact') return answers.email?.includes('@');
+    if (currentQuestion.type === 'contact') return answers.email?.includes('@') && answers.phone?.length >= 10 && answers.socialHandle?.length > 0;
     return true;
   };
 
@@ -424,192 +193,223 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
   return (
     <AnimatePresence>
       <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gradient-to-br from-soft-cream via-cream to-sand/90 backdrop-blur-sm"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex"
       >
-        {/* Subtle animated background for form */}
-        <FloatingParticles count={20} />
-        <AnimatedBackground variant="light" />
-        <motion.button 
-          onClick={onClose} 
-          className="absolute top-8 right-8 p-3 text-charcoal/60 hover:text-deep-charcoal transition-colors" 
-          data-testid="close-questionnaire"
-          whileHover={{ scale: 1.1, rotate: 90 }}
-          whileTap={{ scale: 0.9 }}
+        {/* Left side - Image with animation */}
+        <motion.div 
+          className="hidden lg:block w-1/2 relative overflow-hidden"
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
         >
-          <X className="w-6 h-6" />
-        </motion.button>
-        <div className="absolute top-0 left-0 right-0 h-[3px] bg-sand">
-          <motion.div className="h-full bg-gradient-to-r from-accent-gold via-accent-bronze to-accent-gold" initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ duration: 0.5 }} />
-        </div>
-        <div className="absolute top-8 left-8 text-xs text-charcoal/50 font-body tracking-widest uppercase">{step + 1} / {totalSteps}</div>
+          <motion.img 
+            key={step}
+            src={currentImage}
+            alt="Journey"
+            className="w-full h-full object-cover"
+            initial={{ scale: 1.1, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-cream/20" />
+        </motion.div>
 
-        {isComplete ? (
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md text-center text-deep-charcoal">
-            <motion.div 
-              className="w-24 h-24 border-2 border-accent-gold flex items-center justify-center mx-auto mb-10 bg-cream"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", duration: 0.8 }}
-            >
-              <Check className="w-10 h-10 text-accent-gold" />
+        {/* Right side - Form */}
+        <div className="w-full lg:w-1/2 bg-gradient-to-br from-cream via-soft-cream to-sand/50 flex items-center justify-center p-8 relative">
+          <AnimatedBackground variant="light" />
+          
+          <motion.button 
+            onClick={onClose} 
+            className="absolute top-6 right-6 p-3 text-charcoal/60 hover:text-deep-charcoal z-10" 
+            data-testid="close-questionnaire"
+            whileHover={{ scale: 1.1, rotate: 90 }}
+          >
+            <X className="w-6 h-6" />
+          </motion.button>
+
+          {/* Progress bar */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-sand/50">
+            <motion.div className="h-full bg-gradient-to-r from-accent-gold to-accent-bronze" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
+          </div>
+          <div className="absolute top-6 left-6 text-xs text-charcoal/50 font-sans">{step + 1} / {totalSteps}</div>
+
+          {isComplete ? (
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md text-center relative z-10">
+              <motion.div 
+                className="w-20 h-20 border-2 border-accent-gold rounded-full flex items-center justify-center mx-auto mb-8 bg-cream"
+                initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring" }}
+              >
+                <Check className="w-8 h-8 text-accent-gold" />
+              </motion.div>
+              <h2 className="font-serif text-3xl mb-4 text-deep-charcoal">Your response has been received!</h2>
+              <p className="text-charcoal/70 font-sans mb-3">The Becoming awaits you.</p>
+              <p className="text-accent-gold font-sans text-lg mb-8">A Becoming bud will call you soon!</p>
+              <motion.button onClick={onClose} className="btn-primary" whileHover={{ scale: 1.05 }}>
+                Return Home
+              </motion.button>
             </motion.div>
-            <h2 className="font-heading text-4xl mb-4 text-deep-charcoal">Thank you, {answers.name}</h2>
-            <p className="text-charcoal/70 text-sm font-body leading-relaxed mb-10 tracking-wide">Your responses have been received. We will be in touch if The Becoming feels right for you.</p>
-            <motion.button 
-              onClick={onClose} 
-              className="btn-outline border-accent-gold text-deep-charcoal hover:bg-accent-gold/10"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Return
-            </motion.button>
-          </motion.div>
-        ) : (
-          <motion.div key={step} initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.5, ease: "easeOut" }} className="w-full max-w-2xl text-deep-charcoal">
-            {currentQuestion.type === 'welcome' && (
-              <div className="text-center">
-                <FloatingElement>
-                  <Logo className="h-28 mx-auto mb-12" variant="dark" />
-                </FloatingElement>
-                <motion.h2 
-                  className="font-heading text-4xl sm:text-5xl mb-4 italic text-deep-charcoal"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  {currentQuestion.title}
-                </motion.h2>
-                <motion.p 
-                  className="text-charcoal/60 text-sm font-body tracking-wide mb-12"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  {currentQuestion.subtitle}
-                </motion.p>
-                <motion.button 
-                  onClick={handleNext} 
-                  className="btn-luxe"
-                  whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(184, 166, 126, 0.4)" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Begin <ArrowRight className="inline ml-3 w-4 h-4" />
-                </motion.button>
-              </div>
-            )}
-            {currentQuestion.type === 'text' && (
-              <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <motion.input 
-                  type="text" 
-                  value={answers[currentQuestion.field] || ''} 
-                  onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} 
-                  placeholder={currentQuestion.placeholder || ''} 
-                  className="w-full bg-transparent border-b-2 border-sand px-0 py-4 text-xl text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-all font-body" 
-                  autoFocus
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.5 }}
-                />
-              </div>
-            )}
-            {currentQuestion.type === 'textarea' && (
-              <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <textarea value={answers[currentQuestion.field] || ''} onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} placeholder={currentQuestion.placeholder || ''} className="w-full bg-white/50 border-2 border-sand px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-colors font-body min-h-[140px] resize-none" autoFocus />
-              </div>
-            )}
-            {currentQuestion.type === 'single' && (
-              <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <div className="space-y-2 max-h-[45vh] overflow-y-auto pr-2">
-                  {currentQuestion.options.map((option, idx) => (
-                    <motion.div 
-                      key={option} 
-                      initial={{ opacity: 0, x: 30 }} 
-                      animate={{ opacity: 1, x: 0 }} 
-                      transition={{ delay: idx * 0.05 }}
-                      onClick={() => handleSelectSingle(option)}
-                      whileHover={{ x: 10, backgroundColor: "rgba(184, 166, 126, 0.15)" }}
-                      className={`p-4 border-2 cursor-pointer transition-all font-body text-sm tracking-wide ${answers[currentQuestion.field] === option ? 'bg-accent-gold/20 border-accent-gold text-deep-charcoal' : 'border-sand bg-white/30 text-charcoal hover:border-accent-gold/50 hover:text-deep-charcoal'}`}
-                    >
-                      {option}
-                    </motion.div>
-                  ))}
+          ) : (
+            <motion.div key={step} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} className="w-full max-w-lg relative z-10">
+              {currentQuestion.type === 'welcome' && (
+                <div className="text-center">
+                  <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.5 }}>
+                    <Logo className="h-24 mx-auto mb-8" variant="dark" />
+                  </motion.div>
+                  <motion.h2 className="font-serif text-3xl md:text-4xl mb-4 text-deep-charcoal" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
+                    {currentQuestion.title}
+                  </motion.h2>
+                  <motion.p className="text-charcoal/60 font-sans mb-10" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
+                    {currentQuestion.subtitle}
+                  </motion.p>
+                  <motion.button onClick={handleNext} className="btn-primary" whileHover={{ scale: 1.05 }} initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.6 }}>
+                    Begin Your Journey <ArrowRight className="inline ml-2 w-4 h-4" />
+                  </motion.button>
                 </div>
-              </div>
-            )}
-            {currentQuestion.type === 'multi' && (
-              <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <div className="grid grid-cols-2 gap-2 max-h-[45vh] overflow-y-auto pr-2">
-                  {currentQuestion.options.map((option, idx) => {
-                    const isSelected = (answers[currentQuestion.field] || []).includes(option);
-                    return (
+              )}
+
+              {currentQuestion.type === 'text' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
+                    {currentQuestion.hint && <p className="text-charcoal/50 font-sans text-sm">{currentQuestion.hint}</p>}
+                  </div>
+                  <input 
+                    type="text" 
+                    value={answers[currentQuestion.field] || ''} 
+                    onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} 
+                    placeholder={currentQuestion.placeholder || ''} 
+                    className="w-full bg-white/50 border-b-2 border-sand px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans" 
+                    autoFocus
+                  />
+                </div>
+              )}
+
+              {currentQuestion.type === 'textarea' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
+                    {currentQuestion.hint && <p className="text-charcoal/50 font-sans text-sm">{currentQuestion.hint}</p>}
+                  </div>
+                  <textarea 
+                    value={answers[currentQuestion.field] || ''} 
+                    onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} 
+                    placeholder={currentQuestion.placeholder || ''} 
+                    className="w-full bg-white/50 border border-sand px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans min-h-[120px] resize-none" 
+                  />
+                </div>
+              )}
+
+              {currentQuestion.type === 'single' && (
+                <div className="space-y-6">
+                  <h2 className="font-serif text-2xl md:text-3xl text-deep-charcoal">{currentQuestion.label}</h2>
+                  <div className="space-y-2 max-h-[50vh] overflow-y-auto">
+                    {currentQuestion.options.map((option, idx) => (
                       <motion.div 
                         key={option} 
-                        initial={{ opacity: 0, scale: 0.95 }} 
-                        animate={{ opacity: 1, scale: 1 }} 
-                        transition={{ delay: idx * 0.04 }}
-                        onClick={() => handleSelectMulti(option)}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`p-4 border-2 cursor-pointer transition-all font-body text-sm ${isSelected ? 'bg-accent-gold/20 border-accent-gold text-deep-charcoal' : 'border-sand bg-white/30 text-charcoal hover:border-accent-gold/50'}`}
+                        initial={{ opacity: 0, x: 20 }} 
+                        animate={{ opacity: 1, x: 0 }} 
+                        transition={{ delay: idx * 0.05 }}
+                        onClick={() => handleSelectSingle(option)}
+                        className={`p-4 border-2 cursor-pointer font-sans text-sm transition-all hover:border-accent-gold/50 ${answers[currentQuestion.field] === option ? 'bg-accent-gold/15 border-accent-gold text-deep-charcoal' : 'border-sand bg-white/30 text-charcoal'}`}
                       >
                         {option}
                       </motion.div>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            {currentQuestion.type === 'contact' && (
-              <div className="space-y-8">
-                <div><h2 className="font-heading text-3xl sm:text-4xl mb-3 italic text-deep-charcoal">{currentQuestion.label}</h2>{currentQuestion.hint && <p className="text-charcoal/50 text-sm font-body tracking-wide">{currentQuestion.hint}</p>}</div>
-                <div className="space-y-4">
-                  <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com" className="w-full bg-transparent border-b-2 border-sand px-0 py-4 text-xl text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
-                  <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone (optional)" className="w-full bg-transparent border-b-2 border-sand px-0 py-4 text-xl text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none transition-colors font-body" />
+              )}
+
+              {currentQuestion.type === 'multi' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
+                    {currentQuestion.hint && <p className="text-charcoal/50 font-sans text-sm">{currentQuestion.hint}</p>}
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 max-h-[45vh] overflow-y-auto">
+                    {currentQuestion.options.map((option, idx) => {
+                      const selected = Array.isArray(answers[currentQuestion.field]) && answers[currentQuestion.field].includes(option);
+                      return (
+                        <motion.div 
+                          key={option} 
+                          initial={{ opacity: 0, scale: 0.95 }} 
+                          animate={{ opacity: 1, scale: 1 }} 
+                          transition={{ delay: idx * 0.03 }}
+                          onClick={() => handleSelectMulti(option)}
+                          className={`p-3 border-2 cursor-pointer font-sans text-sm transition-all ${selected ? 'bg-accent-gold/15 border-accent-gold' : 'border-sand bg-white/30 hover:border-accent-gold/50'}`}
+                        >
+                          {option}
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
-            {currentQuestion.type !== 'welcome' && (
-              <div className="flex justify-between items-center mt-12">
-                <motion.button 
-                  onClick={handleBack} 
-                  disabled={step === 0} 
-                  className="text-charcoal/50 hover:text-deep-charcoal disabled:opacity-20 transition-all flex items-center gap-2 text-sm font-body tracking-wider uppercase"
-                  whileHover={{ x: -5 }}
-                >
-                  <ArrowLeft className="w-4 h-4" /> Back
-                </motion.button>
-                {step === totalSteps - 1 ? (
-                  <motion.button 
-                    onClick={handleSubmit} 
-                    disabled={!canProceed() || isSubmitting} 
-                    className="btn-luxe flex items-center gap-2"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Submitting</> : <>Complete <Check className="w-4 h-4" /></>}
+              )}
+
+              {currentQuestion.type === 'contact' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
+                    <p className="text-charcoal/50 font-sans text-sm">Email, phone, and one social media are required.</p>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <Mail className="w-5 h-5 text-accent-gold" />
+                      <input type="email" value={answers.email || ''} onChange={(e) => setAnswers({ ...answers, email: e.target.value })} placeholder="your@email.com *" className="flex-1 bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans" />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-5 h-5 text-accent-gold" />
+                      <input type="tel" value={answers.phone || ''} onChange={(e) => setAnswers({ ...answers, phone: e.target.value })} placeholder="Phone number *" className="flex-1 bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans" />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-5 h-5 text-charcoal/40" />
+                      <input type="tel" value={answers.altPhone || ''} onChange={(e) => setAnswers({ ...answers, altPhone: e.target.value })} placeholder="Alternate phone (optional)" className="flex-1 bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans" />
+                    </div>
+                    <div className="pt-2">
+                      <p className="text-charcoal/60 font-sans text-sm mb-3">Social Media *</p>
+                      <div className="flex gap-2 mb-3">
+                        {[{ name: 'Instagram', icon: Instagram }, { name: 'LinkedIn', icon: Linkedin }].map(({ name, icon: Icon }) => (
+                          <button
+                            key={name}
+                            onClick={() => setAnswers({ ...answers, socialMedia: name })}
+                            className={`flex items-center gap-2 px-4 py-2 border-2 font-sans text-sm transition-all ${answers.socialMedia === name ? 'border-accent-gold bg-accent-gold/15' : 'border-sand hover:border-accent-gold/50'}`}
+                          >
+                            <Icon className="w-4 h-4" /> {name}
+                          </button>
+                        ))}
+                      </div>
+                      <input 
+                        type="text" 
+                        value={answers.socialHandle || ''} 
+                        onChange={(e) => setAnswers({ ...answers, socialHandle: e.target.value })} 
+                        placeholder={answers.socialMedia ? `Your ${answers.socialMedia} handle *` : "Select a platform first"} 
+                        className="w-full bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans"
+                        disabled={!answers.socialMedia}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentQuestion.type !== 'welcome' && (
+                <div className="flex justify-between items-center mt-10">
+                  <motion.button onClick={handleBack} disabled={step === 0} className="text-charcoal/50 hover:text-deep-charcoal disabled:opacity-20 flex items-center gap-2 font-sans text-sm" whileHover={{ x: -5 }}>
+                    <ArrowLeft className="w-4 h-4" /> Back
                   </motion.button>
-                ) : (
-                  <motion.button 
-                    onClick={handleNext} 
-                    disabled={!canProceed()} 
-                    className="btn-luxe flex items-center gap-2 disabled:opacity-50"
-                    whileHover={{ scale: 1.05, x: 5 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Continue <ArrowRight className="w-4 h-4" />
-                  </motion.button>
-                )}
-              </div>
-            )}
-          </motion.div>
-        )}
+                  {step === totalSteps - 1 ? (
+                    <motion.button onClick={handleSubmit} disabled={!canProceed() || isSubmitting} className="btn-primary flex items-center gap-2" whileHover={{ scale: 1.05 }}>
+                      {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Submitting</> : <>Submit <Check className="w-4 h-4" /></>}
+                    </motion.button>
+                  ) : (
+                    <motion.button onClick={handleNext} disabled={!canProceed()} className="btn-primary flex items-center gap-2 disabled:opacity-50" whileHover={{ scale: 1.05 }}>
+                      Continue <ArrowRight className="w-4 h-4" />
+                    </motion.button>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          )}
+        </div>
       </motion.div>
     </AnimatePresence>
   );
@@ -627,46 +427,19 @@ const Navigation = ({ onBeginJourney }) => {
 
   return (
     <motion.header 
-      initial={{ y: -100, opacity: 0 }} 
-      animate={{ y: 0, opacity: 1 }} 
-      transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-700 ${isScrolled ? 'bg-cream/95 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'}`}
+      initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}
     >
-      <div className="max-w-7xl mx-auto px-8 lg:px-16 flex items-center justify-between">
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Logo className={`${isScrolled ? 'h-14' : 'h-20'} transition-all duration-500`} variant="dark" />
-        </motion.div>
-        <nav className="hidden md:flex items-center gap-12">
-          {['About', 'Experience', 'Journey'].map((item, idx) => (
-            <motion.button 
-              key={item} 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + idx * 0.1 }}
-              onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-sm font-body tracking-[0.2em] uppercase transition-all relative group text-deep-charcoal/80 hover:text-accent-gold"
-              whileHover={{ y: -2 }}
-            >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+        <Logo className={`${isScrolled ? 'h-12' : 'h-16'} transition-all`} variant="dark" />
+        <nav className="hidden md:flex items-center gap-10">
+          {['About', 'Experience', 'Journey'].map((item) => (
+            <button key={item} onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })} className="font-sans text-sm tracking-wide text-deep-charcoal/80 hover:text-accent-gold transition-colors">
               {item}
-              <motion.span 
-                className="absolute -bottom-1 left-0 h-[1px] bg-accent-gold"
-                initial={{ width: 0 }}
-                whileHover={{ width: "100%" }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.button>
+            </button>
           ))}
         </nav>
-        <motion.button 
-          whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(184, 166, 126, 0.4)" }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onBeginJourney} 
-          className="btn-luxe text-xs" 
-          data-testid="nav-cta"
-        >
+        <motion.button onClick={onBeginJourney} className="btn-primary text-sm" whileHover={{ scale: 1.05 }} data-testid="nav-cta">
           Enter The Becoming
         </motion.button>
       </div>
@@ -674,233 +447,130 @@ const Navigation = ({ onBeginJourney }) => {
   );
 };
 
-// Hero Section - Powerful and immersive with serene landscape
+// Hero Section with Image Carousel
 const HeroSection = ({ onBeginJourney }) => {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
+  const [currentImage, setCurrentImage] = useState(0);
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section ref={containerRef} className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
-      {/* Serene landscape cover image with parallax */}
-      <motion.div className="absolute inset-0" style={{ scale }}>
-        <img 
-          src="/images/hero-cover.png"
-          alt="Serene mountain landscape at sunrise"
-          className="absolute w-full h-full object-cover"
-        />
-        {/* Soft overlay for text readability - keeping dreamy atmosphere */}
-        <div className="absolute inset-0 bg-gradient-to-b from-deep-charcoal/40 via-transparent to-deep-charcoal/50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-deep-charcoal/20 via-transparent to-deep-charcoal/20" />
-        {/* Subtle vignette effect */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(26,26,26,0.3)_100%)]" />
-      </motion.div>
-      
-      <div className="relative z-10 text-center px-6 max-w-6xl mx-auto pt-24">
-        {/* Decorative lines */}
-        <motion.div 
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-20 bg-gradient-to-b from-transparent via-accent-gold to-transparent"
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 1.5, delay: 0.5 }}
-        />
-        
-        {/* Logo with elegant entrance */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }} 
-          animate={{ opacity: 1, scale: 1 }} 
-          transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
+      {/* Image Carousel Background */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentImage}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.5 }}
+          className="absolute inset-0"
         >
-          <FloatingElement duration={8}>
-            <Logo className="h-56 md:h-72 lg:h-96 w-auto mx-auto mb-10" variant="dark" />
-          </FloatingElement>
+          <img src={heroImages[currentImage].url} alt={heroImages[currentImage].alt} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream/40 via-transparent to-cream/60" />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Image indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {heroImages.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentImage(idx)}
+            className={`w-2 h-2 rounded-full transition-all ${idx === currentImage ? 'bg-accent-gold w-6' : 'bg-deep-charcoal/30'}`}
+          />
+        ))}
+      </div>
+      
+      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
+          <Logo className="h-48 md:h-64 lg:h-80 w-auto mx-auto mb-8" variant="dark" />
         </motion.div>
         
-        {/* Tagline */}
         <motion.p 
-          initial={{ opacity: 0, letterSpacing: "0.2em" }} 
-          animate={{ opacity: 1, letterSpacing: "0.5em" }} 
-          transition={{ delay: 0.6, duration: 1 }}
-          className="font-body text-xs md:text-sm tracking-[0.5em] text-deep-charcoal/80 uppercase mb-8 drop-shadow-sm"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+          className="font-sans text-lg md:text-xl tracking-[0.3em] text-accent-gold uppercase mb-6"
         >
           A Curated Human Experience
         </motion.p>
         
-        {/* Main headline - Powerful and emotive */}
         <motion.h1 
-          initial={{ opacity: 0, y: 40 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ delay: 0.8, duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="font-heading text-5xl sm:text-6xl lg:text-8xl xl:text-9xl text-deep-charcoal mb-8 leading-[1.05] drop-shadow-sm"
+          initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
+          className="font-serif text-4xl md:text-5xl lg:text-6xl text-deep-charcoal mb-6 leading-tight"
         >
-          You've been waiting<br />
-          <motion.em 
-            className="text-accent-bronze"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
-          >
-            for this
-          </motion.em>
+          Where growth begins<br />
+          <span className="text-accent-gold italic">and transformation unfolds</span>
         </motion.h1>
         
-        {/* Subheadline - Emotionally engaging */}
         <motion.p 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          transition={{ delay: 1.2, duration: 1 }}
-          className="font-body text-lg md:text-xl lg:text-2xl text-deep-charcoal/80 max-w-3xl mx-auto mb-12 leading-relaxed tracking-wide drop-shadow-sm"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
+          className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto mb-10"
         >
-          For those who have everything in place, yet feel a quiet stirring within.
-          <br className="hidden md:block" />
-          <span className="text-deep-charcoal/60">A sacred pause. A return to yourself.</span>
+          A journey of learning, discovery, and becoming the person you're meant to be.
         </motion.p>
         
-        {/* CTA Buttons */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20"
-        >
-          <motion.button 
-            whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(184, 166, 126, 0.5)" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onBeginJourney} 
-            className="btn-luxe text-base md:text-lg px-16 py-6" 
-            data-testid="hero-cta"
-          >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <motion.button onClick={onBeginJourney} className="btn-primary text-base px-10 py-4" whileHover={{ scale: 1.05 }} data-testid="hero-cta">
             Enter The Becoming
           </motion.button>
-          <motion.button 
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(26,26,26,0.15)" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-deep-charcoal/10 backdrop-blur-sm border-2 border-deep-charcoal/40 text-deep-charcoal hover:bg-deep-charcoal/15 text-base md:text-lg px-16 py-6 font-body tracking-[0.15em] uppercase transition-all"
-          >
+          <motion.button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="btn-secondary text-base px-10 py-4" whileHover={{ scale: 1.05 }}>
             Discover More
           </motion.button>
-        </motion.div>
-        
-        {/* Scroll indicator - Properly positioned */}
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          transition={{ delay: 2.2 }}
-          className="flex flex-col items-center gap-3"
-        >
-          <span className="font-body text-xs text-deep-charcoal/60 tracking-[0.3em] uppercase">Scroll to explore</span>
-          <motion.div 
-            animate={{ y: [0, 8, 0] }} 
-            transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-            className="w-[1px] h-12 bg-gradient-to-b from-accent-bronze/80 to-transparent"
-          />
         </motion.div>
       </div>
     </section>
   );
 };
 
-// About Section - Refined with parallax
+// About Section - Positive framing, no yoga image
 const AboutSection = () => {
-  const sectionRef = useRef(null);
-  const imageRef = useRef(null);
-  const isImageInView = useInView(imageRef, { once: false, margin: "-100px" });
-
   return (
-    <section id="about" className="py-32 lg:py-48 bg-cream relative overflow-hidden" ref={sectionRef}>
-      {/* Subtle animated background */}
+    <section id="about" className="py-24 lg:py-32 bg-cream relative overflow-hidden">
       <AnimatedBackground variant="light" />
       
-      <div className="max-w-7xl mx-auto px-8 lg:px-16 relative z-10">
-        <RevealSection className="text-center mb-20">
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 60 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="h-[1px] bg-accent-gold mx-auto mb-8"
-          />
-          <motion.p 
-            initial={{ opacity: 0, letterSpacing: "0.2em" }}
-            whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="font-body text-xs md:text-sm text-accent-gold uppercase mb-6 tracking-[0.4em]"
-          >
-            The Essence
-          </motion.p>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl text-deep-charcoal italic leading-tight">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
+        <RevealSection className="text-center mb-16">
+          <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">The Essence</p>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
             What is The Becoming?
           </h2>
+          <p className="font-sans text-lg text-charcoal/80 max-w-3xl mx-auto">
+            The Becoming is a <span className="text-accent-gold font-medium">transformative human experience</span> — 
+            a sacred space for those ready to embrace growth, learning, and self-discovery.
+          </p>
         </RevealSection>
 
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          <RevealSection delay={0.2}>
-            <div className="space-y-8 text-charcoal">
-              <p className="text-xl md:text-2xl leading-relaxed font-body">
-                The Becoming is a <span className="text-accent-gold font-medium">curated human experience</span> for those who have outgrown their current chapter — not broken, not lost, just quietly ready for more.
-              </p>
-              
-              <div className="py-10 border-y border-sand/60 space-y-4">
-                {["retreat", "workshop", "lecture"].map((word, idx) => (
-                  <motion.p 
-                    key={word}
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + idx * 0.15 }}
-                    viewport={{ once: true }}
-                    className="font-heading text-2xl md:text-3xl text-deep-charcoal flex items-center gap-4"
-                  >
-                    <span className="w-2 h-2 bg-accent-gold/50 rounded-full" />
-                    It is <span className="text-accent-gold mx-2">not</span> a {word}.
-                  </motion.p>
-                ))}
-              </div>
-              
-              <p className="text-lg md:text-xl leading-relaxed font-body text-charcoal/80">
-                No one will teach you how to live. No one is here to fix you. We simply create space for you to remember who you are — beyond roles, beyond expectations, beyond the noise.
-              </p>
-            </div>
-          </RevealSection>
-          
-          <RevealSection delay={0.4}>
-            <motion.div 
-              ref={imageRef}
-              className="relative aspect-[4/5] overflow-hidden group"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.6 }}
-            >
-              <motion.img 
-                src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&q=80" 
-                alt="Meditation" 
-                className="w-full h-full object-cover"
-                style={{
-                  scale: isImageInView ? 1 : 1.15,
-                  transition: "scale 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/40 via-transparent to-transparent" />
-              
-              {/* Decorative frame */}
-              <div className="absolute top-6 right-6 w-24 h-24 border-t-2 border-r-2 border-accent-gold/40 transition-all duration-500 group-hover:w-28 group-hover:h-28" />
-              <div className="absolute bottom-6 left-6 w-24 h-24 border-b-2 border-l-2 border-accent-gold/40 transition-all duration-500 group-hover:w-28 group-hover:h-28" />
-            </motion.div>
-          </RevealSection>
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          {[
+            { title: "A Space for Growth", desc: "Where learning meets transformation, and every moment becomes an opportunity for discovery." },
+            { title: "A Journey Within", desc: "An invitation to explore your depths, reconnect with your essence, and embrace your potential." },
+            { title: "A Circle of Connection", desc: "A community of like-minded souls, sharing experiences and growing together." }
+          ].map((item, idx) => (
+            <RevealSection key={idx} delay={idx * 0.15}>
+              <motion.div className="p-8 bg-white/50 border border-sand hover:border-accent-gold/50 transition-all h-full" whileHover={{ y: -5 }}>
+                <span className="font-sans text-4xl text-accent-gold/30 block mb-4">0{idx + 1}</span>
+                <h3 className="font-serif text-xl text-deep-charcoal mb-3">{item.title}</h3>
+                <p className="font-sans text-charcoal/70">{item.desc}</p>
+              </motion.div>
+            </RevealSection>
+          ))}
         </div>
 
-        <RevealSection delay={0.3} className="mt-28 text-center max-w-4xl mx-auto">
+        <RevealSection className="text-center">
           <motion.div
-            className="relative"
+            initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            className="py-12 border-t border-b border-sand"
           >
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-6xl text-accent-gold/20 font-heading">"</div>
-            <p className="font-heading text-2xl md:text-3xl lg:text-4xl text-deep-charcoal italic leading-relaxed pt-8">
-              No promises. No fixing. No preaching. No selling.
-              <br />
-              <span className="text-accent-gold">Only experiences that remind you of what's real.</span>
-            </p>
+            <AnimatedText 
+              text="Only experiences that remind you of what's real." 
+              className="font-serif text-2xl md:text-3xl text-deep-charcoal italic"
+            />
           </motion.div>
         </RevealSection>
       </div>
@@ -908,153 +578,112 @@ const AboutSection = () => {
   );
 };
 
-// Experience Section - Enhanced with animations
+// Experience Section - Pyramid Structure with Learning
 const ExperienceSection = () => {
   const experiences = [
-    { title: "Nature & Stillness", desc: "Step away from screens. Reconnect with earth, sky, and the rhythm of your breath.", num: "01" },
-    { title: "Mindful Movement", desc: "Your body holds wisdom. Learn to listen, move, and release what no longer serves you.", num: "02" },
-    { title: "Creative Expression", desc: "Paint, write, sculpt — express what words cannot capture.", num: "03" },
-    { title: "Music & Poetry", desc: "Let art move through you. Create or simply receive.", num: "04" },
-    { title: "Deep Conversations", desc: "Share and witness honest human stories in a circle of presence.", num: "05" }
+    { title: "Learning & Unlearning", desc: "The foundation of growth — opening your mind to new perspectives and releasing what no longer serves you." },
+    { title: "Self-Discovery", desc: "Exploring your inner landscape, understanding your patterns, and embracing your authentic self." },
+    { title: "Creative Expression", desc: "Channeling your emotions and insights through art, music, writing, and movement." },
+    { title: "Mindful Connection", desc: "Building meaningful relationships with yourself, others, and the world around you." },
+    { title: "Transformation", desc: "The culmination of your journey — stepping into the person you're becoming." }
   ];
 
   return (
-    <section id="experience" className="py-32 lg:py-48 bg-soft-cream relative overflow-hidden">
-      {/* Subtle animated background */}
+    <section id="experience" className="py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
       <AnimatedBackground variant="light" />
       
-      <div className="max-w-7xl mx-auto px-8 lg:px-16 relative z-10">
-        <RevealSection className="text-center mb-20">
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 60 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="h-[1px] bg-accent-gold mx-auto mb-8"
-          />
-          <p className="font-body text-xs md:text-sm tracking-[0.4em] text-accent-gold uppercase mb-6">The Journey</p>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl text-deep-charcoal italic leading-tight mb-8">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
+        <RevealSection className="text-center mb-16">
+          <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">The Journey</p>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
             What You Will Experience
           </h2>
-          <p className="font-body text-charcoal text-lg md:text-xl max-w-2xl mx-auto">
-            At The Becoming, you are invited to experience life beyond autopilot — to feel, create, and simply be.
-          </p>
         </RevealSection>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {experiences.map((exp, index) => (
-            <RevealSection key={index} delay={index * 0.1}>
-              <motion.div 
-                whileHover={{ y: -12, boxShadow: "0 25px 50px rgba(0,0,0,0.08)" }}
-                transition={{ duration: 0.4 }}
-                className="p-10 bg-cream border border-sand/50 hover:border-accent-gold/50 transition-all duration-500 group h-full cursor-pointer relative overflow-hidden"
-              >
-                {/* Hover gradient */}
+        {/* Pyramid Structure */}
+        <div className="max-w-4xl mx-auto">
+          {experiences.map((exp, idx) => {
+            const width = 100 - (idx * 15);
+            return (
+              <RevealSection key={idx} delay={idx * 0.1}>
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 via-transparent to-accent-bronze/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                />
-                
-                <div className="relative z-10">
-                  <motion.span 
-                    className="font-body text-5xl font-light text-accent-gold/20 group-hover:text-accent-gold/40 transition-colors duration-500"
-                  >
-                    {exp.num}
-                  </motion.span>
-                  <h3 className="font-heading text-2xl md:text-3xl text-deep-charcoal mt-4 mb-4 italic group-hover:text-accent-gold transition-colors duration-300">
-                    {exp.title}
-                  </h3>
-                  <p className="font-body text-charcoal/80 text-base md:text-lg leading-relaxed">
-                    {exp.desc}
-                  </p>
-                </div>
-                
-                {/* Corner accent */}
-                <div className="absolute bottom-0 right-0 w-0 h-0 border-b-[40px] border-r-[40px] border-b-accent-gold/10 border-r-transparent group-hover:border-b-accent-gold/30 transition-colors duration-500" />
-              </motion.div>
-            </RevealSection>
-          ))}
+                  className="mx-auto mb-4 p-6 bg-white/60 border border-sand hover:border-accent-gold/50 transition-all cursor-pointer relative overflow-hidden group"
+                  style={{ width: `${width}%` }}
+                  whileHover={{ scale: 1.02, boxShadow: "0 10px 40px rgba(184, 166, 126, 0.15)" }}
+                >
+                  <div className="absolute top-0 left-0 w-1 h-full bg-accent-gold/30 group-hover:bg-accent-gold transition-colors" />
+                  <div className="flex items-start gap-4">
+                    <span className="font-sans text-2xl text-accent-gold/50 font-light">{idx + 1}</span>
+                    <div>
+                      <h3 className="font-serif text-lg md:text-xl text-deep-charcoal mb-2">{exp.title}</h3>
+                      <p className="font-sans text-charcoal/70 text-sm md:text-base">{exp.desc}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </RevealSection>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 };
 
-// Journey/Who Section - More balanced alignment
+// Journey Section - Who it's for with bold YOU
 const JourneySection = () => {
-  const forYouIf = [
-    "You're succeeding outwardly, but feel quietly exhausted inside",
-    "You sense there's a version of you waiting to emerge",
-    "You crave depth over distraction, presence over performance",
-    "You're ready to pause the world and listen inward"
+  const forYou = [
+    "are ready to embrace growth and transformation",
+    "seek deeper meaning and purpose in life",
+    "want to learn, unlearn, and discover new perspectives",
+    "crave authentic connections with like-minded souls",
+    "are open to exploring your inner landscape",
+    "feel ready to step into your fullest potential"
   ];
 
   return (
-    <section id="journey" className="py-32 lg:py-48 bg-cream relative overflow-hidden">
-      {/* Subtle animated background */}
+    <section id="journey" className="py-24 lg:py-32 bg-cream relative overflow-hidden">
       <AnimatedBackground variant="light" />
       
-      <div className="max-w-7xl mx-auto px-8 lg:px-16 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <RevealSection>
             <motion.div 
-              className="relative aspect-[4/5] overflow-hidden group"
+              className="relative aspect-[4/5] overflow-hidden"
               whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
             >
-              <motion.img 
+              <img 
                 src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" 
-                alt="Mountains" 
+                alt="Mountain journey" 
                 className="w-full h-full object-cover"
-                whileHover={{ scale: 1.08 }}
-                transition={{ duration: 0.8 }}
               />
-              {/* Decorative frame */}
-              <div className="absolute top-6 left-6 w-24 h-24 border-t-2 border-l-2 border-accent-gold/40 transition-all duration-500 group-hover:w-28 group-hover:h-28" />
-              <div className="absolute bottom-6 right-6 w-24 h-24 border-b-2 border-r-2 border-accent-gold/40 transition-all duration-500 group-hover:w-28 group-hover:h-28" />
+              <div className="absolute inset-0 bg-gradient-to-t from-cream/30 to-transparent" />
             </motion.div>
           </RevealSection>
           
           <RevealSection delay={0.2}>
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: 60 }}
-              transition={{ duration: 1 }}
-              viewport={{ once: true }}
-              className="h-[1px] bg-accent-gold mb-8"
-            />
-            <motion.p 
-              initial={{ opacity: 0, letterSpacing: "0.2em" }}
-              whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
-              transition={{ duration: 1 }}
-              viewport={{ once: true }}
-              className="font-body text-xs md:text-sm text-accent-gold uppercase mb-6 tracking-[0.4em]"
-            >
-              Is This For You?
-            </motion.p>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-deep-charcoal mb-10 italic leading-tight">
-              Who is The Becoming For?
+            <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">Is This For You?</p>
+            <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal mb-8">
+              This May Be For <span className="text-accent-gold">YOU</span>
             </h2>
             
-            <p className="font-body text-charcoal text-lg md:text-xl mb-10 leading-relaxed">
-              Working professionals, creators, artists, seekers — anyone between 21-65 who feels ready for something they can't fully name yet.
+            <p className="font-sans text-charcoal/80 text-lg mb-8">
+              The Becoming welcomes individuals aged 21-65 who are ready to embark on a journey of growth and self-discovery.
             </p>
             
             <div className="space-y-4">
-              <p className="font-heading text-xl md:text-2xl text-deep-charcoal italic mb-6">This may be for you if...</p>
-              {forYouIf.map((item, idx) => (
+              <p className="font-serif text-xl text-deep-charcoal">Maybe <span className="font-bold text-accent-gold">YOU</span>...</p>
+              {forYou.map((item, idx) => (
                 <motion.div 
-                  key={idx} 
-                  initial={{ opacity: 0, x: -30 }}
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.12 }}
+                  transition={{ delay: idx * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex items-start gap-5 py-4 border-b border-sand/60 group hover:border-accent-gold/50 transition-colors duration-300"
+                  className="flex items-start gap-4 py-3 border-b border-sand/60"
                 >
-                  <motion.span 
-                    className="w-2 h-2 bg-accent-gold rounded-full mt-2.5 flex-shrink-0"
-                    whileHover={{ scale: 1.5 }}
-                  />
-                  <p className="font-body text-charcoal/80 text-base md:text-lg group-hover:text-deep-charcoal transition-colors">{item}</p>
+                  <span className="w-2 h-2 bg-accent-gold rounded-full mt-2 flex-shrink-0" />
+                  <p className="font-sans text-charcoal/80">{item}</p>
                 </motion.div>
               ))}
             </div>
@@ -1065,132 +694,47 @@ const JourneySection = () => {
   );
 };
 
-// Circle/Community Section - More luxurious
-const CircleSection = () => {
-  const items = [
-    { text: "Stay connected with you long after the experience ends", num: "01" },
-    { text: "Remind you of what matters when life gets loud again", num: "02" },
-    { text: "A circle of like-minded souls, growing together", num: "03" }
-  ];
-
-  return (
-    <section className="py-32 lg:py-48 bg-deep-charcoal text-white relative overflow-hidden">
-      {/* Subtle animated background for dark section */}
-      <AnimatedBackground variant="dark" />
-
-      <div className="max-w-5xl mx-auto px-8 lg:px-16 text-center relative z-10">
-        <RevealSection>
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 60 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="h-[1px] bg-accent-gold mx-auto mb-8"
-          />
-          <motion.p 
-            initial={{ opacity: 0, letterSpacing: "0.2em" }}
-            whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="font-body text-xs md:text-sm text-accent-gold uppercase mb-6 tracking-[0.4em]"
-          >
-            Beyond The Experience
-          </motion.p>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl mb-8 italic leading-tight">
-            Not Just an Experience.
-            <br />
-            <span className="text-accent-gold">A Circle.</span>
-          </h2>
-          <p className="font-body text-white/70 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-            Beyond the experience itself, The Becoming is the foundation of something larger — a community that values depth over speed, presence over performance, and humanity over hustle.
-          </p>
-        </RevealSection>
-
-        <RevealSection delay={0.3} className="mt-20 grid md:grid-cols-3 gap-8">
-          {items.map((item, idx) => (
-            <motion.div 
-              key={idx} 
-              whileHover={{ y: -10, borderColor: "rgba(184, 166, 126, 0.5)" }}
-              transition={{ duration: 0.4 }}
-              className="p-10 border border-white/10 transition-all cursor-pointer group relative overflow-hidden"
-            >
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              />
-              <span className="font-body text-4xl font-light text-accent-gold/30 group-hover:text-accent-gold/50 transition-colors duration-500 block mb-4">{item.num}</span>
-              <p className="font-body text-white/75 text-base md:text-lg leading-relaxed group-hover:text-white transition-colors relative z-10">{item.text}</p>
-            </motion.div>
-          ))}
-        </RevealSection>
-      </div>
-    </section>
-  );
-};
-
-// FAQ Section - Clean and balanced
+// FAQ Section - Placeholder for Mitin's answers
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const faqs = [
-    { q: "What exactly happens during The Becoming?", a: "The Becoming is a series of curated experiences designed to help you reconnect with yourself. Activities include nature immersion, mindful movement, creative expression, reflection exercises, and meaningful conversations. Each element is intentionally designed, not rushed or agenda-driven." },
-    { q: "How long is the experience?", a: "The experience spans 4 days and 3 nights, carefully designed to give you enough time to truly step away from daily life and immerse yourself in the journey." },
-    { q: "Where does it take place?", a: "The location is revealed to confirmed participants. We choose settings that offer natural beauty, privacy, and the right atmosphere for introspection and connection." },
-    { q: "Is this like therapy or coaching?", a: "No. The Becoming is not therapy, coaching, or any form of treatment. We don't diagnose, prescribe, or promise to fix anything. We simply create space for you to reconnect with yourself through experiences." },
-    { q: "How are participants selected?", a: "We carefully review each application to ensure alignment with The Becoming's values and intentions. We look for genuine readiness and openness, not credentials or achievements." }
+    { q: "What exactly happens during The Becoming?", a: "[Answer to be provided by Mitin]" },
+    { q: "How long is the experience?", a: "[Answer to be provided by Mitin]" },
+    { q: "Where does it take place?", a: "[Answer to be provided by Mitin]" },
+    { q: "What is the investment for this experience?", a: "[Answer to be provided by Mitin]" },
+    { q: "How are participants selected?", a: "[Answer to be provided by Mitin]" }
   ];
 
   return (
-    <section className="py-32 lg:py-48 bg-soft-cream relative overflow-hidden">
-      {/* Subtle animated background */}
+    <section className="py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
       <AnimatedBackground variant="light" />
       
-      <div className="max-w-4xl mx-auto px-8 lg:px-16 relative z-10">
-        <RevealSection className="text-center mb-16">
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 60 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="h-[1px] bg-accent-gold mx-auto mb-8"
-          />
-          <p className="font-body text-xs md:text-sm tracking-[0.4em] text-accent-gold uppercase mb-6">Questions</p>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-deep-charcoal italic">Frequently Asked</h2>
+      <div className="max-w-3xl mx-auto px-6 lg:px-12 relative z-10">
+        <RevealSection className="text-center mb-12">
+          <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">Questions</p>
+          <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal">Frequently Asked</h2>
         </RevealSection>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, idx) => (
             <RevealSection key={idx} delay={idx * 0.08}>
-              <motion.div 
-                className="border border-sand/60 bg-cream overflow-hidden"
-                whileHover={{ borderColor: "rgba(184, 166, 126, 0.5)" }}
-                transition={{ duration: 0.3 }}
-              >
+              <div className="border border-sand bg-white/50 overflow-hidden">
                 <button
                   onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                  className="w-full px-8 py-6 flex items-center justify-between text-left group"
+                  className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-accent-gold/5 transition-colors"
                   data-testid={`faq-${idx}`}
                 >
-                  <span className="font-heading text-lg md:text-xl text-deep-charcoal pr-4 group-hover:text-accent-gold transition-colors">{faq.q}</span>
-                  <motion.div
-                    animate={{ rotate: openIndex === idx ? 45 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Plus className="w-5 h-5 text-accent-gold flex-shrink-0" />
-                  </motion.div>
+                  <span className="font-serif text-lg text-deep-charcoal pr-4">{faq.q}</span>
+                  <motion.span animate={{ rotate: openIndex === idx ? 45 : 0 }} className="text-accent-gold text-2xl">+</motion.span>
                 </button>
                 <AnimatePresence>
                   {openIndex === idx && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-8 pb-8 font-body text-charcoal/80 text-base md:text-lg leading-relaxed">{faq.a}</p>
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }}>
+                      <p className="px-6 pb-5 font-sans text-charcoal/70">{faq.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             </RevealSection>
           ))}
         </div>
@@ -1199,43 +743,24 @@ const FAQSection = () => {
   );
 };
 
-// CTA Section - Impactful
+// CTA Section - Bigger logo, updated content
 const CTASection = ({ onBeginJourney }) => {
   return (
-    <section className="py-32 lg:py-48 bg-cream relative overflow-hidden">
-      {/* Subtle animated background */}
+    <section className="py-24 lg:py-32 bg-cream relative overflow-hidden">
       <AnimatedBackground variant="light" />
-      {/* Additional center glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,166,126,0.1),transparent_60%)]" />
       
-      <RevealSection className="relative z-10 text-center px-8 max-w-4xl mx-auto">
-        <FloatingElement duration={10}>
-          <Logo className="h-40 md:h-56 mx-auto mb-12" />
-        </FloatingElement>
+      <RevealSection className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity }}>
+          <Logo className="h-48 md:h-64 mx-auto mb-10" />
+        </motion.div>
         
-        <motion.div
-          initial={{ width: 0 }}
-          whileInView={{ width: 60 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-          className="h-[1px] bg-accent-gold mx-auto mb-8"
-        />
-        
-        <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl text-deep-charcoal mb-8 italic leading-tight">
-          Ready to begin your
-          <br />
-          <span className="text-accent-gold">transformation</span>?
+        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
+          Ready to begin <span className="text-accent-gold italic">your journey</span>?
         </h2>
-        <p className="font-body text-charcoal/80 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
-          If this resonates with you, if you feel that quiet pull — take a moment and tell us who you are.
+        <p className="font-sans text-charcoal/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+          If something within you resonates with this experience, take the first step. We'd love to hear from you.
         </p>
-        <motion.button 
-          whileHover={{ scale: 1.05, boxShadow: "0 25px 60px rgba(184, 166, 126, 0.45)" }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onBeginJourney} 
-          className="btn-luxe text-sm px-16 py-6" 
-          data-testid="cta-button"
-        >
+        <motion.button onClick={onBeginJourney} className="btn-primary text-base px-12 py-5" whileHover={{ scale: 1.05 }} data-testid="cta-button">
           Enter The Becoming
         </motion.button>
       </RevealSection>
@@ -1243,75 +768,128 @@ const CTASection = ({ onBeginJourney }) => {
   );
 };
 
-// Footer - Refined
-const Footer = () => (
-  <footer className="py-20 bg-deep-charcoal text-white">
-    <div className="max-w-7xl mx-auto px-8 lg:px-16">
-      <div className="grid md:grid-cols-3 gap-16 mb-16">
-        <div>
-          <Logo className="h-20 mb-8" variant="light" />
-          <p className="font-body text-white/60 text-base leading-relaxed">A curated human experience for those ready to become real again.</p>
-        </div>
-        <div>
-          <h4 className="font-body text-xs tracking-[0.3em] uppercase text-accent-gold mb-8">Navigate</h4>
-          <div className="space-y-4">
-            {['About', 'Experience', 'Journey'].map((item) => (
+// Contact Section with required fields
+const ContactSection = () => {
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.email || !form.phone || !form.message) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+    setSubmitting(true);
+    try {
+      await axios.post(`${API}/contact`, form);
+      toast.success('Message sent successfully!');
+      setForm({ name: '', email: '', phone: '', message: '' });
+    } catch (error) {
+      toast.error('Something went wrong. Please try again.');
+    }
+    setSubmitting(false);
+  };
+
+  return (
+    <section className="py-20 bg-deep-charcoal text-white">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12">
+        <div className="grid md:grid-cols-2 gap-12">
+          <div>
+            <Logo className="h-20 mb-6" variant="light" />
+            <p className="font-sans text-white/70 mb-8">
+              A curated human experience for those ready to embrace growth and transformation.
+            </p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-accent-gold" />
+                <span className="font-sans text-white/80">hello@thebecoming.in</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-accent-gold" />
+                <span className="font-sans text-white/80">[Contact Number]</span>
+              </div>
+            </div>
+            <div className="mt-8 pt-8 border-t border-white/10">
+              <p className="font-sans text-white/50 text-sm">
+                <a href="#" className="hover:text-accent-gold transition-colors">Privacy Policy</a> · 
+                <a href="#" className="hover:text-accent-gold transition-colors ml-2">Terms of Service</a>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-serif text-2xl mb-6">Send us a message</h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans"
+              />
+              <input
+                type="email"
+                placeholder="Email Address *"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
+                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans"
+              />
+              <input
+                type="tel"
+                placeholder="Phone Number *"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                required
+                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans"
+              />
+              <textarea
+                placeholder="Your Message *"
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                required
+                rows={4}
+                className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 focus:border-accent-gold focus:outline-none font-sans resize-none"
+              />
               <motion.button 
-                key={item} 
-                onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
-                className="block font-body text-base text-white/60 hover:text-accent-gold transition-colors"
-                whileHover={{ x: 5 }}
+                type="submit" 
+                disabled={submitting}
+                className="btn-primary w-full"
+                whileHover={{ scale: 1.02 }}
               >
-                {item}
+                {submitting ? 'Sending...' : 'Submit'}
               </motion.button>
-            ))}
+            </form>
           </div>
         </div>
-        <div>
-          <h4 className="font-body text-xs tracking-[0.3em] uppercase text-accent-gold mb-8">Connect</h4>
-          <motion.a 
-            href="mailto:hello@thebecoming.in" 
-            className="font-body text-base text-white/60 hover:text-accent-gold transition-colors"
-            whileHover={{ x: 5 }}
-          >
-            hello@thebecoming.in
-          </motion.a>
+
+        <div className="mt-16 pt-8 border-t border-white/10 text-center">
+          <p className="font-sans text-white/50 text-sm">
+            © {new Date().getFullYear()} The Becoming. All rights reserved. 
+            <span className="mx-2">·</span>
+            Powered by <a href="https://techbook.co.in/" target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:underline">Techbook Technologies</a>
+          </p>
         </div>
       </div>
-      <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="font-body text-sm text-white/40 tracking-wide">© {new Date().getFullYear()} The Becoming. All rights reserved.</p>
-        <p className="font-body text-sm text-white/40 tracking-wide">
-          Powered by <a href="https://techbook.co.in/" target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-white transition-colors">Techbook Technologies</a>
-        </p>
-      </div>
-    </div>
-  </footer>
-);
+    </section>
+  );
+};
 
 // Main App
 export default function LandingPage() {
   const [showQuestionnaire, setShowQuestionnaire] = useState(false);
 
-  // Smooth scroll behavior
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
-    return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
-    };
-  }, []);
-
   return (
     <div className="min-h-screen bg-cream" data-testid="landing-page">
-      <Toaster position="top-center" toastOptions={{ style: { background: '#1a1a1a', color: '#fff', border: '1px solid rgba(184, 166, 126, 0.3)', borderRadius: '0' } }} />
+      <Toaster position="top-center" toastOptions={{ style: { background: '#1a1a1a', color: '#fff', border: '1px solid rgba(184, 166, 126, 0.3)' } }} />
       <Navigation onBeginJourney={() => setShowQuestionnaire(true)} />
       <HeroSection onBeginJourney={() => setShowQuestionnaire(true)} />
       <AboutSection />
       <ExperienceSection />
       <JourneySection />
-      <CircleSection />
       <FAQSection />
       <CTASection onBeginJourney={() => setShowQuestionnaire(true)} />
-      <Footer />
+      <ContactSection />
       <QuestionnaireModal isOpen={showQuestionnaire} onClose={() => setShowQuestionnaire(false)} />
     </div>
   );
