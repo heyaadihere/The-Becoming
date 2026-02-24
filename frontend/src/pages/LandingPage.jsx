@@ -899,7 +899,7 @@ const FAQSection = () => {
 
   return (
     <section className="py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
-      <AnimatedBackground variant="light" />
+      <RisingParticlesBackground variant="light" />
       
       <div className="max-w-3xl mx-auto px-6 lg:px-12 relative z-10">
         <RevealSection className="text-center mb-12">
@@ -939,7 +939,7 @@ const FAQSection = () => {
 const CTASection = ({ onBeginJourney }) => {
   return (
     <section className="py-24 lg:py-32 bg-cream relative overflow-hidden">
-      <AnimatedBackground variant="light" />
+      <ShimmerBackground variant="light" />
       
       <RevealSection className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity }}>
