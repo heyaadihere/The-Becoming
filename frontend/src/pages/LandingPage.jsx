@@ -1450,56 +1450,6 @@ const JourneySection = () => {
     </section>
   );
 };
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 0.5, type: "spring" }}
-                >YOU</motion.span>
-              </h2>
-            </FadeUpText>
-            
-            <FadeUpText delay={0.2}>
-              <p className="font-sans text-charcoal/80 text-lg mb-8">
-                The Becoming welcomes individuals who are ready to embark on a journey of growth and self-discovery.
-              </p>
-            </FadeUpText>
-            
-            <div className="space-y-4">
-              <motion.p 
-                className="font-serif text-xl text-deep-charcoal"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-              >
-                Maybe <motion.span 
-                  className="font-bold text-accent-gold inline-block"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >YOU</motion.span>...
-              </motion.p>
-              <StaggerContainer staggerDelay={0.08}>
-                {forYou.map((item, idx) => (
-                  <StaggerItem key={idx}>
-                    <motion.div 
-                      className="flex items-start gap-4 py-3 border-b border-sand/60 group cursor-pointer"
-                      whileHover={{ x: 10, backgroundColor: "rgba(184, 166, 126, 0.05)" }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <motion.span 
-                        className="w-2 h-2 bg-accent-gold rounded-full mt-2 flex-shrink-0"
-                        whileHover={{ scale: 1.5 }}
-                      />
-                      <p className="font-sans text-charcoal/80 group-hover:text-deep-charcoal transition-colors">{item}</p>
-                    </motion.div>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            </div>
-          </SlideIn>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 // Accommodation Section - Before FAQ
 const AccommodationSection = () => {
