@@ -1064,9 +1064,9 @@ const AboutSection = () => {
           </FadeUpText>
         </div>
 
-        <AnimatedDivider className="mb-16 max-w-md mx-auto" />
+        <AnimatedDivider className="mb-10 md:mb-16 max-w-md mx-auto" />
 
-        <StaggerContainer className="grid md:grid-cols-3 gap-8 mb-16" staggerDelay={0.15}>
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-10 md:mb-16" staggerDelay={0.15}>
           {[
             { 
               title: "A Space for Growth", 
