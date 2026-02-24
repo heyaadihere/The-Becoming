@@ -64,9 +64,8 @@ class SignupSubmission(BaseModel):
     name: str
     email: EmailStr
     phone: Optional[str] = None
-    why_becoming: str
-    current_state: str
-    what_seeking: str
+    alt_phone: Optional[str] = None
+    social_media: Optional[str] = None
     questionnaire_data: Optional[str] = None
     submitted_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     status: str = "pending"
