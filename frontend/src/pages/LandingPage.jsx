@@ -1017,29 +1017,51 @@ const AboutSection = () => {
 
         <StaggerContainer className="grid md:grid-cols-3 gap-8 mb-16" staggerDelay={0.15}>
           {[
-            { title: "A Space for Growth", desc: "Where learning meets transformation, and every moment becomes an opportunity for discovery.", icon: "01" },
-            { title: "A Journey Within", desc: "An invitation to explore your depths, reconnect with your essence, and embrace your potential.", icon: "02" },
-            { title: "A Circle of Connection", desc: "A community of like-minded souls, sharing experiences and growing together.", icon: "03" }
+            { 
+              title: "A Space for Growth", 
+              desc: "Where learning meets transformation, and every moment becomes an opportunity for discovery.", 
+              icon: "01",
+              image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80"
+            },
+            { 
+              title: "A Journey Within", 
+              desc: "An invitation to explore your depths, reconnect with your essence, and embrace your potential.", 
+              icon: "02",
+              image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=400&q=80"
+            },
+            { 
+              title: "A Circle of Connection", 
+              desc: "A community of like-minded souls, sharing experiences and growing together.", 
+              icon: "03",
+              image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80"
+            }
           ].map((item, idx) => (
             <StaggerItem key={idx}>
               <motion.div 
-                className="p-8 bg-white/50 border border-sand hover:border-accent-gold/50 transition-all h-full group cursor-pointer relative overflow-hidden"
+                className="bg-white/50 border border-sand hover:border-accent-gold/50 transition-all h-full group cursor-pointer relative overflow-hidden"
                 whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(184, 166, 126, 0.15)" }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Hover gradient overlay */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
-                <motion.span 
-                  className="font-sans text-5xl text-accent-gold/20 block mb-4 relative z-10"
-                  whileHover={{ scale: 1.1, color: "rgba(184, 166, 126, 0.4)" }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {item.icon}
-                </motion.span>
-                <h3 className="font-serif text-xl text-deep-charcoal mb-3 relative z-10 group-hover:text-accent-gold transition-colors duration-300">{item.title}</h3>
-                <p className="font-sans text-charcoal/70 relative z-10">{item.desc}</p>
+                {/* Image */}
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                {/* Content */}
+                <div className="p-6">
+                  <motion.span 
+                    className="font-sans text-4xl text-accent-gold/20 block mb-3 relative z-10"
+                    whileHover={{ scale: 1.1, color: "rgba(184, 166, 126, 0.4)" }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {item.icon}
+                  </motion.span>
+                  <h3 className="font-serif text-xl text-deep-charcoal mb-2 relative z-10 group-hover:text-accent-gold transition-colors duration-300">{item.title}</h3>
+                  <p className="font-sans text-charcoal/70 text-sm relative z-10">{item.desc}</p>
+                </div>
                 {/* Animated underline */}
                 <motion.div 
                   className="absolute bottom-0 left-0 h-[2px] bg-accent-gold"
