@@ -1322,7 +1322,7 @@ const JourneySection = () => {
               viewport={{ once: true }}
               transition={{ duration: 1 }}
             >
-              Who Is This For?
+              Your Tribe Awaits
             </motion.p>
           </FadeUpText>
           <FadeUpText delay={0.1}>
