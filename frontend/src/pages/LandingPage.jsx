@@ -703,14 +703,17 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                     <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
                     {currentQuestion.hint && <p className="text-charcoal/50 font-sans text-sm">{currentQuestion.hint}</p>}
                   </div>
-                  <input 
-                    type="text" 
-                    value={answers[currentQuestion.field] || ''} 
-                    onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} 
-                    placeholder={currentQuestion.placeholder || ''} 
-                    className="w-full bg-white/50 border-b-2 border-sand px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans" 
-                    autoFocus
-                  />
+                  <div>
+                    <input 
+                      type="text" 
+                      value={answers[currentQuestion.field] || ''} 
+                      onChange={(e) => { setAnswers({ ...answers, [currentQuestion.field]: e.target.value }); setFieldError(''); }} 
+                      placeholder={currentQuestion.placeholder || ''} 
+                      className={`w-full bg-white/50 border-b-2 px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && (!answers[currentQuestion.field]?.trim()) ? 'border-red-400' : 'border-sand'}`} 
+                      autoFocus
+                    />
+                    {fieldError && <p className="text-red-500 font-sans text-sm mt-2" data-testid="field-error">{fieldError}</p>}
+                  </div>
                 </div>
               )}
 
@@ -739,13 +742,14 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                         initial={{ opacity: 0, x: 20 }} 
                         animate={{ opacity: 1, x: 0 }} 
                         transition={{ delay: idx * 0.05 }}
-                        onClick={() => handleSelectSingle(option)}
+                        onClick={() => { handleSelectSingle(option); setFieldError(''); }}
                         className={`p-4 border-2 cursor-pointer font-sans text-sm transition-all hover:border-accent-gold/50 ${answers[currentQuestion.field] === option ? 'bg-accent-gold/15 border-accent-gold text-deep-charcoal' : 'border-sand bg-white/30 text-charcoal'}`}
                       >
                         {option}
                       </motion.div>
                     ))}
                   </div>
+                  {fieldError && <p className="text-red-500 font-sans text-sm" data-testid="field-error">{fieldError}</p>}
                 </div>
               )}
 
@@ -764,7 +768,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                           initial={{ opacity: 0, scale: 0.95 }} 
                           animate={{ opacity: 1, scale: 1 }} 
                           transition={{ delay: idx * 0.03 }}
-                          onClick={() => handleSelectMulti(option)}
+                          onClick={() => { handleSelectMulti(option); setFieldError(''); }}
                           className={`p-3 border-2 cursor-pointer font-sans text-sm transition-all ${selected ? 'bg-accent-gold/15 border-accent-gold' : 'border-sand bg-white/30 hover:border-accent-gold/50'}`}
                         >
                           {option}
@@ -772,6 +776,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                       );
                     })}
                   </div>
+                  {fieldError && <p className="text-red-500 font-sans text-sm" data-testid="field-error">{fieldError}</p>}
                 </div>
               )}
 
