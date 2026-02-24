@@ -89,7 +89,8 @@ const FloatingOrbsBackground = ({ variant = "light" }) => {
 // Gentle Waves - Horizontal flowing lines with soft glow
 const GentleWavesBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
-  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  // More vibrant gold
+  const baseColor = isLight ? "201, 169, 98" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -97,11 +98,11 @@ const GentleWavesBackground = ({ variant = "light" }) => {
       {[20, 40, 60, 80].map((top, i) => (
         <motion.div
           key={i}
-          className="absolute w-[200%] h-[1px]"
+          className="absolute w-[200%] h-[2px]"
           style={{
             top: `${top}%`,
             left: "-50%",
-            background: `linear-gradient(90deg, transparent 0%, rgba(${baseColor}, ${0.08 + i * 0.03}) 25%, rgba(${baseColor}, ${0.15 + i * 0.03}) 50%, rgba(${baseColor}, ${0.08 + i * 0.03}) 75%, transparent 100%)`,
+            background: `linear-gradient(90deg, transparent 0%, rgba(${baseColor}, ${0.12 + i * 0.04}) 25%, rgba(${baseColor}, ${0.2 + i * 0.04}) 50%, rgba(${baseColor}, ${0.12 + i * 0.04}) 75%, transparent 100%)`,
           }}
           animate={{ x: ["-25%", "25%", "-25%"] }}
           transition={{ duration: 15 + i * 5, repeat: Infinity, ease: "easeInOut", delay: i * 2 }}
@@ -112,7 +113,7 @@ const GentleWavesBackground = ({ variant = "light" }) => {
         className="absolute w-[300px] h-[300px] rounded-full"
         style={{
           right: "5%", top: "10%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.1) 0%, transparent 60%)`,
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.14) 0%, transparent 60%)`,
           filter: "blur(30px)",
         }}
         animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4], y: [0, 30, 0] }}
@@ -122,7 +123,7 @@ const GentleWavesBackground = ({ variant = "light" }) => {
         className="absolute w-[250px] h-[250px] rounded-full"
         style={{
           left: "10%", bottom: "15%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.08) 0%, transparent 60%)`,
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.1) 0%, transparent 60%)`,
           filter: "blur(25px)",
         }}
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
