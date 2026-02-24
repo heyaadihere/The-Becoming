@@ -5,14 +5,15 @@
 @tailwind utilities;
 
 :root {
-    --cream: #FAF7F2;
-    --soft-cream: #F5F1EA;
-    --sand: #E5DDD0;
-    --accent-gold: #B8A67E;
-    --accent-bronze: #A08B5B;
-    --rich-gold: #9A8456;
-    --charcoal: #4A4A4A;
-    --deep-charcoal: #1A1A1A;
+    --cream: #FBF8F3;
+    --soft-cream: #F7F3EC;
+    --sand: #E8DFD2;
+    --accent-gold: #C9A962;
+    --accent-bronze: #B8944D;
+    --rich-gold: #A6833B;
+    --warm-gold: #D4B36A;
+    --charcoal: #3D3D3D;
+    --deep-charcoal: #1F1F1F;
 }
 
 * {
@@ -35,7 +36,7 @@ body {
 }
 
 ::selection {
-    background-color: rgba(184, 166, 126, 0.4);
+    background-color: rgba(201, 169, 98, 0.4);
     color: var(--deep-charcoal);
 }
 
@@ -61,9 +62,19 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-/* Primary button */
+/* Vibrant image styling */
+img {
+    filter: saturate(1.1) contrast(1.03) brightness(1.02);
+}
+
+/* More vibrant hover effects */
+img:hover {
+    filter: saturate(1.15) contrast(1.05) brightness(1.03);
+}
+
+/* Primary button - more vibrant */
 .btn-primary {
-    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+    background: linear-gradient(135deg, #C9A962 0%, #B8944D 50%, #A6833B 100%);
     color: white;
     padding: 1rem 2.5rem;
     border-radius: 0;
@@ -75,15 +86,16 @@ body {
     transition: all 0.4s ease;
     border: none;
     cursor: pointer;
-    box-shadow: 0 6px 25px rgba(184, 166, 126, 0.35);
+    box-shadow: 0 6px 25px rgba(201, 169, 98, 0.4);
 }
 
 .btn-primary:hover {
+    background: linear-gradient(135deg, #D4B36A 0%, #C9A962 50%, #B8944D 100%);
     transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(184, 166, 126, 0.5);
+    box-shadow: 0 12px 35px rgba(201, 169, 98, 0.55);
 }
 
-/* Secondary button */
+/* Secondary button - more vibrant */
 .btn-secondary {
     background: transparent;
     color: var(--deep-charcoal);
@@ -100,13 +112,14 @@ body {
 }
 
 .btn-secondary:hover {
-    background: var(--accent-gold);
+    background: linear-gradient(135deg, #C9A962 0%, #B8944D 100%);
     color: white;
+    border-color: transparent;
 }
 
 /* Legacy support */
 .btn-luxe {
-    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+    background: linear-gradient(135deg, #C9A962 0%, #B8944D 50%, #A6833B 100%);
     color: white;
     padding: 1rem 2.5rem;
     font-family: 'Inter', sans-serif;
@@ -117,12 +130,12 @@ body {
     transition: all 0.4s ease;
     border: none;
     cursor: pointer;
-    box-shadow: 0 6px 25px rgba(184, 166, 126, 0.35);
+    box-shadow: 0 6px 25px rgba(201, 169, 98, 0.4);
 }
 
 .btn-luxe:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(184, 166, 126, 0.5);
+    box-shadow: 0 12px 35px rgba(201, 169, 98, 0.55);
 }
 
 .btn-outline {
@@ -144,21 +157,35 @@ body {
     color: white;
 }
 
+/* Vibrant card hover effect */
+.card-vibrant {
+    transition: all 0.4s ease;
+}
+
+.card-vibrant:hover {
+    box-shadow: 0 15px 45px rgba(201, 169, 98, 0.2);
+}
+
+/* Accent text glow */
+.text-accent-gold {
+    text-shadow: 0 0 30px rgba(201, 169, 98, 0.15);
+}
+
 @layer base {
     :root {
-        --background: 40 30% 97%;
-        --foreground: 0 0% 10%;
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 10%;
-        --primary: 40 35% 60%;
+        --background: 42 35% 97%;
+        --foreground: 0 0% 12%;
+        --card: 42 30% 99%;
+        --card-foreground: 0 0% 12%;
+        --primary: 42 50% 57%;
         --primary-foreground: 0 0% 100%;
-        --secondary: 40 30% 50%;
-        --muted: 40 20% 92%;
+        --secondary: 42 45% 50%;
+        --muted: 42 25% 92%;
         --muted-foreground: 0 0% 35%;
-        --accent: 40 35% 60%;
-        --border: 40 25% 85%;
-        --input: 40 20% 90%;
-        --ring: 40 35% 60%;
+        --accent: 42 50% 57%;
+        --border: 42 30% 85%;
+        --input: 42 25% 90%;
+        --ring: 42 50% 57%;
         --radius: 0;
     }
 }
