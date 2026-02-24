@@ -310,33 +310,60 @@ const PulsingDotsBackground = ({ variant = "light" }) => {
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(3)].map((_, i) => (
+      {/* Grid of pulsing dots */}
+      {[...Array(8)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-2 h-2 rounded-full"
+          className="absolute rounded-full"
           style={{
-            left: `${25 + i * 25}%`,
-            top: `${30 + i * 15}%`,
-            background: `rgba(${baseColor}, 0.15)`,
+            left: `${10 + (i % 4) * 25}%`,
+            top: `${20 + Math.floor(i / 4) * 40}%`,
+            width: `${4 + (i % 3) * 2}px`,
+            height: `${4 + (i % 3) * 2}px`,
+            background: `rgba(${baseColor}, ${0.15 + (i % 3) * 0.05})`,
           }}
-          animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3] }}
+          animate={{ 
+            scale: [1, 1.8, 1], 
+            opacity: [0.2, 0.6, 0.2] 
+          }}
           transition={{ 
-            duration: 4, 
+            duration: 3 + (i % 3), 
             repeat: Infinity, 
             ease: "easeInOut",
-            delay: i * 1.5 
+            delay: i * 0.5 
           }}
         />
       ))}
+      {/* Large floating orbs */}
       <motion.div
-        className="absolute w-[350px] h-[350px] rounded-full"
+        className="absolute w-[450px] h-[450px] rounded-full"
         style={{
-          right: "-5%", bottom: "-10%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.05) 0%, transparent 60%)`,
-          filter: "blur(40px)",
+          right: "-10%", bottom: "-15%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.1) 0%, transparent 60%)`,
+          filter: "blur(35px)",
         }}
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ scale: [1, 1.15, 1], x: [0, -20, 0] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-[300px] h-[300px] rounded-full"
+        style={{
+          left: "-5%", top: "10%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.08) 0%, transparent 60%)`,
+          filter: "blur(30px)",
+        }}
+        animate={{ scale: [1, 1.2, 1], y: [0, 20, 0] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+      />
+      {/* Connecting lines effect */}
+      <motion.div
+        className="absolute w-48 h-[1px]"
+        style={{
+          left: "30%", top: "50%",
+          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.2), transparent)`,
+        }}
+        animate={{ scaleX: [0, 1, 0], x: [-50, 50] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );
