@@ -624,8 +624,8 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
         </motion.div>
 
         {/* Right side - Form */}
-        <div className="w-full lg:w-1/2 bg-gradient-to-br from-cream via-soft-cream to-sand/50 flex items-center justify-center p-8 relative">
-          <AnimatedBackground variant="light" />
+        <div className="w-full lg:w-1/2 bg-gradient-to-br from-cream via-soft-cream to-sand/50 flex items-center justify-center p-8 relative overflow-hidden">
+          <FloatingOrbsBackground variant="light" />
           
           <motion.button 
             onClick={onClose} 
