@@ -1029,14 +1029,14 @@ const HeroSection = ({ onBeginJourney }) => {
 // About Section - Positive framing, no yoga image
 const AboutSection = () => {
   return (
-    <section id="about" className="py-24 lg:py-32 bg-cream relative overflow-hidden">
+    <section id="about" className="py-16 md:py-24 lg:py-32 bg-cream relative overflow-hidden">
       <FloatingOrbsBackground variant="light" />
       
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="text-center mb-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
+        <div className="text-center mb-10 md:mb-16">
           <FadeUpText>
             <motion.p 
-              className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
+              className="font-sans text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] text-accent-gold uppercase mb-3 md:mb-4"
               initial={{ opacity: 0, letterSpacing: "0.1em" }}
               whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
               viewport={{ once: true }}
@@ -1046,12 +1046,12 @@ const AboutSection = () => {
             </motion.p>
           </FadeUpText>
           <FadeUpText delay={0.1}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal mb-4 md:mb-6">
               What is The Becoming?
             </h2>
           </FadeUpText>
           <FadeUpText delay={0.2}>
-            <p className="font-sans text-lg text-charcoal/80 max-w-3xl mx-auto">
+            <p className="font-sans text-sm md:text-base lg:text-lg text-charcoal/80 max-w-3xl mx-auto px-2">
               The Becoming is a <motion.span 
                 className="text-accent-gold font-medium"
                 initial={{ opacity: 0 }}
