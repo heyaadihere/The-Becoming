@@ -1225,24 +1225,25 @@ const ExperienceSection = () => {
           </motion.p>
         </div>
 
-        <AnimatedDivider className="mb-12 max-w-sm mx-auto" />
+        <AnimatedDivider className="mb-8 md:mb-12 max-w-sm mx-auto" />
 
         {/* Pyramid Structure with enhanced animations */}
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto px-2">
           {experiences.map((exp, idx) => {
-            const width = 100 - (idx * 12);
+            // On mobile, use full width; on desktop, use pyramid
+            const width = 100 - (idx * 8);
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30, scale: 0.95 }}
+                initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20, scale: 0.95 }}
                 whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: idx * 0.12, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
               >
                 <motion.div 
-                  className="mx-auto mb-4 p-6 bg-white/60 border border-sand hover:border-accent-gold/50 transition-all cursor-pointer relative overflow-hidden group"
-                  style={{ width: `${width}%` }}
-                  whileHover={{ scale: 1.03, boxShadow: "0 15px 50px rgba(184, 166, 126, 0.2)" }}
+                  className="mx-auto mb-3 md:mb-4 p-4 md:p-6 bg-white/60 border border-sand hover:border-accent-gold/50 transition-all cursor-pointer relative overflow-hidden group"
+                  style={{ width: window.innerWidth < 640 ? '100%' : `${width}%` }}
+                  whileHover={{ scale: 1.02, boxShadow: "0 10px 40px rgba(184, 166, 126, 0.15)" }}
                   transition={{ duration: 0.3 }}
                 >
                   {/* Animated side bar */}
@@ -1257,16 +1258,16 @@ const ExperienceSection = () => {
                   <motion.div 
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-accent-gold/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
                   />
-                  <div className="flex items-start gap-4 relative z-10">
+                  <div className="flex items-start gap-3 md:gap-4 relative z-10">
                     <motion.span 
-                      className="font-sans text-3xl text-accent-gold/40 font-light"
+                      className="font-sans text-xl md:text-3xl text-accent-gold/40 font-light flex-shrink-0"
                       whileHover={{ scale: 1.2, color: "rgba(184, 166, 126, 0.8)" }}
                     >
                       {idx + 1}
                     </motion.span>
                     <div>
-                      <h3 className="font-serif text-lg md:text-xl text-deep-charcoal mb-2 group-hover:text-accent-gold transition-colors duration-300">{exp.title}</h3>
-                      <p className="font-sans text-charcoal/70 text-sm md:text-base">{exp.desc}</p>
+                      <h3 className="font-serif text-base md:text-lg lg:text-xl text-deep-charcoal mb-1 md:mb-2 group-hover:text-accent-gold transition-colors duration-300">{exp.title}</h3>
+                      <p className="font-sans text-charcoal/70 text-xs md:text-sm lg:text-base">{exp.desc}</p>
                     </div>
                   </div>
                 </motion.div>
