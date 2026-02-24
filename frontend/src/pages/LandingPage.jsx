@@ -529,11 +529,11 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
   });
 
   const stepImages = [
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80",
-    "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80",
-    "https://images.unsplash.com/photo-1518173946687-a4c036bc3e77?w=800&q=80",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90",
+    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=90",
+    "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=90",
+    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=90",
+    "https://images.unsplash.com/photo-1518173946687-a4c036bc3e77?w=1920&q=90",
   ];
 
   const questions = [
@@ -549,7 +549,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
     { id: 'showUpAs', type: 'single', label: "How would you like to show up?", field: 'showUpAs',
       options: ['Open and curious', 'Ready to participate fully', 'Observing and absorbing', 'Eager to connect', 'Present and mindful'] },
     { id: 'timing', type: 'single', label: "When would you like to join us?", field: 'timing', 
-      options: ['April 2026', 'June 2026', 'September 2026', 'I\'m flexible'] },
+      options: ['April 2026', 'July 2026', 'Oct 2026', 'Flexible'] },
     { id: 'creativeExpression', type: 'text', label: "Do you have any creative interests?", hint: "Music, art, writing, or anything that moves you.", field: 'creativeExpression', placeholder: "e.g., Playing guitar, writing poetry..." },
     { id: 'contact', type: 'contact', label: "Let's stay connected", hint: "How can we reach you?" },
     { id: 'finalThought', type: 'textarea', label: "Anything else you'd like to share?", hint: "We're listening.", field: 'finalThought', placeholder: "Share your thoughts..." }
@@ -1157,7 +1157,7 @@ const ExperienceSection = () => {
     { title: "Learning & Unlearning", desc: "The foundation of growth - opening your mind to new perspectives and releasing what no longer serves you.", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&q=80" },
     { title: "Self-Discovery", desc: "Exploring your inner landscape, understanding your patterns, and embracing your authentic self.", image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80" },
     { title: "Creative Expression", desc: "Channeling your emotions and insights through art, music, writing, and movement.", image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&q=80" },
-    { title: "Mindful Connection", desc: "Building meaningful relationships with yourself, others, and the world around you.", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80" },
+    { title: "Mindful Connection", desc: "Building meaningful relationships with yourself, others, and the world around you.", image: "https://images.unsplash.com/photo-1740065592719-052d3e5ec6fb?w=800&q=90" },
     { title: "Transformation", desc: "The culmination of your journey - stepping into the person you're becoming.", image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=400&q=80" }
   ];
 
@@ -1327,7 +1327,7 @@ const JourneySection = () => {
           </FadeUpText>
           <FadeUpText delay={0.1}>
             <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal mb-4 md:mb-6">
-              Whom is The Becoming For?
+              Who Is This For?
             </h2>
           </FadeUpText>
           <FadeUpText delay={0.2}>
@@ -1456,10 +1456,10 @@ const JourneySection = () => {
 // Accommodation Section - Before FAQ
 const AccommodationSection = () => {
   const accommodationImages = [
-    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80",
-    "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80",
-    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80",
-    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80"
+    { url: "https://images.unsplash.com/photo-1748859462647-9acc66c919db?w=1200&q=90", label: "Mountain Sunrise" },
+    { url: "https://images.unsplash.com/photo-1759855021430-d6e2121b6928?w=1200&q=90", label: "Monsoon Valley" },
+    { url: "https://images.unsplash.com/photo-1665394617059-a6803a41ba60?w=1200&q=90", label: "Beach & Open Sky" },
+    { url: "https://images.unsplash.com/photo-1541578870040-09ac67e46304?w=1200&q=90", label: "Starry Night" }
   ];
 
   return (
@@ -1503,10 +1503,13 @@ const AccommodationSection = () => {
                 transition={{ duration: 0.4 }}
               >
                 <img 
-                  src={img} 
-                  alt={`Accommodation ${idx + 1}`} 
+                  src={img.url} 
+                  alt={img.label} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
+                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-charcoal/60 to-transparent">
+                  <p className="text-white font-sans text-xs md:text-sm tracking-wider">{img.label}</p>
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <motion.div 
                   className="absolute top-2 md:top-3 left-2 md:left-3 w-6 md:w-8 h-6 md:h-8 border-l-2 border-t-2 border-white/0 group-hover:border-white/60 transition-all duration-300"
