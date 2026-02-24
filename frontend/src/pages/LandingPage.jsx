@@ -431,7 +431,7 @@ const Navigation = ({ onBeginJourney }) => {
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-        <Logo className={`${isScrolled ? 'h-12' : 'h-16'} transition-all`} variant="dark" />
+        <Logo className={`${isScrolled ? 'h-20' : 'h-28'} transition-all`} variant="dark" />
         <nav className="hidden md:flex items-center gap-10">
           {['About', 'Experience', 'Journey'].map((item) => (
             <button key={item} onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })} className="font-sans text-sm tracking-wide text-deep-charcoal/80 hover:text-accent-gold transition-colors">
@@ -824,7 +824,7 @@ const ContactSection = () => {
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <Logo className="h-32 md:h-40 mb-8" variant="light" />
+            <Logo className="h-48 md:h-56 lg:h-64 mb-10" variant="light" />
             <p className="font-sans text-white/70 mb-8">
               A curated human experience for those ready to embrace growth and transformation.
             </p>
