@@ -17,15 +17,16 @@ module.exports = {
                         sm: 'calc(var(--radius) - 4px)'
                 },
                 colors: {
-                        // Luxurious color palette
-                        'cream': '#FAF7F2',
-                        'soft-cream': '#F5F1EA',
-                        'sand': '#E5DDD0',
-                        'accent-gold': '#B8A67E',
-                        'accent-bronze': '#A08B5B',
-                        'rich-gold': '#9A8456',
-                        'charcoal': '#4A4A4A',
-                        'deep-charcoal': '#1A1A1A',
+                        // Vibrant luxurious color palette
+                        'cream': '#FBF8F3',
+                        'soft-cream': '#F7F3EC',
+                        'sand': '#E8DFD2',
+                        'accent-gold': '#C9A962',
+                        'accent-bronze': '#B8944D',
+                        'rich-gold': '#A6833B',
+                        'warm-gold': '#D4B36A',
+                        'charcoal': '#3D3D3D',
+                        'deep-charcoal': '#1F1F1F',
                         background: 'hsl(var(--background))',
                         foreground: 'hsl(var(--foreground))',
                         card: {
