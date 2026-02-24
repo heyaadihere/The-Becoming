@@ -31,7 +31,8 @@ const heroImages = [
 // Floating Orbs - Soft glowing spheres that drift gracefully
 const FloatingOrbsBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
-  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  // More vibrant gold: 201, 169, 98 instead of 184, 166, 126
+  const baseColor = isLight ? "201, 169, 98" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -40,7 +41,7 @@ const FloatingOrbsBackground = ({ variant = "light" }) => {
         className="absolute w-[500px] h-[500px] rounded-full"
         style={{
           left: "-5%", top: "5%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.15) 0%, rgba(${baseColor}, 0.05) 40%, transparent 70%)`,
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.18) 0%, rgba(${baseColor}, 0.06) 40%, transparent 70%)`,
           filter: "blur(40px)",
         }}
         animate={{ x: [0, 80, 0], y: [0, 60, 0], scale: [1, 1.2, 1] }}
@@ -51,7 +52,7 @@ const FloatingOrbsBackground = ({ variant = "light" }) => {
         className="absolute w-[400px] h-[400px] rounded-full"
         style={{
           right: "0%", bottom: "10%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.12) 0%, rgba(${baseColor}, 0.04) 40%, transparent 70%)`,
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.15) 0%, rgba(${baseColor}, 0.05) 40%, transparent 70%)`,
           filter: "blur(35px)",
         }}
         animate={{ x: [0, -60, 0], y: [0, -50, 0], scale: [1, 1.15, 1] }}
@@ -62,7 +63,7 @@ const FloatingOrbsBackground = ({ variant = "light" }) => {
         className="absolute w-[200px] h-[200px] rounded-full"
         style={{
           left: "40%", top: "60%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.1) 0%, transparent 60%)`,
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.12) 0%, transparent 60%)`,
           filter: "blur(25px)",
         }}
         animate={{ x: [0, 40, 0], y: [0, -30, 0], opacity: [0.5, 1, 0.5] }}
@@ -70,13 +71,13 @@ const FloatingOrbsBackground = ({ variant = "light" }) => {
       />
       {/* Floating circles */}
       <motion.div
-        className="absolute w-24 h-24 border border-accent-gold/10 rounded-full"
+        className="absolute w-24 h-24 border-2 border-accent-gold/15 rounded-full"
         style={{ left: "15%", top: "30%" }}
         animate={{ rotate: 360, scale: [1, 1.1, 1] }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute w-16 h-16 border border-accent-gold/8 rounded-full"
+        className="absolute w-16 h-16 border border-accent-gold/12 rounded-full"
         style={{ right: "20%", top: "20%" }}
         animate={{ rotate: -360 }}
         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
