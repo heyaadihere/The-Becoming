@@ -834,13 +834,13 @@ const JourneySection = () => {
 
   return (
     <section id="journey" className="py-24 lg:py-32 bg-cream relative overflow-hidden">
-      <AnimatedBackground variant="light" />
+      <FloatingGeometryBackground variant="light" />
       
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <RevealSection>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
+          <RevealSection className="flex">
             <motion.div 
-              className="relative aspect-[4/5] overflow-hidden"
+              className="relative w-full overflow-hidden"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5 }}
             >
@@ -853,7 +853,7 @@ const JourneySection = () => {
             </motion.div>
           </RevealSection>
           
-          <RevealSection delay={0.2}>
+          <RevealSection delay={0.2} className="flex flex-col justify-center">
             <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">Is This For You?</p>
             <h2 className="font-serif text-3xl md:text-4xl text-deep-charcoal mb-8">
               This May Be For <span className="text-accent-gold">YOU</span>
