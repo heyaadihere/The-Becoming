@@ -826,6 +826,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
 // Navigation
 const Navigation = ({ onBeginJourney }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -833,15 +834,19 @@ const Navigation = ({ onBeginJourney }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navItems = ['About', 'Experience', 'Journey'];
+
   return (
     <motion.header 
       initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-3 md:py-5'}`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-        <Logo className={`${isScrolled ? 'h-20' : 'h-28'} transition-all`} variant="dark" />
-        <nav className="hidden md:flex items-center gap-10">
-          {['About', 'Experience', 'Journey'].map((item) => (
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-12 flex items-center justify-between">
+        <Logo className={`${isScrolled ? 'h-12 md:h-16' : 'h-14 md:h-20 lg:h-28'} transition-all`} variant="dark" />
+        
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-6 lg:gap-10">
+          {navItems.map((item) => (
             <button key={item} onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })} className="font-sans text-sm tracking-wide text-deep-charcoal/80 hover:text-accent-gold transition-colors">
               {item}
             </button>
@@ -850,10 +855,56 @@ const Navigation = ({ onBeginJourney }) => {
             Contact
           </Link>
         </nav>
-        <motion.button onClick={onBeginJourney} className="btn-primary text-sm" whileHover={{ scale: 1.05 }} data-testid="nav-cta">
-          Enter The Becoming
-        </motion.button>
+        
+        <div className="flex items-center gap-3">
+          <motion.button onClick={onBeginJourney} className="btn-primary text-xs md:text-sm px-4 md:px-6 py-2 md:py-3" whileHover={{ scale: 1.05 }} data-testid="nav-cta">
+            Enter The Becoming
+          </motion.button>
+          
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden p-2 text-deep-charcoal"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <div className="w-6 h-5 flex flex-col justify-between">
+              <motion.span animate={{ rotate: mobileMenuOpen ? 45 : 0, y: mobileMenuOpen ? 8 : 0 }} className="w-full h-0.5 bg-deep-charcoal block" />
+              <motion.span animate={{ opacity: mobileMenuOpen ? 0 : 1 }} className="w-full h-0.5 bg-deep-charcoal block" />
+              <motion.span animate={{ rotate: mobileMenuOpen ? -45 : 0, y: mobileMenuOpen ? -8 : 0 }} className="w-full h-0.5 bg-deep-charcoal block" />
+            </div>
+          </button>
+        </div>
       </div>
+      
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }} 
+            animate={{ opacity: 1, height: 'auto' }} 
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-cream/98 backdrop-blur-md border-t border-sand"
+          >
+            <div className="px-4 py-4 space-y-3">
+              {navItems.map((item) => (
+                <button 
+                  key={item} 
+                  onClick={() => { document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }}
+                  className="block w-full text-left py-2 font-sans text-base text-deep-charcoal hover:text-accent-gold transition-colors"
+                >
+                  {item}
+                </button>
+              ))}
+              <Link 
+                to="/contact" 
+                className="block w-full text-left py-2 font-sans text-base text-deep-charcoal hover:text-accent-gold transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };
