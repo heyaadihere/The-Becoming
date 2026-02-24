@@ -810,40 +810,89 @@ const AboutSection = () => {
       <FloatingOrbsBackground variant="light" />
       
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-        <RevealSection className="text-center mb-16">
-          <p className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4">The Essence</p>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
-            What is The Becoming?
-          </h2>
-          <p className="font-sans text-lg text-charcoal/80 max-w-3xl mx-auto">
-            The Becoming is a <span className="text-accent-gold font-medium">transformative human experience</span> - 
-            a sacred space for those ready to embrace growth, learning, and self-discovery.
-          </p>
-        </RevealSection>
-
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {[
-            { title: "A Space for Growth", desc: "Where learning meets transformation, and every moment becomes an opportunity for discovery." },
-            { title: "A Journey Within", desc: "An invitation to explore your depths, reconnect with your essence, and embrace your potential." },
-            { title: "A Circle of Connection", desc: "A community of like-minded souls, sharing experiences and growing together." }
-          ].map((item, idx) => (
-            <RevealSection key={idx} delay={idx * 0.15}>
-              <motion.div className="p-8 bg-white/50 border border-sand hover:border-accent-gold/50 transition-all h-full" whileHover={{ y: -5 }}>
-                <span className="font-sans text-4xl text-accent-gold/30 block mb-4">0{idx + 1}</span>
-                <h3 className="font-serif text-xl text-deep-charcoal mb-3">{item.title}</h3>
-                <p className="font-sans text-charcoal/70">{item.desc}</p>
-              </motion.div>
-            </RevealSection>
-          ))}
+        <div className="text-center mb-16">
+          <FadeUpText>
+            <motion.p 
+              className="font-sans text-sm tracking-[0.3em] text-accent-gold uppercase mb-4"
+              initial={{ opacity: 0, letterSpacing: "0.1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              The Essence
+            </motion.p>
+          </FadeUpText>
+          <FadeUpText delay={0.1}>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-deep-charcoal mb-6">
+              What is The Becoming?
+            </h2>
+          </FadeUpText>
+          <FadeUpText delay={0.2}>
+            <p className="font-sans text-lg text-charcoal/80 max-w-3xl mx-auto">
+              The Becoming is a <motion.span 
+                className="text-accent-gold font-medium"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              >transformative human experience</motion.span> - 
+              a sacred space for those ready to embrace growth, learning, and self-discovery.
+            </p>
+          </FadeUpText>
         </div>
 
-        <RevealSection className="text-center">
+        <AnimatedDivider className="mb-16 max-w-md mx-auto" />
+
+        <StaggerContainer className="grid md:grid-cols-3 gap-8 mb-16" staggerDelay={0.15}>
+          {[
+            { title: "A Space for Growth", desc: "Where learning meets transformation, and every moment becomes an opportunity for discovery.", icon: "01" },
+            { title: "A Journey Within", desc: "An invitation to explore your depths, reconnect with your essence, and embrace your potential.", icon: "02" },
+            { title: "A Circle of Connection", desc: "A community of like-minded souls, sharing experiences and growing together.", icon: "03" }
+          ].map((item, idx) => (
+            <StaggerItem key={idx}>
+              <motion.div 
+                className="p-8 bg-white/50 border border-sand hover:border-accent-gold/50 transition-all h-full group cursor-pointer relative overflow-hidden"
+                whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(184, 166, 126, 0.15)" }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Hover gradient overlay */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <motion.span 
+                  className="font-sans text-5xl text-accent-gold/20 block mb-4 relative z-10"
+                  whileHover={{ scale: 1.1, color: "rgba(184, 166, 126, 0.4)" }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {item.icon}
+                </motion.span>
+                <h3 className="font-serif text-xl text-deep-charcoal mb-3 relative z-10 group-hover:text-accent-gold transition-colors duration-300">{item.title}</h3>
+                <p className="font-sans text-charcoal/70 relative z-10">{item.desc}</p>
+                {/* Animated underline */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 h-[2px] bg-accent-gold"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.4 }}
+                />
+              </motion.div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        <ScaleIn className="text-center">
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="py-12 border-t border-b border-sand"
+            className="py-12 border-t border-b border-sand relative"
           >
+            <motion.div
+              className="absolute left-1/2 -translate-x-1/2 -top-3 w-6 h-6 bg-cream flex items-center justify-center"
+            >
+              <motion.div 
+                className="w-2 h-2 bg-accent-gold rounded-full"
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
             <AnimatedText 
               text="Only experiences that remind you of what's real." 
               className="font-serif text-2xl md:text-3xl text-deep-charcoal italic"
