@@ -665,16 +665,49 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
 
           {isComplete ? (
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md text-center relative z-10">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Logo className="h-20 mx-auto mb-6" variant="dark" />
+              </motion.div>
               <motion.div 
-                className="w-20 h-20 border-2 border-accent-gold rounded-full flex items-center justify-center mx-auto mb-8 bg-cream"
-                initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring" }}
+                className="w-20 h-20 border-2 border-accent-gold rounded-full flex items-center justify-center mx-auto mb-6 bg-accent-gold/10"
+                initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.2 }}
               >
                 <Check className="w-8 h-8 text-accent-gold" />
               </motion.div>
-              <h2 className="font-serif text-3xl mb-4 text-deep-charcoal">Your response has been received!</h2>
-              <p className="text-charcoal/70 font-sans mb-3">The Becoming awaits you.</p>
-              <p className="text-accent-gold font-sans text-lg mb-8">A Becoming bud will call you soon!</p>
-              <motion.button onClick={onClose} className="btn-primary" whileHover={{ scale: 1.05 }}>
+              <motion.h2 
+                className="font-serif text-3xl mb-3 text-deep-charcoal"
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+              >
+                You're on Your Way!
+              </motion.h2>
+              <motion.p 
+                className="text-charcoal/70 font-sans mb-2"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+              >
+                Thank you for taking this beautiful first step.
+              </motion.p>
+              <motion.p 
+                className="text-accent-gold font-sans text-lg mb-3"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+              >
+                A Becoming bud will call you soon!
+              </motion.p>
+              <motion.p 
+                className="text-charcoal/60 font-sans text-sm mb-8 italic"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
+              >
+                "Every great journey begins with a single, courageous step."
+              </motion.p>
+              <motion.button 
+                onClick={onClose} 
+                className="btn-primary" 
+                whileHover={{ scale: 1.05 }}
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
+              >
                 Return Home
               </motion.button>
             </motion.div>
