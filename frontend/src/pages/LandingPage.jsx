@@ -522,6 +522,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [fieldError, setFieldError] = useState('');
   const [answers, setAnswers] = useState({
     name: '', email: '', phone: '', altPhone: '', socialMedia: '', socialHandle: '',
     whatBringsYou: '', currentPhase: '', seekingGrowth: '', readyFor: '', showUpAs: '',
@@ -560,8 +561,26 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
   const currentQuestion = questions[step];
   const currentImage = stepImages[step % stepImages.length];
 
-  const handleNext = () => { if (step < totalSteps - 1) setStep(step + 1); };
-  const handleBack = () => { if (step > 0) setStep(step - 1); };
+  const handleNext = () => {
+    if (!canProceed()) {
+      if (currentQuestion.type === 'text' && currentQuestion.required) {
+        setFieldError('This field is required to continue.');
+      } else if (currentQuestion.type === 'single') {
+        setFieldError('Please select an option to continue.');
+      } else if (currentQuestion.type === 'multi') {
+        setFieldError('Please select at least one option.');
+      } else if (currentQuestion.type === 'contact') {
+        if (!answers.email?.includes('@')) setFieldError('Please enter a valid email address.');
+        else if (!answers.phone || answers.phone.length < 10) setFieldError('Please enter a valid phone number.');
+        else if (!answers.socialHandle) setFieldError('Please provide at least one social media handle.');
+        else setFieldError('Please fill in all required contact fields.');
+      }
+      return;
+    }
+    setFieldError('');
+    if (step < totalSteps - 1) setStep(step + 1);
+  };
+  const handleBack = () => { setFieldError(''); if (step > 0) setStep(step - 1); };
   const handleSelectSingle = (option) => setAnswers({ ...answers, [currentQuestion.field]: option });
   const handleSelectMulti = (option) => {
     const current = answers[currentQuestion.field] || [];
