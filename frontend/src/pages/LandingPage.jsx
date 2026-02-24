@@ -250,6 +250,113 @@ const RevealSection = ({ children, className = "", delay = 0 }) => {
   );
 };
 
+// Fade up animation for text
+const FadeUpText = ({ children, className = "", delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.8, delay, ease: "easeOut" }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+// Scale in animation
+const ScaleIn = ({ children, className = "", delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.9 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.6, delay, ease: "easeOut" }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+// Slide in from side
+const SlideIn = ({ children, className = "", direction = "left", delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, x: direction === "left" ? -50 : 50 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.8, delay, ease: "easeOut" }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+// Stagger children animation wrapper
+const StaggerContainer = ({ children, className = "", staggerDelay = 0.1 }) => (
+  <motion.div
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: "-50px" }}
+    variants={{
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: { staggerChildren: staggerDelay }
+      }
+    }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+// Stagger item
+const StaggerItem = ({ children, className = "" }) => (
+  <motion.div
+    variants={{
+      hidden: { opacity: 0, y: 30 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+// Animated counter
+const AnimatedCounter = ({ value, className = "" }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  
+  return (
+    <motion.span
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : {}}
+      className={className}
+    >
+      {isInView && (
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {value}
+        </motion.span>
+      )}
+    </motion.span>
+  );
+};
+
+// Animated line divider
+const AnimatedDivider = ({ className = "" }) => (
+  <motion.div
+    initial={{ scaleX: 0 }}
+    whileInView={{ scaleX: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 1, ease: "easeInOut" }}
+    className={`h-[1px] bg-gradient-to-r from-transparent via-accent-gold/50 to-transparent origin-center ${className}`}
+  />
+);
+
 // Animated text component
 const AnimatedText = ({ text, className = "" }) => {
   const words = text.split(' ');
