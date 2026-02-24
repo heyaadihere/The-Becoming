@@ -78,13 +78,29 @@ Build a luxe minimalist website for "The Becoming" - a curated human experience 
 - [x] Questionnaire modal with images per slide
 - [x] All background animations (luxurious, subtle)
 - [x] No black backgrounds anywhere
+- [x] Journey section title fixed: "Who Is This For?" (was repetitive)
+- [x] Form validation error messages on required fields
+- [x] Accommodation images: mountains sunrise, monsoon valley, beach open sky, starry night
+- [x] Timing options updated: April 2026, July 2026, Oct 2026, Flexible
+- [x] Form images upgraded to HD resolution (w=1920&q=90)
+- [x] Success page: logo + celebratory "You're on Your Way!" message
+- [x] Duplicate friends image removed (unique images across all sections)
+
+## Latest Changes (Feb 2026)
+1. **Form Validation Errors** - Red error messages when mandatory fields are empty and user clicks Continue
+2. **Accommodation Images** - Mountain sunrise, monsoon valley, beach with open sky, starry night (with labels)
+3. **Timing Options** - April 2026, July 2026, Oct 2026, Flexible
+4. **HD Form Images** - All form step images at w=1920&q=90
+5. **Success Page** - Logo, checkmark, "You're on Your Way!", motivational quote
+6. **Duplicate Image Fix** - Mindful Connection now uses a unique community image
+7. **Title Fix** - "Who Is This For?" replaces the repetitive subtitle
 
 ## Next Action Items
-1. 🟡 Provide Resend API key for email notifications
-2. 🟡 Provide FAQ answers
-3. 🟡 Replace "[Contact Number]" placeholder
+1. 🟠 P1: Integrate Resend email notifications (need API key)
+2. 🟡 P2: Provide FAQ content
+3. 🟡 P2: Replace "[Contact Number]" placeholder
+4. 🟡 P2: Refactor LandingPage.jsx into smaller components
 
 ## Future/Backlog
 - Admin dashboard for submissions
 - SEO optimization
-- Component refactoring
