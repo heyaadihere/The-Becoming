@@ -27,173 +27,283 @@ const heroImages = [
 
 // Animated background for sections
 // Different background animations for each section
+
+// Floating Orbs - Soft glowing spheres that drift gracefully
 const FloatingOrbsBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
   const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Large primary orb */}
+      <motion.div
+        className="absolute w-[500px] h-[500px] rounded-full"
+        style={{
+          left: "-5%", top: "5%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.15) 0%, rgba(${baseColor}, 0.05) 40%, transparent 70%)`,
+          filter: "blur(40px)",
+        }}
+        animate={{ x: [0, 80, 0], y: [0, 60, 0], scale: [1, 1.2, 1] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+      />
+      {/* Secondary orb */}
       <motion.div
         className="absolute w-[400px] h-[400px] rounded-full"
         style={{
-          left: "5%", top: "10%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.08) 0%, transparent 70%)`,
-          filter: "blur(60px)",
+          right: "0%", bottom: "10%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.12) 0%, rgba(${baseColor}, 0.04) 40%, transparent 70%)`,
+          filter: "blur(35px)",
         }}
-        animate={{ x: [0, 60, 0], y: [0, 40, 0], scale: [1, 1.15, 1] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ x: [0, -60, 0], y: [0, -50, 0], scale: [1, 1.15, 1] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+      />
+      {/* Small accent orb */}
+      <motion.div
+        className="absolute w-[200px] h-[200px] rounded-full"
+        style={{
+          left: "40%", top: "60%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.1) 0%, transparent 60%)`,
+          filter: "blur(25px)",
+        }}
+        animate={{ x: [0, 40, 0], y: [0, -30, 0], opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+      />
+      {/* Floating circles */}
+      <motion.div
+        className="absolute w-24 h-24 border border-accent-gold/10 rounded-full"
+        style={{ left: "15%", top: "30%" }}
+        animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute w-[300px] h-[300px] rounded-full"
-        style={{
-          right: "10%", bottom: "20%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.06) 0%, transparent 70%)`,
-          filter: "blur(50px)",
-        }}
-        animate={{ x: [0, -40, 0], y: [0, -30, 0] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+        className="absolute w-16 h-16 border border-accent-gold/8 rounded-full"
+        style={{ right: "20%", top: "20%" }}
+        animate={{ rotate: -360 }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       />
     </div>
   );
 };
 
+// Gentle Waves - Horizontal flowing lines with soft glow
 const GentleWavesBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
   const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Multiple flowing lines */}
+      {[20, 40, 60, 80].map((top, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-[200%] h-[1px]"
+          style={{
+            top: `${top}%`,
+            left: "-50%",
+            background: `linear-gradient(90deg, transparent 0%, rgba(${baseColor}, ${0.08 + i * 0.03}) 25%, rgba(${baseColor}, ${0.15 + i * 0.03}) 50%, rgba(${baseColor}, ${0.08 + i * 0.03}) 75%, transparent 100%)`,
+          }}
+          animate={{ x: ["-25%", "25%", "-25%"] }}
+          transition={{ duration: 15 + i * 5, repeat: Infinity, ease: "easeInOut", delay: i * 2 }}
+        />
+      ))}
+      {/* Floating glow */}
       <motion.div
-        className="absolute w-full h-[2px]"
+        className="absolute w-[300px] h-[300px] rounded-full"
         style={{
-          top: "30%",
-          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.15), transparent)`,
+          right: "5%", top: "10%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.1) 0%, transparent 60%)`,
+          filter: "blur(30px)",
         }}
-        animate={{ x: ["-100%", "100%"] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4], y: [0, 30, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute w-full h-[1px]"
+        className="absolute w-[250px] h-[250px] rounded-full"
         style={{
-          top: "60%",
-          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.1), transparent)`,
+          left: "10%", bottom: "15%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.08) 0%, transparent 60%)`,
+          filter: "blur(25px)",
         }}
-        animate={{ x: ["100%", "-100%"] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        className="absolute w-[200px] h-[200px] rounded-full"
-        style={{
-          right: "5%", top: "15%",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.05) 0%, transparent 70%)`,
-          filter: "blur(40px)",
-        }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 4 }}
       />
     </div>
   );
 };
 
+// Floating Geometry - Elegant shapes that rotate and drift
 const FloatingGeometryBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
   const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Large circle */}
       <motion.div
-        className="absolute w-32 h-32 border rounded-full"
-        style={{ left: "10%", top: "20%", borderColor: `rgba(${baseColor}, 0.1)` }}
-        animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }}
-        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        className="absolute w-48 h-48 border-2 rounded-full"
+        style={{ left: "5%", top: "15%", borderColor: `rgba(${baseColor}, 0.12)` }}
+        animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
       />
+      {/* Medium square */}
       <motion.div
-        className="absolute w-20 h-20 border"
-        style={{ right: "15%", top: "40%", borderColor: `rgba(${baseColor}, 0.08)` }}
-        animate={{ rotate: [0, 90, 0], y: [0, 20, 0] }}
+        className="absolute w-32 h-32 border"
+        style={{ right: "10%", top: "25%", borderColor: `rgba(${baseColor}, 0.1)` }}
+        animate={{ rotate: [0, 180, 0], y: [0, 30, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
       />
+      {/* Small diamond */}
       <motion.div
-        className="absolute w-16 h-16"
+        className="absolute w-20 h-20 border"
         style={{ 
-          left: "20%", bottom: "25%", 
-          borderLeft: `1px solid rgba(${baseColor}, 0.1)`,
-          borderBottom: `1px solid rgba(${baseColor}, 0.1)`,
+          left: "25%", bottom: "20%", 
+          borderColor: `rgba(${baseColor}, 0.15)`,
+          transform: "rotate(45deg)"
         }}
-        animate={{ rotate: [45, 135, 45] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      {/* Corner accent lines */}
+      <motion.div
+        className="absolute w-32 h-[1px]"
+        style={{ left: "60%", top: "70%", background: `rgba(${baseColor}, 0.15)` }}
+        animate={{ scaleX: [0, 1, 0], x: [0, 50, 100] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      {/* Floating orb */}
+      <motion.div
+        className="absolute w-[350px] h-[350px] rounded-full"
+        style={{
+          right: "-5%", bottom: "0%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.08) 0%, transparent 60%)`,
+          filter: "blur(30px)",
+        }}
+        animate={{ scale: [1, 1.15, 1], x: [0, -30, 0] }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );
 };
 
+// Rising Particles - Elegant dots that float upward
 const RisingParticlesBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
   const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(5)].map((_, i) => (
+      {/* Rising particles */}
+      {[...Array(12)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 rounded-full"
+          className="absolute rounded-full"
           style={{
-            left: `${15 + i * 18}%`,
-            bottom: "0%",
-            background: `rgba(${baseColor}, 0.2)`,
+            left: `${8 + i * 8}%`,
+            bottom: "-5%",
+            width: `${3 + (i % 3) * 2}px`,
+            height: `${3 + (i % 3) * 2}px`,
+            background: `rgba(${baseColor}, ${0.15 + (i % 4) * 0.05})`,
           }}
-          animate={{ y: [0, -500], opacity: [0, 0.6, 0] }}
+          animate={{ 
+            y: [0, -800], 
+            opacity: [0, 0.8, 0.8, 0],
+            x: [0, (i % 2 === 0 ? 20 : -20), 0]
+          }}
           transition={{ 
-            duration: 12 + i * 2, 
+            duration: 10 + (i % 5) * 3, 
             repeat: Infinity, 
             ease: "easeOut",
-            delay: i * 3 
+            delay: i * 1.5 
           }}
         />
       ))}
+      {/* Central glow */}
       <motion.div
-        className="absolute w-[250px] h-[250px] rounded-full"
+        className="absolute w-[400px] h-[400px] rounded-full"
         style={{
-          left: "50%", top: "50%", transform: "translate(-50%, -50%)",
-          background: `radial-gradient(circle, rgba(${baseColor}, 0.04) 0%, transparent 70%)`,
-          filter: "blur(50px)",
+          left: "50%", top: "50%", 
+          transform: "translate(-50%, -50%)",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.08) 0%, transparent 60%)`,
+          filter: "blur(40px)",
         }}
-        animate={{ scale: [1, 1.3, 1] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
-    </div>
-  );
-};
-
-const ShimmerBackground = ({ variant = "light" }) => {
-  const isLight = variant === "light";
-  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
-  
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Accent circles */}
       <motion.div
-        className="absolute w-[600px] h-[600px]"
-        style={{
-          left: "-10%", top: "-10%",
-          background: `conic-gradient(from 0deg, transparent, rgba(${baseColor}, 0.03), transparent, rgba(${baseColor}, 0.03), transparent)`,
-          filter: "blur(30px)",
-        }}
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        className="absolute w-24 h-[1px]"
-        style={{
-          right: "20%", top: "40%",
-          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.2), transparent)`,
-        }}
-        animate={{ scaleX: [0, 1, 0], x: [0, 100, 200] }}
+        className="absolute w-20 h-20 border border-accent-gold/10 rounded-full"
+        style={{ left: "20%", top: "30%" }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );
 };
 
+// Shimmer Background - Rotating gradient with sparkles
+const ShimmerBackground = ({ variant = "light" }) => {
+  const isLight = variant === "light";
+  const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Large rotating gradient */}
+      <motion.div
+        className="absolute w-[800px] h-[800px]"
+        style={{
+          left: "50%", top: "50%",
+          transform: "translate(-50%, -50%)",
+          background: `conic-gradient(from 0deg, transparent, rgba(${baseColor}, 0.06), transparent, rgba(${baseColor}, 0.04), transparent, rgba(${baseColor}, 0.06), transparent)`,
+          filter: "blur(20px)",
+        }}
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+      />
+      {/* Shimmer lines */}
+      <motion.div
+        className="absolute w-40 h-[2px]"
+        style={{
+          left: "20%", top: "30%",
+          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.3), transparent)`,
+        }}
+        animate={{ x: [0, 200, 0], opacity: [0, 1, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-32 h-[2px]"
+        style={{
+          right: "25%", top: "60%",
+          background: `linear-gradient(90deg, transparent, rgba(${baseColor}, 0.25), transparent)`,
+        }}
+        animate={{ x: [0, -150, 0], opacity: [0, 1, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+      />
+      {/* Corner glows */}
+      <motion.div
+        className="absolute w-[300px] h-[300px] rounded-full"
+        style={{
+          left: "-5%", top: "-5%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.1) 0%, transparent 60%)`,
+          filter: "blur(30px)",
+        }}
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-[250px] h-[250px] rounded-full"
+        style={{
+          right: "-5%", bottom: "-5%",
+          background: `radial-gradient(circle, rgba(${baseColor}, 0.08) 0%, transparent 60%)`,
+          filter: "blur(25px)",
+        }}
+        animate={{ scale: [1, 1.3, 1] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+      />
+    </div>
+  );
+};
+
+// Pulsing Dots Background - Rhythmic dots with glowing orbs
 const PulsingDotsBackground = ({ variant = "light" }) => {
   const isLight = variant === "light";
   const baseColor = isLight ? "184, 166, 126" : "255, 255, 255";
