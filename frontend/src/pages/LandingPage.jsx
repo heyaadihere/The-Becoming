@@ -502,15 +502,15 @@ const HeroSection = ({ onBeginJourney }) => {
           initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
           className="font-serif text-4xl md:text-5xl lg:text-6xl text-deep-charcoal mb-6 leading-tight"
         >
-          Where growth begins<br />
-          <span className="text-accent-gold italic">and transformation unfolds</span>
+          You've always known<br />
+          <span className="text-accent-gold italic">there's more to who you are</span>
         </motion.h1>
         
         <motion.p 
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
           className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto mb-10"
         >
-          A journey of learning, discovery, and becoming the person you're meant to be.
+          This is where you stop searching and start becoming.
         </motion.p>
         
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
