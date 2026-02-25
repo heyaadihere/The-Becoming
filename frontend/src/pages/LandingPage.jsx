@@ -1454,13 +1454,7 @@ const JourneySection = () => {
               transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
             />
             
-            <motion.p 
-              className="font-sans text-sm md:text-base tracking-[0.2em] text-accent-gold uppercase mb-4"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-            </motion.p>
+            <div className="mb-4" />
             
             <motion.h3 
               className="font-serif text-4xl md:text-5xl lg:text-6xl text-deep-charcoal mb-4"
@@ -1724,10 +1718,6 @@ const CTASection = ({ onBeginJourney }) => {
               your journey
             </motion.span>?
           </h2>
-        </FadeUpText>
-        <FadeUpText delay={0.3}>
-          <p className="font-sans text-charcoal/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-          </p>
         </FadeUpText>
         <FadeUpText delay={0.4}>
           <motion.button 
