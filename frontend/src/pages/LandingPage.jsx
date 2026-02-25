@@ -2075,8 +2075,10 @@ export default function LandingPage() {
       <HeroSection onBeginJourney={() => setShowQuestionnaire(true)} />
       <AboutSection />
       <ExperienceSection />
+      <WhatItIsSection />
       <JourneySection />
       <AccommodationSection />
+      <FounderStorySection />
       <CTASection onBeginJourney={() => setShowQuestionnaire(true)} />
       <FAQSection />
       <ContactSection />
