@@ -1604,7 +1604,10 @@ const FAQSection = () => {
     { q: "How long is the experience?", a: "7 Days, 6 Nights. Long enough to reset your nervous system. Long enough to create meaningful internal shifts." },
     { q: "Where does it take place?", a: "In a carefully selected, nature-led environment away from city noise. The exact location is shared with confirmed participants to preserve privacy." },
     { q: "What is the investment?", a: "The Becoming is a premium, fully curated experience limited to 21 participants. The investment includes: Accommodation, Curated meals, All creative materials, The full immersive experience, Access to the post-experience community. Exact investment details are shared during the application process." },
-    { q: "How are participants selected?", a: "We curate for intention, not status. Selection is based on readiness, your willingness to engage deeply, embrace silence, reduce device use, and actively participate. It is not a party retreat, therapy, or a quick-fix transformation. Only 21 participants are selected per edition." }
+    { q: "How are participants selected?", a: "We curate for intention, not status. Selection is based on readiness, your willingness to engage deeply, embrace silence, reduce device use, and actively participate. It is not a party retreat, therapy, or a quick-fix transformation. Only 21 participants are selected per edition." },
+    { q: "Is it spiritual or religious?", a: "No. The Becoming is a human experience focused on growth — not aligned with any spiritual or religious practice." },
+    { q: "Is it therapy?", a: "No. While deep and reflective, The Becoming is an experience, not a clinical or medical intervention." },
+    { q: "Can I come alone?", a: "Yes, absolutely. The focus is on honest human connection with a curated group. Most participants arrive on their own and leave with meaningful connections." }
   ];
 
   return (
