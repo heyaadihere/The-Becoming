@@ -86,7 +86,9 @@ Build a luxe minimalist website for "The Becoming" - a curated human experience 
 - [x] Success page: logo + celebratory "You're on Your Way!" message
 - [x] Duplicate friends image removed (unique images across all sections)
 
-## Latest Changes (Feb 2026)
+- [x] FAQ section populated with real content (5 Q&As from doc)
+- [x] CTA subtitle removed ("If something within you resonates...")
+- [x] "And Most Importantly" removed above Maybe YOU
 1. **Form Validation Errors** - Red error messages when mandatory fields are empty and user clicks Continue
 2. **Accommodation Images** - Mountain sunrise, monsoon valley, beach with open sky, starry night (with labels)
 3. **Timing Options** - April 2026, July 2026, Oct 2026, Flexible
@@ -97,9 +99,8 @@ Build a luxe minimalist website for "The Becoming" - a curated human experience 
 
 ## Next Action Items
 1. 🟠 P1: Integrate Resend email notifications (need API key)
-2. 🟡 P2: Provide FAQ content
-3. 🟡 P2: Replace "[Contact Number]" placeholder
-4. 🟡 P2: Refactor LandingPage.jsx into smaller components
+2. 🟡 P2: Replace "[Contact Number]" placeholder
+3. 🟡 P2: Refactor LandingPage.jsx into smaller components
 
 ## Future/Backlog
 - Admin dashboard for submissions
