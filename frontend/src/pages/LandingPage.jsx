@@ -670,7 +670,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Logo className="h-20 mx-auto mb-6" variant="dark" />
+                <Logo className="h-32 mx-auto mb-6" variant="dark" />
               </motion.div>
               <motion.div 
                 className="w-20 h-20 border-2 border-accent-gold rounded-full flex items-center justify-center mx-auto mb-6 bg-accent-gold/10"
@@ -1118,8 +1118,7 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.8 }}
-              >transformative human experience</motion.span> - 
-              a sacred space for those ready to embrace growth, learning, and self-discovery.
+              >human experience</motion.span> where being ends and becoming begins. A psychological reset designed to bridge the gap between who you are and who you could choose to become — moving from routine repetition to active evolution.
             </p>
           </FadeUpText>
         </div>
