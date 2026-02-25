@@ -1460,7 +1460,6 @@ const JourneySection = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-              And Most Importantly
             </motion.p>
             
             <motion.h3 
@@ -1608,11 +1607,11 @@ const AccommodationSection = () => {
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const faqs = [
-    { q: "What exactly happens during The Becoming?", a: "[Answer to be provided by Mitin]" },
-    { q: "How long is the experience?", a: "[Answer to be provided by Mitin]" },
-    { q: "Where does it take place?", a: "[Answer to be provided by Mitin]" },
-    { q: "What is the investment for this experience?", a: "[Answer to be provided by Mitin]" },
-    { q: "How are participants selected?", a: "[Answer to be provided by Mitin]" }
+    { q: "What exactly happens during The Becoming?", a: "The Becoming is a 7-day psychological and creative reset. You step away from routine and into reflection, nature, mindful movement, creative expression, and honest human conversation. There is intentional digital reduction, structured introspection, storytelling, writing, music, and skill-building." },
+    { q: "How long is the experience?", a: "7 Days, 6 Nights. Long enough to reset your nervous system. Long enough to create meaningful internal shifts." },
+    { q: "Where does it take place?", a: "In a carefully selected, nature-led environment away from city noise. The exact location is shared with confirmed participants to preserve privacy." },
+    { q: "What is the investment?", a: "The Becoming is a premium, fully curated experience limited to 21 participants. The investment includes: Accommodation, Curated meals, All creative materials, The full immersive experience, Access to the post-experience community. Exact investment details are shared during the application process." },
+    { q: "How are participants selected?", a: "We curate for intention, not status. Selection is based on readiness, your willingness to engage deeply, embrace silence, reduce device use, and actively participate. It is not a party retreat, therapy, or a quick-fix transformation. Only 21 participants are selected per edition." }
   ];
 
   return (
@@ -1728,7 +1727,6 @@ const CTASection = ({ onBeginJourney }) => {
         </FadeUpText>
         <FadeUpText delay={0.3}>
           <p className="font-sans text-charcoal/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-            If something within you resonates with this experience, take the first step. We'd love to hear from you.
           </p>
         </FadeUpText>
         <FadeUpText delay={0.4}>
