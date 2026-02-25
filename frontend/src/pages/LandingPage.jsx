@@ -1503,6 +1503,181 @@ const JourneySection = () => {
   );
 };
 
+// What It Is / What It Isn't Section
+const WhatItIsSection = () => {
+  const whatItIs = [
+    { title: "Exclusive & Intentional", desc: "A highly curated space limited to exactly 21 individuals." },
+    { title: "A Human Experience", desc: "A space where being ends and becoming begins." },
+    { title: "A Mirror", desc: "A direct confrontation with the reality of whether you are growing or just growing older." },
+    { title: "A Growth Catalyst", desc: "Designed to trigger introspection and a genuine desire to evolve." },
+    { title: "A Reset for the Nervous System", desc: "7 days of nature, stillness, and mindful, intentional movement to quiet the internal noise." },
+    { title: "A Skill-Building Journey", desc: "An immersive engagement with communication, storytelling, music, poetry, creativity, self-love and more." },
+    { title: "A Community", desc: "Of people who are ready to choose their Becoming." }
+  ];
+
+  const whatItIsnt = [
+    { title: "Not Therapy", desc: "While deep and reflective, it is not a clinical or medical intervention." },
+    { title: "Not a Networking Event", desc: "We curate for intention and readiness, not for professional status or titles." },
+    { title: "Not a Party Vibe", desc: "This is a space for those seeking depth and a need for a reset, not social entertainment." },
+    { title: "Not a Passive Retreat", desc: "You will not just consume content — you will work on yourself and develop new skills." },
+    { title: "Not a Quick Fix", desc: "There are no promises of instant transformation; we provide the environment, you provide the effort." },
+    { title: "Not a Digital Workspace", desc: "This is a no phone, no device experience. Intentional digital reduction is integral to cultivating presence and clarity." }
+  ];
+
+  return (
+    <section className="py-16 md:py-24 lg:py-32 bg-cream relative overflow-hidden">
+      <FloatingOrbsBackground variant="light" />
+      
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
+        <div className="text-center mb-10 md:mb-16">
+          <FadeUpText>
+            <motion.p 
+              className="font-sans text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] text-accent-gold uppercase mb-3 md:mb-4"
+              initial={{ opacity: 0, letterSpacing: "0.1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              The Anatomy of an Experience
+            </motion.p>
+          </FadeUpText>
+          <FadeUpText delay={0.1}>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal mb-4 md:mb-6">
+              What It Is <span className="text-accent-gold">/</span> What It Isn't
+            </h2>
+          </FadeUpText>
+          <FadeUpText delay={0.2}>
+            <p className="font-sans text-sm md:text-base lg:text-lg text-charcoal/80 max-w-2xl mx-auto px-2">
+              To ensure we curate for the right mindset, it is essential to define the boundaries of The Becoming.
+            </p>
+          </FadeUpText>
+        </div>
+
+        <AnimatedDivider className="mb-10 md:mb-16 max-w-md mx-auto" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+          {/* What It Is */}
+          <div>
+            <FadeUpText>
+              <h3 className="font-serif text-xl md:text-2xl text-deep-charcoal mb-6 text-center lg:text-left">
+                What It <span className="text-accent-gold italic">Is</span>
+              </h3>
+            </FadeUpText>
+            <StaggerContainer className="space-y-3" staggerDelay={0.08}>
+              {whatItIs.map((item, idx) => (
+                <StaggerItem key={idx}>
+                  <motion.div 
+                    className="flex gap-4 p-4 bg-white/40 border border-sand hover:border-accent-gold/40 transition-all group"
+                    whileHover={{ x: 5 }}
+                  >
+                    <span className="text-accent-gold font-serif text-lg mt-0.5 shrink-0" data-testid={`what-it-is-${idx}`}>+</span>
+                    <div>
+                      <h4 className="font-serif text-base md:text-lg text-deep-charcoal group-hover:text-accent-gold transition-colors">{item.title}</h4>
+                      <p className="font-sans text-sm text-charcoal/70 mt-1">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+
+          {/* What It Isn't */}
+          <div>
+            <FadeUpText>
+              <h3 className="font-serif text-xl md:text-2xl text-deep-charcoal mb-6 text-center lg:text-left">
+                What It <span className="text-charcoal/40 italic">Isn't</span>
+              </h3>
+            </FadeUpText>
+            <StaggerContainer className="space-y-3" staggerDelay={0.08}>
+              {whatItIsnt.map((item, idx) => (
+                <StaggerItem key={idx}>
+                  <motion.div 
+                    className="flex gap-4 p-4 bg-soft-cream/60 border border-sand/60 hover:border-charcoal/20 transition-all group"
+                    whileHover={{ x: 5 }}
+                  >
+                    <span className="text-charcoal/30 font-serif text-lg mt-0.5 shrink-0" data-testid={`what-it-isnt-${idx}`}>—</span>
+                    <div>
+                      <h4 className="font-serif text-base md:text-lg text-deep-charcoal group-hover:text-charcoal/70 transition-colors">{item.title}</h4>
+                      <p className="font-sans text-sm text-charcoal/60 mt-1">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Founder Story Section
+const FounderStorySection = () => {
+  return (
+    <section className="py-16 md:py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
+      <GentleWavesBackground variant="light" />
+      
+      <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
+        <div className="text-center mb-10 md:mb-14">
+          <FadeUpText>
+            <motion.p 
+              className="font-sans text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] text-accent-gold uppercase mb-3 md:mb-4"
+              initial={{ opacity: 0, letterSpacing: "0.1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              The Origin
+            </motion.p>
+          </FadeUpText>
+          <FadeUpText delay={0.1}>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal">
+              How It Began
+            </h2>
+          </FadeUpText>
+        </div>
+
+        <AnimatedDivider className="mb-10 md:mb-14 max-w-sm mx-auto" />
+
+        <FadeUpText delay={0.2}>
+          <div className="space-y-6 font-sans text-charcoal/80 text-base md:text-lg leading-relaxed">
+            <p>
+              Somewhere along the way, life became very serious. Calendars filled up. Minds got noisy. Days started repeating themselves. And strangely... even the wins began to feel routine.
+            </p>
+            <p>
+              The Becoming emerged from a very simple observation: <span className="text-deep-charcoal font-medium">Most people are not lost. They're just disconnected</span> from the parts of themselves that once felt light, curious, and fully alive.
+            </p>
+            <p>
+              That version of you still exists. Just buried under deadlines, roles, expectations, and the endless "what's next?"
+            </p>
+            <p>
+              The Becoming is a space created for a different kind of experience. One where you slow down without guilt. Think without pressure. Feel without filters. Laugh without performance. Reflect without heaviness.
+            </p>
+            <motion.blockquote 
+              className="border-l-2 border-accent-gold pl-6 py-2 my-8 font-serif text-lg md:text-xl lg:text-2xl text-deep-charcoal italic"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              Because becoming isn't always about fixing something. Sometimes, it's about remembering something.
+            </motion.blockquote>
+            <p>
+              Your clarity. Your playfulness. Your joy. Your depth. Your aliveness.
+            </p>
+            <p>
+              At its heart, The Becoming carries one simple belief: <span className="text-deep-charcoal font-medium">You are not meant to stay one version of yourself forever.</span> Life moves. You evolve. Your inner world expands.
+            </p>
+            <p className="text-accent-gold font-medium text-lg md:text-xl">
+              Because becoming should feel less like pressure — and more like coming alive.
+            </p>
+          </div>
+        </FadeUpText>
+      </div>
+    </section>
+  );
+};
+
 // Accommodation Section - Before FAQ
 const AccommodationSection = () => {
   const accommodationImages = [
