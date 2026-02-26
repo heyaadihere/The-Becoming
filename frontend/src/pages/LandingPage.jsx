@@ -670,7 +670,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Logo className="h-32 mx-auto mb-6" variant="dark" />
+                <Logo className="h-40 mx-auto mb-6" variant="dark" />
               </motion.div>
               <motion.div 
                 className="w-20 h-20 border-2 border-accent-gold rounded-full flex items-center justify-center mx-auto mb-6 bg-accent-gold/10"
