@@ -1492,6 +1492,19 @@ const JourneySection = () => {
             </motion.div>
           </motion.div>
         </ScaleIn>
+
+        <FadeUpText delay={0.3}>
+          <motion.div 
+            className="text-center mt-10 md:mt-14 py-6 px-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <p className="font-sans text-sm md:text-base text-charcoal/60 max-w-2xl mx-auto italic">
+              The Becoming is <span className="text-charcoal/80 font-medium">not</span> for those seeking a party vibe, clinical therapy, or quick-fix transformations.
+            </p>
+          </motion.div>
+        </FadeUpText>
       </div>
     </section>
   );
