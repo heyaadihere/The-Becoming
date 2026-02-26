@@ -544,7 +544,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
       options: ['Seeking clarity and direction', 'Ready for personal growth', 'Looking for meaningful connections', 'Curious about self-discovery', 'Ready to learn and evolve', 'Following my intuition'] },
     { id: 'currentPhase', type: 'single', label: "Where are you in your journey right now?", field: 'currentPhase',
       options: ['Beginning a new chapter', 'Growing and expanding', 'Seeking deeper meaning', 'Ready for transformation', 'Open to possibilities', 'Trusting the process'] },
-    { id: 'seekingGrowth', type: 'multi', label: "What kind of growth are you seeking?", hint: "Select all that resonate with you.", field: 'seekingGrowth', max: 4,
+    { id: 'seekingGrowth', type: 'multi', label: "What kind of growth are you seeking?", hint: "Select all that resonate with you.", field: 'seekingGrowth', max: 8,
       options: ['Learning new perspectives', 'Emotional intelligence', 'Creative expression', 'Deeper self-awareness', 'Meaningful connections', 'Inner peace', 'Clarity of purpose', 'Personal transformation'] },
     { id: 'readyFor', type: 'textarea', label: "What are you ready to embrace?", hint: "Share what feels true for you.", field: 'readyFor', placeholder: "I'm ready to..." },
     { id: 'showUpAs', type: 'single', label: "How would you like to show up?", field: 'showUpAs',
@@ -1040,7 +1040,7 @@ const HeroSection = ({ onBeginJourney }) => {
         {/* Text container with subtle backdrop for readability */}
         <div className="bg-cream/75 backdrop-blur-sm rounded-2xl md:rounded-3xl py-8 md:py-12 px-5 md:px-16">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
-            <Logo className="h-24 sm:h-32 md:h-52 lg:h-64 w-auto mx-auto mb-4 md:mb-6" variant="dark" />
+            <Logo className="h-28 sm:h-36 md:h-56 lg:h-72 w-auto mx-auto mb-4 md:mb-6" variant="dark" />
           </motion.div>
           
           <AnimatePresence mode="wait">
@@ -1525,7 +1525,7 @@ const WhatItIsSection = () => {
 
   const whatItIsnt = [
     { title: "Not Therapy", desc: "While deep and reflective, it is not a clinical or medical intervention." },
-    { title: "Not a Networking Event", desc: "We curate for intention and readiness, not for professional status or titles." },
+    { title: "Not a Networking Event", desc: "This is not just another networking event. We curate for intention and readiness, not for professional status or titles." },
     { title: "Not a Party Vibe", desc: "This is a space for those seeking depth and a need for a reset, not social entertainment." },
     { title: "Not a Passive Retreat", desc: "You will not just consume content; you will work on yourself and develop new skills." },
     { title: "Not a Quick Fix", desc: "There are no promises of instant transformation; we provide the environment, you provide the effort." },
@@ -1973,7 +1973,7 @@ const ContactSection = () => {
                 <div className="w-10 h-10 bg-accent-gold/10 flex items-center justify-center rounded-full">
                   <Mail className="w-5 h-5 text-accent-gold" />
                 </div>
-                <span className="font-sans text-deep-charcoal">hello@thebecoming.in</span>
+                <span className="font-sans text-deep-charcoal">enter@thebecoming.in</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-accent-gold/10 flex items-center justify-center rounded-full">
