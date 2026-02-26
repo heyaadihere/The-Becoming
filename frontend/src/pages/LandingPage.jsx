@@ -896,7 +896,7 @@ const Navigation = ({ onBeginJourney }) => {
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? 'bg-cream/95 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-3 md:py-5'}`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-12 flex items-center justify-between">
-        <Logo className={`${isScrolled ? 'h-12 md:h-16' : 'h-14 md:h-20 lg:h-28'} transition-all`} variant="dark" />
+        <Logo className={`${isScrolled ? 'h-10 md:h-16' : 'h-12 md:h-20 lg:h-28'} transition-all`} variant="dark" />
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6 lg:gap-10">
@@ -911,7 +911,7 @@ const Navigation = ({ onBeginJourney }) => {
         </nav>
         
         <div className="flex items-center gap-3">
-          <motion.button onClick={onBeginJourney} className="btn-primary text-xs md:text-sm px-4 md:px-6 py-2 md:py-3" whileHover={{ scale: 1.05 }} data-testid="nav-cta">
+          <motion.button onClick={onBeginJourney} className="btn-primary text-[10px] md:text-sm px-3 md:px-6 py-1.5 md:py-3" whileHover={{ scale: 1.05 }} data-testid="nav-cta">
             Enter The Becoming
           </motion.button>
           
@@ -1036,11 +1036,11 @@ const HeroSection = ({ onBeginJourney }) => {
         ))}
       </div>
       
-      <div className="relative z-10 text-center px-4 md:px-6 max-w-5xl mx-auto pt-24 md:pt-20">
+      <div className="relative z-10 text-center px-3 md:px-6 max-w-5xl mx-auto pt-20 md:pt-20">
         {/* Text container with subtle backdrop for readability */}
-        <div className="bg-cream/75 backdrop-blur-sm rounded-2xl md:rounded-3xl py-8 md:py-12 px-5 md:px-16">
+        <div className="bg-cream/75 backdrop-blur-sm rounded-2xl md:rounded-3xl py-6 md:py-12 px-4 md:px-16">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
-            <Logo className="h-28 sm:h-36 md:h-56 lg:h-72 w-auto mx-auto mb-4 md:mb-6" variant="dark" />
+            <Logo className="h-44 sm:h-48 md:h-56 lg:h-72 w-auto mx-auto mb-4 md:mb-6" variant="dark" />
           </motion.div>
           
           <AnimatePresence mode="wait">
