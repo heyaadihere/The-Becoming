@@ -1984,8 +1984,8 @@ const ContactSection = () => {
             </div>
             <div className="mt-auto pt-8 border-t border-sand">
               <p className="font-sans text-charcoal/60 text-sm">
-                <a href="#" className="hover:text-accent-gold transition-colors">Privacy Policy</a> · 
-                <a href="#" className="hover:text-accent-gold transition-colors ml-2">Terms of Service</a>
+                <a href="/privacy-policy" className="hover:text-accent-gold transition-colors">Privacy Policy</a> · 
+                <a href="/terms-of-use" className="hover:text-accent-gold transition-colors ml-2">Terms of Use</a>
               </p>
             </div>
           </div>
