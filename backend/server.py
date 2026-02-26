@@ -179,6 +179,18 @@ async def get_signups():
     
     return submissions
 
+@api_router.get("/admin/signups")
+async def get_admin_signups():
+    """Get all signup submissions for admin dashboard"""
+    submissions = await db.signup_submissions.find({}, {"_id": 0}).sort("submitted_at", -1).to_list(1000)
+    return submissions
+
+@api_router.get("/admin/contacts")
+async def get_admin_contacts():
+    """Get all contact submissions for admin dashboard"""
+    contacts = await db.contact_submissions.find({}, {"_id": 0}).sort("submitted_at", -1).to_list(1000)
+    return contacts
+
 # Include the router in the main app
 app.include_router(api_router)
 
