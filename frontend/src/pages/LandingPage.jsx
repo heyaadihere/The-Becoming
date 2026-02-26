@@ -685,14 +685,8 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                 You're on Your Way!
               </motion.h2>
               <motion.p 
-                className="text-charcoal/70 font-sans mb-2"
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-              >
-                Thank you for taking this beautiful first step.
-              </motion.p>
-              <motion.p 
                 className="text-accent-gold font-sans text-lg mb-3"
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
               >
                 A Becoming bud will call you soon!
               </motion.p>
@@ -1118,7 +1112,7 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.8 }}
-              >human experience</motion.span> where being ends and becoming begins. A psychological reset designed to bridge the gap between who you are and who you could choose to become — moving from routine repetition to active evolution.
+              >human experience</motion.span> where being ends and becoming begins. A psychological reset designed to bridge the gap between who you are and who you could choose to become, moving from routine repetition to active evolution.
             </p>
           </FadeUpText>
         </div>
@@ -1533,7 +1527,7 @@ const WhatItIsSection = () => {
     { title: "Not Therapy", desc: "While deep and reflective, it is not a clinical or medical intervention." },
     { title: "Not a Networking Event", desc: "We curate for intention and readiness, not for professional status or titles." },
     { title: "Not a Party Vibe", desc: "This is a space for those seeking depth and a need for a reset, not social entertainment." },
-    { title: "Not a Passive Retreat", desc: "You will not just consume content — you will work on yourself and develop new skills." },
+    { title: "Not a Passive Retreat", desc: "You will not just consume content; you will work on yourself and develop new skills." },
     { title: "Not a Quick Fix", desc: "There are no promises of instant transformation; we provide the environment, you provide the effort." },
     { title: "Not a Digital Workspace", desc: "This is a no phone, no device experience. Intentional digital reduction is integral to cultivating presence and clarity." }
   ];
@@ -1609,7 +1603,7 @@ const WhatItIsSection = () => {
                     className="flex gap-4 p-4 bg-soft-cream/60 border border-sand/60 hover:border-charcoal/20 transition-all group"
                     whileHover={{ x: 5 }}
                   >
-                    <span className="text-charcoal/30 font-serif text-lg mt-0.5 shrink-0" data-testid={`what-it-isnt-${idx}`}>—</span>
+                    <span className="text-charcoal/30 font-serif text-lg mt-0.5 shrink-0" data-testid={`what-it-isnt-${idx}`}>*</span>
                     <div>
                       <h4 className="font-serif text-base md:text-lg text-deep-charcoal group-hover:text-charcoal/70 transition-colors">{item.title}</h4>
                       <p className="font-sans text-sm text-charcoal/60 mt-1">{item.desc}</p>
@@ -1683,7 +1677,7 @@ const FounderStorySection = () => {
               At its heart, The Becoming carries one simple belief: <span className="text-deep-charcoal font-medium">You are not meant to stay one version of yourself forever.</span> Life moves. You evolve. Your inner world expands.
             </p>
             <p className="text-accent-gold font-medium text-lg md:text-xl">
-              Because becoming should feel less like pressure — and more like coming alive.
+              Because becoming should feel less like pressure, and more like coming alive.
             </p>
           </div>
         </FadeUpText>
@@ -1794,7 +1788,7 @@ const FAQSection = () => {
     { q: "Where does it take place?", a: "In a carefully selected, nature-led environment away from city noise. The exact location is shared with confirmed participants to preserve privacy." },
     { q: "What is the investment?", a: "The Becoming is a premium, fully curated experience limited to 21 participants. The investment includes: Accommodation, Curated meals, All creative materials, The full immersive experience, Access to the post-experience community. Exact investment details are shared during the application process." },
     { q: "How are participants selected?", a: "We curate for intention, not status. Selection is based on readiness, your willingness to engage deeply, embrace silence, reduce device use, and actively participate. It is not a party retreat, therapy, or a quick-fix transformation. Only 21 participants are selected per edition." },
-    { q: "Is it spiritual or religious?", a: "No. The Becoming is a human experience focused on growth — not aligned with any spiritual or religious practice." },
+    { q: "Is it spiritual or religious?", a: "No. The Becoming is a human experience focused on growth, not aligned with any spiritual or religious practice." },
     { q: "Is it therapy?", a: "No. While deep and reflective, The Becoming is an experience, not a clinical or medical intervention." },
     { q: "Can I come alone?", a: "Yes, absolutely. The focus is on honest human connection with a curated group. Most participants arrive on their own and leave with meaningful connections." }
   ];
