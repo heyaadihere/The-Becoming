@@ -2045,9 +2045,18 @@ const FooterSection = () => {
   return (
     <footer className="py-8 bg-cream border-t border-sand">
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col items-center gap-4">
           <Logo className="h-16" variant="dark" />
-          <p className="font-sans text-charcoal/60 text-sm text-center md:text-right">
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 font-sans text-sm text-charcoal/60">
+            <a href="/refund-policy" className="hover:text-accent-gold transition-colors">Refund Policy</a>
+            <span className="hidden sm:inline">·</span>
+            <a href="/privacy-policy" className="hover:text-accent-gold transition-colors">Privacy Policy</a>
+            <span className="hidden sm:inline">·</span>
+            <a href="/terms-of-use" className="hover:text-accent-gold transition-colors">Terms of Use</a>
+            <span className="hidden sm:inline">·</span>
+            <a href="/cookie-policy" className="hover:text-accent-gold transition-colors">Cookie Policy</a>
+          </div>
+          <p className="font-sans text-charcoal/60 text-sm text-center">
             © {new Date().getFullYear()} The Becoming. All rights reserved. 
             <span className="mx-2">·</span>
             Powered by <a href="https://techbook.co.in/" target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:underline">Techbook Technologies</a>
