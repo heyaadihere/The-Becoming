@@ -64,11 +64,19 @@ Hero > About (The Essence) > Experience > What It Is / What It Isn't > Journey (
 - Username: admin
 - Password: TheBecoming@2026
 
+- [x] Questionnaire: Phone is first question, email/social is last
+- [x] Questionnaire: Investment question added (3 price ranges in ₹)
+- [x] Questionnaire: Creative interests is multi-select with Poetry & Storytelling
+- [x] Partial form tracking: saves progress on each step, visible in admin 'Incomplete' tab
+- [x] Admin dashboard: 3 tabs (Completed, Incomplete with WhatsApp message, Contacts)
+
 ## API Endpoints
 - POST /api/signup - Questionnaire submissions
 - POST /api/contact - Contact form
-- GET /api/admin/signups - All signups (admin)
+- POST /api/partial-signup - Save partial form progress
+- GET /api/admin/signups - All completed signups (admin)
 - GET /api/admin/contacts - All contacts (admin)
+- GET /api/admin/partial-signups - Incomplete form submissions (admin)
 
 ## Next Action Items
 1. P1: Email notifications via Resend (need API key)
