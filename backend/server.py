@@ -133,10 +133,14 @@ async def create_signup(input: SignupSubmissionCreate):
         "social_media": input.social_media,
         "questionnaire_data": input.questionnaire_data,
         "submitted_at": datetime.now(timezone.utc).isoformat(),
-        "status": "pending"
+        "status": "completed"
     }
     
     await db.signup_submissions.insert_one(submission)
+    
+    # Remove from partial submissions since form is complete
+    if input.phone:
+        await db.partial_submissions.delete_many({"phone": input.phone})
     
     # Return without _id
     return {
@@ -144,9 +148,38 @@ async def create_signup(input: SignupSubmissionCreate):
         "name": input.name,
         "email": input.email,
         "phone": input.phone,
-        "status": "pending",
+        "status": "completed",
         "message": "Submission received successfully"
     }
+
+class PartialSignup(BaseModel):
+    phone: str
+    name: str = ""
+    last_step: str = ""
+    answers: str = ""
+
+@api_router.post("/partial-signup")
+async def save_partial_signup(input: PartialSignup):
+    """Save partial form data for users who leave midway"""
+    await db.partial_submissions.update_one(
+        {"phone": input.phone},
+        {"$set": {
+            "phone": input.phone,
+            "name": input.name,
+            "last_step": input.last_step,
+            "answers": input.answers,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "whatsapp_message": "Hey. You didn't come this far to stop halfway.\nYour BECOMING journey is waiting.\nFinish your form.. let's move."
+        }},
+        upsert=True
+    )
+    return {"message": "Partial form saved"}
+
+@api_router.get("/admin/partial-signups")
+async def get_admin_partial_signups():
+    """Get all partial/incomplete form submissions"""
+    partials = await db.partial_submissions.find({}, {"_id": 0}).sort("updated_at", -1).to_list(1000)
+    return partials
 
 @api_router.post("/contact")
 async def create_contact(input: ContactSubmissionCreate):
