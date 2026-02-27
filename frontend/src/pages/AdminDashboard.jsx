@@ -171,6 +171,13 @@ export default function AdminDashboard() {
             Sign-ups ({signups.length})
           </button>
           <button
+            onClick={() => setActiveTab('partials')}
+            className={`px-6 py-3 font-sans text-sm transition-colors ${activeTab === 'partials' ? 'text-orange-500 border-b-2 border-orange-400' : 'text-charcoal/60 hover:text-deep-charcoal'}`}
+            data-testid="tab-partials"
+          >
+            Incomplete ({partials.length})
+          </button>
+          <button
             onClick={() => setActiveTab('contacts')}
             className={`px-6 py-3 font-sans text-sm transition-colors ${activeTab === 'contacts' ? 'text-accent-gold border-b-2 border-accent-gold' : 'text-charcoal/60 hover:text-deep-charcoal'}`}
             data-testid="tab-contacts"
