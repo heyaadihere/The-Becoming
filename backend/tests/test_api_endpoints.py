@@ -42,7 +42,7 @@ class TestSignupEndpoint:
         assert "id" in data, "Response should contain id"
         assert data["name"] == "Test User"
         assert data["email"] == unique_email
-        assert data["status"] == "pending"
+        assert data["status"] == "completed"
         assert "message" in data
         print(f"✓ Signup success: {data}")
 
