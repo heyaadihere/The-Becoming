@@ -539,6 +539,7 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
 
   const questions = [
     { id: 'welcome', type: 'welcome', title: "Welcome to The Becoming", subtitle: "A space for growth, discovery, and transformation" },
+    { id: 'phone', type: 'phone', label: "What's the best number to reach you?", hint: "We'll use this to stay in touch.", field: 'phone', required: true },
     { id: 'name', type: 'text', label: "What should we call you?", hint: "Your first name is perfect.", field: 'name', required: true },
     { id: 'whatBringsYou', type: 'single', label: "What brings you here today?", field: 'whatBringsYou',
       options: ['Seeking clarity and direction', 'Ready for personal growth', 'Looking for meaningful connections', 'Curious about self-discovery', 'Ready to learn and evolve', 'Following my intuition'] },
@@ -551,7 +552,10 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
       options: ['Open and curious', 'Ready to participate fully', 'Observing and absorbing', 'Eager to connect', 'Present and mindful'] },
     { id: 'timing', type: 'single', label: "When would you like to join us?", field: 'timing', 
       options: ['April 2026', 'July 2026', 'Oct 2026', 'Flexible'] },
-    { id: 'creativeExpression', type: 'text', label: "Do you have any creative interests?", hint: "Music, art, writing, or anything that moves you.", field: 'creativeExpression', placeholder: "e.g., Playing guitar, writing poetry..." },
+    { id: 'investment', type: 'single', label: "When you invest in who you're meant to become, which range feels right?", field: 'investment',
+      options: ['\u20B91,75,000 \u2013 \u20B92,25,000', '\u20B92,75,000 \u2013 \u20B93,00,000', '\u20B93,25,000 \u2013 \u20B93,95,000'] },
+    { id: 'creativeExpression', type: 'multi', label: "Do you have any creative interests?", hint: "Select all that resonate with you.", field: 'creativeExpression', max: 10,
+      options: ['Music', 'Art', 'Writing', 'Poetry', 'Storytelling', 'Dance', 'Photography', 'Theatre', 'Other'] },
     { id: 'contact', type: 'contact', label: "Let's stay connected", hint: "How can we reach you?" },
     { id: 'finalThought', type: 'textarea', label: "Anything else you'd like to share?", hint: "We're listening.", field: 'finalThought', placeholder: "Share your thoughts..." }
   ];
