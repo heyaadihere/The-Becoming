@@ -745,6 +745,27 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                 </div>
               )}
 
+              {currentQuestion.type === 'phone' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
+                    {currentQuestion.hint && <p className="text-charcoal/50 font-sans text-sm">{currentQuestion.hint}</p>}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-accent-gold" />
+                    <input 
+                      type="tel" 
+                      value={answers.phone || ''} 
+                      onChange={(e) => { setAnswers({ ...answers, phone: e.target.value }); setFieldError(''); }} 
+                      placeholder="Your phone number" 
+                      className={`flex-1 bg-white/50 border-b-2 px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && (!answers.phone || answers.phone.length < 10) ? 'border-red-400' : 'border-sand'}`} 
+                      autoFocus
+                    />
+                  </div>
+                  {fieldError && <p className="text-red-500 font-sans text-sm mt-2" data-testid="field-error">{fieldError}</p>}
+                </div>
+              )}
+
               {currentQuestion.type === 'text' && (
                 <div className="space-y-6">
                   <div>
