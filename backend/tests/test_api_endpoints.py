@@ -201,5 +201,88 @@ class TestStatusEndpoint:
         print(f"✓ Status GET returns {len(data)} items")
 
 
+class TestPartialSignupEndpoint:
+    """Test /api/partial-signup endpoint for saving incomplete form data"""
+    
+    def test_partial_signup_save_success(self):
+        """Test saving partial form data"""
+        unique_phone = f"TEST{uuid.uuid4().hex[:8]}"
+        payload = {
+            "phone": unique_phone,
+            "name": "Partial Test User",
+            "last_step": "timing",
+            "answers": '{"phone":"' + unique_phone + '","name":"Partial Test User"}'
+        }
+        response = requests.post(f"{BASE_URL}/api/partial-signup", json=payload)
+        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
+        
+        data = response.json()
+        assert "message" in data
+        assert data["message"] == "Partial form saved"
+        print(f"✓ Partial signup saved: {data}")
+    
+    def test_partial_signup_upsert_updates_existing(self):
+        """Test that posting same phone updates existing record (upsert)"""
+        test_phone = "TEST_UPSERT_7654321"
+        # First submission
+        payload1 = {
+            "phone": test_phone,
+            "name": "First Name",
+            "last_step": "name",
+            "answers": '{"phone":"' + test_phone + '"}'
+        }
+        response1 = requests.post(f"{BASE_URL}/api/partial-signup", json=payload1)
+        assert response1.status_code == 200
+        
+        # Second submission with updated data
+        payload2 = {
+            "phone": test_phone,
+            "name": "Updated Name",
+            "last_step": "timing",
+            "answers": '{"phone":"' + test_phone + '","name":"Updated Name"}'
+        }
+        response2 = requests.post(f"{BASE_URL}/api/partial-signup", json=payload2)
+        assert response2.status_code == 200
+        
+        # Verify it was updated by checking admin endpoint
+        response3 = requests.get(f"{BASE_URL}/api/admin/partial-signups")
+        assert response3.status_code == 200
+        partials = response3.json()
+        matching = [p for p in partials if p["phone"] == test_phone]
+        assert len(matching) == 1, "Should have exactly one record (upsert)"
+        assert matching[0]["name"] == "Updated Name"
+        assert matching[0]["last_step"] == "timing"
+        print(f"✓ Partial signup upsert works correctly")
+
+
+class TestAdminPartialSignupsEndpoint:
+    """Test /api/admin/partial-signups endpoint"""
+    
+    def test_get_admin_partial_signups_returns_list(self):
+        """Test that admin partial signups endpoint returns a list"""
+        response = requests.get(f"{BASE_URL}/api/admin/partial-signups")
+        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
+        
+        data = response.json()
+        assert isinstance(data, list), "Response should be a list"
+        print(f"✓ Admin partial signups returns {len(data)} items")
+    
+    def test_partial_signups_contain_required_fields(self):
+        """Test that partial signups have required fields"""
+        response = requests.get(f"{BASE_URL}/api/admin/partial-signups")
+        assert response.status_code == 200
+        
+        data = response.json()
+        if len(data) > 0:
+            first_partial = data[0]
+            assert "phone" in first_partial, "Should have phone field"
+            assert "last_step" in first_partial, "Should have last_step field"
+            assert "updated_at" in first_partial, "Should have updated_at field"
+            assert "whatsapp_message" in first_partial, "Should have whatsapp_message field"
+            print(f"✓ Partial signup has all required fields: phone={first_partial['phone']}, last_step={first_partial['last_step']}")
+        else:
+            print("⚠ No partial signups to verify fields")
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
