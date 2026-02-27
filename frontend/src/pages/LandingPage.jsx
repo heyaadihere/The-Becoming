@@ -853,16 +853,12 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
                 <div className="space-y-6">
                   <div>
                     <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
-                    <p className="text-charcoal/50 font-sans text-sm">Email, phone, and one social media are required.</p>
+                    <p className="text-charcoal/50 font-sans text-sm">Email and one social media handle are required.</p>
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <Mail className="w-5 h-5 text-accent-gold" />
                       <input type="email" value={answers.email || ''} onChange={(e) => { setAnswers({ ...answers, email: e.target.value }); setFieldError(''); }} placeholder="your@email.com *" className={`flex-1 bg-white/50 border-b-2 px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && !answers.email?.includes('@') ? 'border-red-400' : 'border-sand'}`} />
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Phone className="w-5 h-5 text-accent-gold" />
-                      <input type="tel" value={answers.phone || ''} onChange={(e) => { setAnswers({ ...answers, phone: e.target.value }); setFieldError(''); }} placeholder="Phone number *" className={`flex-1 bg-white/50 border-b-2 px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && (!answers.phone || answers.phone.length < 10) ? 'border-red-400' : 'border-sand'}`} />
                     </div>
                     <div className="flex items-center gap-3">
                       <Phone className="w-5 h-5 text-charcoal/40" />
