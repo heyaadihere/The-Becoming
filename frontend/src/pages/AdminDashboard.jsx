@@ -137,13 +137,20 @@ export default function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="bg-white/50 border border-sand p-5" data-testid="signup-count">
             <div className="flex items-center gap-3">
               <Users className="w-5 h-5 text-accent-gold" />
-              <span className="font-sans text-sm text-charcoal/60">Sign-up Submissions</span>
+              <span className="font-sans text-sm text-charcoal/60">Completed Sign-ups</span>
             </div>
             <p className="font-serif text-3xl text-deep-charcoal mt-2">{signups.length}</p>
+          </div>
+          <div className="bg-white/50 border border-sand p-5" data-testid="partial-count">
+            <div className="flex items-center gap-3">
+              <Users className="w-5 h-5 text-orange-400" />
+              <span className="font-sans text-sm text-charcoal/60">Incomplete Forms</span>
+            </div>
+            <p className="font-serif text-3xl text-deep-charcoal mt-2">{partials.length}</p>
           </div>
           <div className="bg-white/50 border border-sand p-5" data-testid="contact-count">
             <div className="flex items-center gap-3">
