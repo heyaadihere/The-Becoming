@@ -569,20 +569,36 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
     if (!canProceed()) {
       if (currentQuestion.type === 'text' && currentQuestion.required) {
         setFieldError('This field is required to continue.');
+      } else if (currentQuestion.type === 'phone') {
+        setFieldError('Please enter a valid phone number to continue.');
       } else if (currentQuestion.type === 'single') {
         setFieldError('Please select an option to continue.');
       } else if (currentQuestion.type === 'multi') {
         setFieldError('Please select at least one option.');
       } else if (currentQuestion.type === 'contact') {
         if (!answers.email?.includes('@')) setFieldError('Please enter a valid email address.');
-        else if (!answers.phone || answers.phone.length < 10) setFieldError('Please enter a valid phone number.');
         else if (!answers.socialHandle) setFieldError('Please provide at least one social media handle.');
         else setFieldError('Please fill in all required contact fields.');
       }
       return;
     }
     setFieldError('');
+    // Save partial form data after each meaningful step
+    if (answers.phone && step >= 1) {
+      savePartialForm();
+    }
     if (step < totalSteps - 1) setStep(step + 1);
+  };
+
+  const savePartialForm = async () => {
+    try {
+      await axios.post(`${API}/partial-signup`, {
+        phone: answers.phone,
+        name: answers.name || '',
+        last_step: currentQuestion.id,
+        answers: JSON.stringify(answers)
+      });
+    } catch (e) { /* silent */ }
   };
   const handleBack = () => { setFieldError(''); if (step > 0) setStep(step - 1); };
   const handleSelectSingle = (option) => setAnswers({ ...answers, [currentQuestion.field]: option });
