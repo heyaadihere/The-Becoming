@@ -631,9 +631,10 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
 
   const canProceed = () => {
     if (currentQuestion.type === 'welcome') return true;
+    if (currentQuestion.type === 'phone') return answers.phone?.length >= 10;
     if (currentQuestion.type === 'text' && currentQuestion.required) return answers[currentQuestion.field]?.trim().length > 0;
     if (currentQuestion.type === 'single') return answers[currentQuestion.field]?.length > 0;
-    if (currentQuestion.type === 'contact') return answers.email?.includes('@') && answers.phone?.length >= 10 && answers.socialHandle?.length > 0;
+    if (currentQuestion.type === 'contact') return answers.email?.includes('@') && answers.socialHandle?.length > 0;
     return true;
   };
 
