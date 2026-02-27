@@ -17,6 +17,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('signups');
   const [signups, setSignups] = useState([]);
   const [contacts, setContacts] = useState([]);
+  const [partials, setPartials] = useState([]);
   const [loading, setLoading] = useState(false);
   const [expandedRow, setExpandedRow] = useState(null);
   const navigate = useNavigate();
@@ -49,12 +50,14 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [signupsRes, contactsRes] = await Promise.all([
+      const [signupsRes, contactsRes, partialsRes] = await Promise.all([
         fetch(`${API}/admin/signups`),
-        fetch(`${API}/admin/contacts`)
+        fetch(`${API}/admin/contacts`),
+        fetch(`${API}/admin/partial-signups`)
       ]);
       if (signupsRes.ok) setSignups(await signupsRes.json());
       if (contactsRes.ok) setContacts(await contactsRes.json());
+      if (partialsRes.ok) setPartials(await partialsRes.json());
     } catch (err) {
       console.error('Failed to fetch data', err);
     }
