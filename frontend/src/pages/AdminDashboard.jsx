@@ -255,6 +255,59 @@ export default function AdminDashboard() {
           </div>
         )}
 
+        {/* Partials Table */}
+        {!loading && activeTab === 'partials' && (
+          <div className="space-y-2" data-testid="partials-table">
+            <div className="bg-orange-50/50 border border-orange-200/50 p-4 mb-4">
+              <p className="font-sans text-sm text-orange-700">
+                <strong>WhatsApp Follow-up Message:</strong> "Hey. You didn't come this far to stop halfway. Your BECOMING journey is waiting. Finish your form.. let's move."
+              </p>
+            </div>
+            {partials.length === 0 ? (
+              <p className="text-center font-sans text-charcoal/50 py-12">No incomplete forms yet.</p>
+            ) : (
+              partials.map((p, idx) => {
+                const parsedAnswers = parseQuestionnaire(p.answers);
+                const isExpanded = expandedRow === `partial-${idx}`;
+                return (
+                  <div key={idx} className="bg-white/50 border border-orange-200/40" data-testid={`partial-row-${idx}`}>
+                    <button
+                      onClick={() => setExpandedRow(isExpanded ? null : `partial-${idx}`)}
+                      className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-orange-50/30 transition-colors"
+                    >
+                      <div className="flex items-center gap-4 flex-wrap">
+                        <span className="font-serif text-deep-charcoal">{p.name || 'Unknown'}</span>
+                        <span className="font-sans text-sm text-accent-gold">{p.phone}</span>
+                        <span className="font-sans text-xs px-2 py-0.5 bg-orange-100 text-orange-600 rounded">Stopped at: {p.last_step}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="font-sans text-xs text-charcoal/40">{p.updated_at ? new Date(p.updated_at).toLocaleDateString() : ''}</span>
+                        {isExpanded ? <ChevronUp className="w-4 h-4 text-charcoal/40" /> : <ChevronDown className="w-4 h-4 text-charcoal/40" />}
+                      </div>
+                    </button>
+                    {isExpanded && parsedAnswers && (
+                      <div className="px-5 pb-5 border-t border-sand/50">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+                          {Object.entries(parsedAnswers).filter(([k]) => !['socialMedia','socialHandle','altPhone'].includes(k)).map(([key, value]) => (
+                            <div key={key} className="bg-soft-cream/50 p-3 border border-sand/30">
+                              <p className="font-sans text-xs text-accent-gold capitalize mb-1">{key.replace(/([A-Z])/g, ' $1').trim()}</p>
+                              <p className="font-sans text-sm text-deep-charcoal">{Array.isArray(value) ? value.join(', ') : value || 'N/A'}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-4 p-3 bg-green-50/50 border border-green-200/50">
+                          <p className="font-sans text-xs text-green-700 mb-1">Send on WhatsApp to {p.phone}:</p>
+                          <p className="font-sans text-sm text-green-800 italic">"Hey. You didn't come this far to stop halfway. Your BECOMING journey is waiting. Finish your form.. let's move."</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        )}
+
         {/* Contacts Table */}
         {!loading && activeTab === 'contacts' && (
           <div className="space-y-2" data-testid="contacts-table">
