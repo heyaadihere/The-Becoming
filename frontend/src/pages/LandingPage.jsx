@@ -539,8 +539,8 @@ const QuestionnaireModal = ({ isOpen, onClose }) => {
 
   const questions = [
     { id: 'welcome', type: 'welcome', title: "Welcome to The Becoming", subtitle: "A space for growth, discovery, and transformation" },
-    { id: 'phone', type: 'phone', label: "What's the best number to reach you?", hint: "We'll use this to stay in touch.", field: 'phone', required: true },
     { id: 'name', type: 'text', label: "What should we call you?", hint: "Your first name is perfect.", field: 'name', required: true },
+    { id: 'phone', type: 'phone', label: "What's the best number to reach you?", hint: "We'll use this to stay in touch.", field: 'phone', required: true },
     { id: 'whatBringsYou', type: 'single', label: "What brings you here today?", field: 'whatBringsYou',
       options: ['Seeking clarity and direction', 'Ready for personal growth', 'Looking for meaningful connections', 'Curious about self-discovery', 'Ready to learn and evolve', 'Following my intuition'] },
     { id: 'currentPhase', type: 'single', label: "Where are you in your journey right now?", field: 'currentPhase',
