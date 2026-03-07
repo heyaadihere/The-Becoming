@@ -17,12 +17,14 @@ const Logo = ({ className = "h-16", variant = "dark" }) => (
   />
 );
 
-// Hero images for carousel
-const heroImages = [
-  { url: "/images/hero-cover.png", alt: "Serene mountain landscape" },
-  { url: "https://images.unsplash.com/photo-1758637689126-2598f5b17ceb?w=1920&q=80", alt: "Misty mountains at sunrise" },
-  { url: "https://images.unsplash.com/photo-1767591467577-6d10030bc9ce?w=1920&q=80", alt: "Snowy trees at dawn" },
-  { url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80", alt: "Nature landscape" }
+// Hero videos for carousel - Pexels free stock videos
+const heroVideos = [
+  { url: "https://videos.pexels.com/video-files/20636793/20636793-uhd_2560_1440_50fps.mp4", poster: "https://images.pexels.com/videos/20636793/arab-birds-flying-caravan-dark-morning-20636793.jpeg?auto=compress&cs=tinysrgb&w=1920", alt: "Birds flying over mountains at sunset" },
+  { url: "https://videos.pexels.com/video-files/6989020/6989020-hd_1920_1080_25fps.mp4", poster: "https://images.pexels.com/videos/6989020/pexels-photo-6989020.jpeg?auto=compress&cs=tinysrgb&w=1920", alt: "Sunrise among mountains with sea of clouds" },
+  { url: "https://videos.pexels.com/video-files/7456987/7456987-hd_1920_1080_25fps.mp4", poster: "https://images.pexels.com/videos/7456987/pexels-photo-7456987.jpeg?auto=compress&cs=tinysrgb&w=1920", alt: "River flowing by the mountains" },
+  { url: "https://videos.pexels.com/video-files/5382333/5382333-uhd_2560_1440_30fps.mp4", poster: "https://images.pexels.com/videos/5382333/night-stars-tree-5382333.jpeg?auto=compress&cs=tinysrgb&w=1920", alt: "Sky full of stars through pine trees" },
+  { url: "https://videos.pexels.com/video-files/855617/855617-uhd_2560_1440_25fps.mp4", poster: "https://images.pexels.com/videos/855617/free-video-855617.jpg?auto=compress&cs=tinysrgb&w=1920", alt: "Golden sunset over clouds" },
+  { url: "https://videos.pexels.com/video-files/3562185/3562185-uhd_2560_1440_30fps.mp4", poster: "https://images.pexels.com/videos/3562185/free-video-3562185.jpg?auto=compress&cs=tinysrgb&w=1920", alt: "Beach with islands" }
 ];
 
 // Animated background for sections
@@ -1001,46 +1003,59 @@ const Navigation = ({ onBeginJourney }) => {
   );
 };
 
-// Hero Section with Image Carousel and Dynamic Content
+// Hero Section with Video Carousel and Dynamic Content
 const HeroSection = ({ onBeginJourney }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  // 4 different hero content versions that change with images
   const heroSlides = [
     {
-      image: heroImages[0]?.url || "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80",
+      video: heroVideos[0],
       tagline: "A Curated Human Experience",
       headline: "You've always known",
       highlight: "there's more to who you are",
       subtext: "This is where you stop searching and start becoming."
     },
     {
-      image: heroImages[1]?.url || "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=80",
+      video: heroVideos[1],
       tagline: "Embrace Your Transformation",
       headline: "The journey within",
       highlight: "begins with a single step",
       subtext: "Discover the path to your authentic self."
     },
     {
-      image: heroImages[2]?.url || "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600&q=80",
+      video: heroVideos[2],
       tagline: "Awaken Your Potential",
       headline: "Where learning meets",
       highlight: "transformation",
       subtext: "A sacred space for growth, discovery, and connection."
     },
     {
-      image: heroImages[3]?.url || "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1600&q=80",
+      video: heroVideos[3],
       tagline: "Find Your True Self",
       headline: "Not just an experience",
       highlight: "but a becoming",
       subtext: "Join a community of souls ready to evolve together."
+    },
+    {
+      video: heroVideos[4],
+      tagline: "Discover Your Light",
+      headline: "Where being ends",
+      highlight: "and becoming begins",
+      subtext: "A psychological reset designed for active evolution."
+    },
+    {
+      video: heroVideos[5],
+      tagline: "Your Journey Awaits",
+      headline: "Step into the person",
+      highlight: "you're meant to become",
+      subtext: "7 days of nature, stillness, and intentional growth."
     }
   ];
   
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
+    }, 8000);
     return () => clearInterval(timer);
   }, []);
 
@@ -1048,22 +1063,30 @@ const HeroSection = ({ onBeginJourney }) => {
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden" data-testid="hero-section">
-      {/* Image Carousel Background */}
+      {/* Video Carousel Background */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, scale: 1.1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5 }}
           className="absolute inset-0"
         >
-          <img src={currentContent.image} alt="The Becoming" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/40 to-cream/70" />
+          <video 
+            src={currentContent.video.url} 
+            poster={currentContent.video.poster}
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream/50 via-cream/30 to-cream/60" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Image indicators */}
+      {/* Video indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {heroSlides.map((_, idx) => (
           <button
