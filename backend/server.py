@@ -96,12 +96,14 @@ async def send_confirmation_email(to_email, name, form_type="signup"):
         params = {
             "from": SENDER_EMAIL,
             "to": [to_email],
-            "cc": [CC_EMAIL],
             "subject": subject,
             "html": html
         }
+        # Only add CC when using a verified domain (not the default test sender)
+        if SENDER_EMAIL != 'onboarding@resend.dev':
+            params["cc"] = [CC_EMAIL]
         email = await asyncio.to_thread(resend.Emails.send, params)
-        logger.info(f"Email sent to {to_email}, cc: {CC_EMAIL}, id: {email.get('id')}")
+        logger.info(f"Email sent to {to_email}, id: {email.get('id')}")
     except Exception as e:
         logger.error(f"Failed to send email to {to_email}: {str(e)}")
 
