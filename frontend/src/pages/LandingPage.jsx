@@ -572,7 +572,9 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
       if (currentQuestion.type === 'text' && currentQuestion.required) {
         setFieldError('This field is required to continue.');
       } else if (currentQuestion.type === 'phone') {
-        setFieldError('Please enter a valid phone number to continue.');
+        if (!answers.phone || answers.phone.length === 0) setFieldError('Please enter your phone number.');
+        else if (answers.phone.length !== 10) setFieldError(`Please enter a valid 10-digit phone number. You entered ${answers.phone.length} digits.`);
+        else setFieldError('Please enter a valid phone number.');
       } else if (currentQuestion.type === 'single') {
         setFieldError('Please select an option to continue.');
       } else if (currentQuestion.type === 'multi') {
@@ -633,7 +635,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
 
   const canProceed = () => {
     if (currentQuestion.type === 'welcome') return true;
-    if (currentQuestion.type === 'phone') return answers.phone?.length >= 10;
+    if (currentQuestion.type === 'phone') return answers.phone?.length === 10;
     if (currentQuestion.type === 'text' && currentQuestion.required) return answers[currentQuestion.field]?.trim().length > 0;
     if (currentQuestion.type === 'single') return answers[currentQuestion.field]?.length > 0;
     if (currentQuestion.type === 'contact') return answers.email?.includes('@') && answers.socialHandle?.length > 0;
@@ -757,14 +759,21 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                     <Phone className="w-5 h-5 text-accent-gold" />
                     <input 
                       type="tel" 
+                      inputMode="numeric"
+                      maxLength={10}
                       value={answers.phone || ''} 
-                      onChange={(e) => { setAnswers({ ...answers, phone: e.target.value }); setFieldError(''); }} 
-                      placeholder="Your phone number" 
-                      className={`flex-1 bg-white/50 border-b-2 px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && (!answers.phone || answers.phone.length < 10) ? 'border-red-400' : 'border-sand'}`} 
+                      onChange={(e) => { 
+                        const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        setAnswers({ ...answers, phone: val }); 
+                        setFieldError(''); 
+                      }} 
+                      placeholder="10 digit phone number" 
+                      className={`flex-1 bg-white/50 border-b-2 px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError ? 'border-red-400' : 'border-sand'}`} 
                       autoFocus
                     />
                   </div>
-                  {fieldError && <p className="text-red-500 font-sans text-sm mt-2" data-testid="field-error">{fieldError}</p>}
+                  <p className="text-charcoal/40 font-sans text-xs">{answers.phone?.length || 0}/10 digits</p>
+                  {fieldError && <p className="text-red-500 font-sans text-sm" data-testid="field-error">{fieldError}</p>}
                 </div>
               )}
 

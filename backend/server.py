@@ -358,7 +358,7 @@ async def shutdown_db_client():
 # Serve React frontend build for SPA routing
 FRONTEND_BUILD = Path(__file__).parent.parent / 'frontend' / 'build'
 
-if FRONTEND_BUILD.exists():
+if FRONTEND_BUILD.exists() and (FRONTEND_BUILD / "static").exists():
     # Serve static files (JS, CSS, images)
     app.mount("/static", StaticFiles(directory=str(FRONTEND_BUILD / "static")), name="static")
     

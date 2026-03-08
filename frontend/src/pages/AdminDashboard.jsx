@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown, ChevronUp, LogOut, Users, MessageSquare, Eye, EyeOff } from 'lucide-react';
+import { ChevronDown, ChevronUp, LogOut, Users, MessageSquare, Eye, EyeOff, Download } from 'lucide-react';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -68,6 +71,96 @@ export default function AdminDashboard() {
     try { return JSON.parse(data); } catch { return null; }
   };
 
+  const flattenSignup = (s) => {
+    const q = parseQuestionnaire(s.questionnaire_data) || {};
+    return {
+      Name: s.name || q.name || '',
+      Email: s.email || '',
+      Phone: s.phone || '',
+      'Alt Phone': s.alt_phone || '',
+      'Social Media': s.social_media || '',
+      'What Brings You': q.whatBringsYou || '',
+      'Current Phase': q.currentPhase || '',
+      'Seeking Growth': Array.isArray(q.seekingGrowth) ? q.seekingGrowth.join(', ') : (q.seekingGrowth || ''),
+      'Ready For': q.readyFor || '',
+      'Show Up As': q.showUpAs || '',
+      Timing: q.timing || '',
+      Investment: q.investment || '',
+      'Creative Interests': Array.isArray(q.creativeExpression) ? q.creativeExpression.join(', ') : (q.creativeExpression || ''),
+      'Final Thought': q.finalThought || '',
+      Status: s.status || '',
+      'Submitted At': s.submitted_at ? new Date(s.submitted_at).toLocaleString() : ''
+    };
+  };
+
+  const flattenContact = (c) => ({
+    Name: c.name || '',
+    Email: c.email || '',
+    Phone: c.phone || '',
+    Message: c.message || '',
+    'Submitted At': c.submitted_at ? new Date(c.submitted_at).toLocaleString() : ''
+  });
+
+  const flattenPartial = (p) => {
+    const q = parseQuestionnaire(p.answers) || {};
+    return {
+      Name: p.name || q.name || '',
+      Phone: p.phone || '',
+      'Last Step': p.last_step || '',
+      'Updated At': p.updated_at ? new Date(p.updated_at).toLocaleString() : '',
+      ...Object.fromEntries(Object.entries(q).filter(([k]) => !['name','phone','altPhone','socialMedia','socialHandle','email'].includes(k)).map(([k, v]) => [k, Array.isArray(v) ? v.join(', ') : v || '']))
+    };
+  };
+
+  const downloadXLS = () => {
+    const wb = XLSX.utils.book_new();
+    if (signups.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(signups.map(flattenSignup)), 'Sign-ups');
+    if (partials.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(partials.map(flattenPartial)), 'Incomplete');
+    if (contacts.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(contacts.map(flattenContact)), 'Contacts');
+    XLSX.writeFile(wb, `TheBecoming_Leads_${new Date().toISOString().split('T')[0]}.xlsx`);
+  };
+
+  const downloadPDF = () => {
+    const doc = new jsPDF({ orientation: 'landscape' });
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.text('The Becoming - Leads Report', 14, 20);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
+
+    if (signups.length) {
+      doc.setFontSize(13);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Sign-ups (${signups.length})`, 14, 38);
+      const rows = signups.map(flattenSignup);
+      const cols = ['Name', 'Email', 'Phone', 'Timing', 'Investment', 'Status', 'Submitted At'];
+      doc.autoTable({ head: [cols], body: rows.map(r => cols.map(c => r[c])), startY: 42, styles: { fontSize: 8 }, headStyles: { fillColor: [201, 169, 98] } });
+    }
+
+    if (partials.length) {
+      const y = (doc.lastAutoTable?.finalY || 42) + 12;
+      doc.setFontSize(13);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Incomplete Forms (${partials.length})`, 14, y);
+      const rows = partials.map(flattenPartial);
+      const cols = ['Name', 'Phone', 'Last Step', 'Updated At'];
+      doc.autoTable({ head: [cols], body: rows.map(r => cols.map(c => r[c] || '')), startY: y + 4, styles: { fontSize: 8 }, headStyles: { fillColor: [251, 146, 60] } });
+    }
+
+    if (contacts.length) {
+      doc.addPage();
+      doc.setFontSize(13);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Contact Messages (${contacts.length})`, 14, 20);
+      const rows = contacts.map(flattenContact);
+      const cols = ['Name', 'Email', 'Phone', 'Message', 'Submitted At'];
+      doc.autoTable({ head: [cols], body: rows.map(r => cols.map(c => r[c])), startY: 24, styles: { fontSize: 8 }, headStyles: { fillColor: [201, 169, 98] } });
+    }
+
+    doc.save(`TheBecoming_Leads_${new Date().toISOString().split('T')[0]}.pdf`);
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center px-4">
@@ -126,6 +219,12 @@ export default function AdminDashboard() {
           <h1 className="font-serif text-lg text-deep-charcoal hidden sm:block">Admin Dashboard</h1>
         </div>
         <div className="flex items-center gap-3">
+          <button onClick={downloadXLS} className="flex items-center gap-1 font-sans text-sm text-green-600 hover:text-green-800 bg-green-50 px-3 py-1.5 border border-green-200" data-testid="download-xls">
+            <Download className="w-4 h-4" /> XLS
+          </button>
+          <button onClick={downloadPDF} className="flex items-center gap-1 font-sans text-sm text-red-600 hover:text-red-800 bg-red-50 px-3 py-1.5 border border-red-200" data-testid="download-pdf">
+            <Download className="w-4 h-4" /> PDF
+          </button>
           <button onClick={fetchData} className="font-sans text-sm text-accent-gold hover:underline" data-testid="refresh-btn">
             Refresh
           </button>
