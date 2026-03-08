@@ -1099,7 +1099,7 @@ const HeroSection = ({ onBeginJourney }) => {
       
       <div className="relative z-10 text-center px-3 md:px-6 max-w-5xl mx-auto pt-20 md:pt-20">
         {/* Text container with subtle backdrop for readability */}
-        <div className="bg-cream/60 backdrop-blur-md rounded-2xl md:rounded-3xl py-6 md:py-12 px-4 md:px-16">
+        <div className="bg-cream/85 backdrop-blur-md rounded-2xl md:rounded-3xl py-6 md:py-12 px-4 md:px-16">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
             <Logo className="h-44 sm:h-48 md:h-56 lg:h-72 w-auto mx-auto mb-4 md:mb-6" variant="dark" />
           </motion.div>
