@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Check, Loader2, X, ChevronLeft, ChevronRight, Phone, Mail, Instagram, Linkedin, MessageCircle } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Check, Loader2, X, ChevronLeft, ChevronRight, Mail, Instagram, Linkedin, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -572,9 +574,8 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
       if (currentQuestion.type === 'text' && currentQuestion.required) {
         setFieldError('This field is required to continue.');
       } else if (currentQuestion.type === 'phone') {
-        if (!answers.phone || answers.phone.length === 0) setFieldError('Please enter your phone number.');
-        else if (answers.phone.length !== 10) setFieldError(`Please enter a valid 10-digit phone number. You entered ${answers.phone.length} digits.`);
-        else setFieldError('Please enter a valid phone number.');
+        if (!answers.phone) setFieldError('Please enter your phone number.');
+        else if (!isValidPhoneNumber(answers.phone)) setFieldError('Please enter a valid phone number for the selected country.');
       } else if (currentQuestion.type === 'single') {
         setFieldError('Please select an option to continue.');
       } else if (currentQuestion.type === 'multi') {
@@ -635,7 +636,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
 
   const canProceed = () => {
     if (currentQuestion.type === 'welcome') return true;
-    if (currentQuestion.type === 'phone') return answers.phone?.length === 10;
+    if (currentQuestion.type === 'phone') return answers.phone && isValidPhoneNumber(answers.phone);
     if (currentQuestion.type === 'text' && currentQuestion.required) return answers[currentQuestion.field]?.trim().length > 0;
     if (currentQuestion.type === 'single') return answers[currentQuestion.field]?.length > 0;
     if (currentQuestion.type === 'contact') return answers.email?.includes('@') && answers.socialHandle?.length > 0;
@@ -755,25 +756,16 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                     <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
                     {currentQuestion.hint && <p className="text-charcoal/50 font-sans text-sm">{currentQuestion.hint}</p>}
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-accent-gold" />
-                    <input 
-                      type="tel" 
-                      inputMode="numeric"
-                      maxLength={10}
-                      value={answers.phone || ''} 
-                      onChange={(e) => { 
-                        const val = e.target.value.replace(/\D/g, '').slice(0, 10);
-                        setAnswers({ ...answers, phone: val }); 
-                        setFieldError(''); 
-                      }} 
-                      placeholder="10 digit phone number" 
-                      className={`flex-1 bg-white/50 border-b-2 px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError ? 'border-red-400' : 'border-sand'}`} 
-                      autoFocus
+                  <div className="phone-input-wrapper">
+                    <PhoneInput
+                      international
+                      defaultCountry="IN"
+                      value={answers.phone || ''}
+                      onChange={(val) => { setAnswers({ ...answers, phone: val || '' }); setFieldError(''); }}
+                      className={`w-full bg-white/50 border-b-2 px-2 py-3 text-lg text-deep-charcoal focus-within:border-accent-gold font-sans ${fieldError ? 'border-red-400' : 'border-sand'}`}
                     />
                   </div>
-                  <p className="text-charcoal/40 font-sans text-xs">{answers.phone?.length || 0}/10 digits</p>
-                  {fieldError && <p className="text-red-500 font-sans text-sm" data-testid="field-error">{fieldError}</p>}
+                  {fieldError && <p className="text-red-500 font-sans text-sm mt-2" data-testid="field-error">{fieldError}</p>}
                 </div>
               )}
 

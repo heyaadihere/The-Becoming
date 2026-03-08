@@ -213,3 +213,28 @@ iframe[src*="emergent"],
     position: absolute !important;
     left: -9999px !important;
 }
+
+
+/* Phone input styling */
+.phone-input-wrapper .PhoneInput {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.phone-input-wrapper .PhoneInputCountry {
+    padding: 8px;
+    background: rgba(255,255,255,0.3);
+    border: 1px solid var(--sand);
+    border-radius: 4px;
+}
+.phone-input-wrapper .PhoneInputInput {
+    flex: 1;
+    background: transparent;
+    outline: none;
+    font-size: 1.125rem;
+    color: var(--deep-charcoal);
+    padding: 4px 0;
+}
+.phone-input-wrapper .PhoneInputInput::placeholder {
+    color: rgba(61,61,61,0.3);
+}
