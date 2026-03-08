@@ -7,6 +7,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfUsePage from "./pages/TermsOfUsePage";
 import CookiePolicyPage from "./pages/CookiePolicyPage";
 import AdminDashboard from "./pages/AdminDashboard";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/terms-of-use" element={<TermsOfUsePage />} />
           <Route path="/cookie-policy" element={<CookiePolicyPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Routes>
       </BrowserRouter>
     </div>

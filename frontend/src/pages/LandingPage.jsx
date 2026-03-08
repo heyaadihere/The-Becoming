@@ -520,7 +520,7 @@ const AnimatedText = ({ text, className = "" }) => {
 };
 
 // Questionnaire Modal with images and animations
-const QuestionnaireModal = ({ isOpen, onClose }) => {
+export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
