@@ -28,7 +28,8 @@ db = client[os.environ['DB_NAME']]
 # Resend setup
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
-CC_EMAIL = 'updates@enterthebecoming.com'
+RESEND_TEMPLATE_ID = '4313defa-edad-4ba3-8592-b2b98fa91d64'
+CC_EMAIL = 'updates@enteryourbecoming.com'
 
 if RESEND_AVAILABLE and RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
@@ -39,71 +40,102 @@ async def send_confirmation_email(to_email, name, form_type="signup"):
         logger.warning("Resend not configured, skipping email")
         return
     
-    if form_type == "signup":
-        subject = "Welcome to The Becoming"
-        html = f"""
-        <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background-color: #FAF8F5;">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h1 style="color: #2D2926; font-size: 28px; margin: 0;">The Becoming</h1>
-            </div>
-            <div style="background: white; padding: 30px; border: 1px solid #E8DFD5;">
-                <h2 style="color: #2D2926; font-size: 22px;">Hello {name},</h2>
-                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
-                    Thank you for taking this step towards your Becoming.
-                </p>
-                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
-                    We've received your response and a Becoming bud will be reaching out to you soon to discuss the next steps of your journey.
-                </p>
-                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
-                    In the meantime, know that something beautiful is about to begin.
-                </p>
-                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #E8DFD5;">
-                    <p style="color: #C9A962; font-style: italic; font-size: 16px;">
-                        "Because becoming should feel less like pressure, and more like coming alive."
-                    </p>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 20px;">
-                <p style="color: #4A4543; font-size: 13px;">With warmth,<br><strong>The Becoming Team</strong></p>
-                <p style="color: #B8956A; font-size: 12px;">enter@thebecoming.in</p>
-            </div>
-        </div>
-        """
-    else:
-        subject = "We received your message - The Becoming"
-        html = f"""
-        <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background-color: #FAF8F5;">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h1 style="color: #2D2926; font-size: 28px; margin: 0;">The Becoming</h1>
-            </div>
-            <div style="background: white; padding: 30px; border: 1px solid #E8DFD5;">
-                <h2 style="color: #2D2926; font-size: 22px;">Hello {name},</h2>
-                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
-                    Thank you for reaching out to us. We've received your message and will get back to you shortly.
-                </p>
-                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
-                    We appreciate your interest in The Becoming.
-                </p>
-            </div>
-            <div style="text-align: center; margin-top: 20px;">
-                <p style="color: #4A4543; font-size: 13px;">With warmth,<br><strong>The Becoming Team</strong></p>
-                <p style="color: #B8956A; font-size: 12px;">enter@thebecoming.in</p>
-            </div>
-        </div>
-        """
-    
     try:
-        params = {
-            "from": SENDER_EMAIL,
-            "to": [to_email],
-            "subject": subject,
-            "html": html
-        }
-        # Only add CC when using a verified domain (not the default test sender)
-        if SENDER_EMAIL != 'onboarding@resend.dev':
-            params["cc"] = [CC_EMAIL]
+        if form_type == "signup":
+            # Use the Resend template for signup confirmations
+            params = {
+                "from": SENDER_EMAIL,
+                "to": [to_email],
+                "cc": [CC_EMAIL],
+                "reply_to": ["updates@enteryourbecoming.com"],
+                "subject": "You\u2019ve Entered The Becoming!",
+                "html": """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+  <head>
+    <meta content="width=device-width" name="viewport" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <div style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0" data-skip-in-text="true">
+      You're in! Next steps coming soon for Mountain Sunrise Chapter
+    </div>
+    <table border="0" width="100%" cellpadding="0" cellspacing="0" role="presentation" align="center">
+      <tbody>
+        <tr>
+          <td>
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+              style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;font-size:1.08em;min-height:100%;line-height:155%">
+              <tbody>
+                <tr>
+                  <td>
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                      style="align:left;width:100%;padding-left:0px;padding-right:0px;line-height:155%;max-width:600px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em">
+                              <span>Hey, You\u2019re in!</span>
+                            </p>
+                            <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em">
+                              <span>You\u2019ve just taken the first step toward The Becoming - Mountain Sunrise Chapter, a premium human experience &amp; experiential learning journey for 21 individuals, set in the lap of the Himalayas.</span>
+                            </p>
+                            <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em">
+                              <span>Our team is reviewing applications now. Next steps within 24 hours.</span>
+                            </p>
+                            <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em">
+                              <span>Something beautiful has already begun!</span>
+                            </p>
+                            <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em">
+                              <span>-Team The Becoming</span>
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>"""
+            }
+        else:
+            # Contact form - simple acknowledgment
+            params = {
+                "from": SENDER_EMAIL,
+                "to": [to_email],
+                "cc": [CC_EMAIL],
+                "reply_to": ["updates@enteryourbecoming.com"],
+                "subject": "We received your message - The Becoming",
+                "html": """<!DOCTYPE html>
+<html><body>
+<table border="0" width="100%" cellpadding="0" cellspacing="0" role="presentation" align="center">
+  <tbody><tr><td>
+    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+      style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;font-size:1.08em;min-height:100%;line-height:155%">
+      <tbody><tr><td>
+        <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+          style="max-width:600px;line-height:155%">
+          <tbody><tr><td>
+            <p style="margin:0;padding:0.5em 0;font-size:1em"><span>Hello """ + f"{name}" + """,</span></p>
+            <p style="margin:0;padding:0.5em 0;font-size:1em"><span>Thank you for reaching out to us. We've received your message and will get back to you shortly.</span></p>
+            <p style="margin:0;padding:0.5em 0;font-size:1em"><span>We appreciate your interest in The Becoming.</span></p>
+            <p style="margin:0;padding:0.5em 0;font-size:1em"><span>-Team The Becoming</span></p>
+          </td></tr></tbody>
+        </table>
+      </td></tr></tbody>
+    </table>
+  </td></tr></tbody>
+</table>
+</body></html>"""
+            }
+        
         email = await asyncio.to_thread(resend.Emails.send, params)
-        logger.info(f"Email sent to {to_email}, id: {email.get('id')}")
+        logger.info(f"Email sent to {to_email}, cc: {CC_EMAIL}, id: {email.get('id')}")
     except Exception as e:
         logger.error(f"Failed to send email to {to_email}: {str(e)}")
 
