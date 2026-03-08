@@ -28,10 +28,82 @@ db = client[os.environ['DB_NAME']]
 # Resend setup
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
-NOTIFICATION_EMAIL = os.environ.get('NOTIFICATION_EMAIL')
+CC_EMAIL = 'updates@enterthebecoming.com'
 
 if RESEND_AVAILABLE and RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
+
+async def send_confirmation_email(to_email, name, form_type="signup"):
+    """Send confirmation email to form submitter with CC to team"""
+    if not (RESEND_AVAILABLE and RESEND_API_KEY):
+        logger.warning("Resend not configured, skipping email")
+        return
+    
+    if form_type == "signup":
+        subject = "Welcome to The Becoming"
+        html = f"""
+        <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background-color: #FAF8F5;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="color: #2D2926; font-size: 28px; margin: 0;">The Becoming</h1>
+            </div>
+            <div style="background: white; padding: 30px; border: 1px solid #E8DFD5;">
+                <h2 style="color: #2D2926; font-size: 22px;">Hello {name},</h2>
+                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
+                    Thank you for taking this step towards your Becoming.
+                </p>
+                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
+                    We've received your response and a Becoming bud will be reaching out to you soon to discuss the next steps of your journey.
+                </p>
+                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
+                    In the meantime, know that something beautiful is about to begin.
+                </p>
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #E8DFD5;">
+                    <p style="color: #C9A962; font-style: italic; font-size: 16px;">
+                        "Because becoming should feel less like pressure, and more like coming alive."
+                    </p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="color: #4A4543; font-size: 13px;">With warmth,<br><strong>The Becoming Team</strong></p>
+                <p style="color: #B8956A; font-size: 12px;">enter@thebecoming.in</p>
+            </div>
+        </div>
+        """
+    else:
+        subject = "We received your message - The Becoming"
+        html = f"""
+        <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background-color: #FAF8F5;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="color: #2D2926; font-size: 28px; margin: 0;">The Becoming</h1>
+            </div>
+            <div style="background: white; padding: 30px; border: 1px solid #E8DFD5;">
+                <h2 style="color: #2D2926; font-size: 22px;">Hello {name},</h2>
+                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
+                    Thank you for reaching out to us. We've received your message and will get back to you shortly.
+                </p>
+                <p style="color: #4A4543; line-height: 1.8; font-size: 16px;">
+                    We appreciate your interest in The Becoming.
+                </p>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="color: #4A4543; font-size: 13px;">With warmth,<br><strong>The Becoming Team</strong></p>
+                <p style="color: #B8956A; font-size: 12px;">enter@thebecoming.in</p>
+            </div>
+        </div>
+        """
+    
+    try:
+        params = {
+            "from": SENDER_EMAIL,
+            "to": [to_email],
+            "cc": [CC_EMAIL],
+            "subject": subject,
+            "html": html
+        }
+        email = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Email sent to {to_email}, cc: {CC_EMAIL}, id: {email.get('id')}")
+    except Exception as e:
+        logger.error(f"Failed to send email to {to_email}: {str(e)}")
 
 # Create the main app without a prefix
 app = FastAPI()
@@ -142,6 +214,10 @@ async def create_signup(input: SignupSubmissionCreate):
     if input.phone:
         await db.partial_submissions.delete_many({"phone": input.phone})
     
+    # Send confirmation email (non-blocking)
+    if input.email:
+        asyncio.create_task(send_confirmation_email(input.email, input.name, "signup"))
+    
     # Return without _id
     return {
         "id": submission_id,
@@ -195,6 +271,10 @@ async def create_contact(input: ContactSubmissionCreate):
     }
     
     await db.contact_submissions.insert_one(contact)
+    
+    # Send confirmation email (non-blocking)
+    if input.email:
+        asyncio.create_task(send_confirmation_email(input.email, input.name, "contact"))
     
     return {
         "id": contact_id,
