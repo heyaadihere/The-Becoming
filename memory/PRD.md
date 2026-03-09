@@ -25,62 +25,62 @@ Hero > About (The Essence) > Experience > What It Is / What It Isn't > Journey (
 ├── backend/
 │   └── server.py        # FastAPI: /api/signup, /api/contact, /api/admin/signups, /api/admin/contacts
 ├── frontend/src/
-│   ├── App.js           # Routes: /, /contact, /admin, /refund-policy, /privacy-policy, /terms-of-use, /cookie-policy
+│   ├── App.js           # Routes: /, /contact, /admin, /signup, /refund-policy, /privacy-policy, /terms-of-use
 │   └── pages/
-│       ├── LandingPage.jsx
+│       ├── LandingPage.jsx    # All landing page sections + questionnaire logic
 │       ├── ContactPage.jsx
-│       ├── AdminDashboard.jsx
+│       ├── AdminPage.jsx
+│       ├── SignupPage.jsx
 │       ├── RefundPolicyPage.jsx
 │       ├── PrivacyPolicyPage.jsx
-│       ├── TermsOfUsePage.jsx
-│       └── CookiePolicyPage.jsx
+│       └── TermsOfUsePage.jsx
 └── memory/PRD.md
 ```
 
 ## Completed Features
-- [x] Hero carousel (4 images, synced content)
+- [x] Hero video carousel (6 videos, synced content)
 - [x] About section (updated definition from doc)
 - [x] Experience section with pyramid layout
-- [x] **What It Is / What It Isn't** section (7 "is" + 6 "isn't" items from doc)
+- [x] What It Is / What It Isn't section
 - [x] Journey section (Working Professionals, Creators, Artists, Homemakers + "Not For" disclaimer)
-- [x] **Founder Story** section ("How It Began" with full story text)
+- [x] Founder Story section
 - [x] Accommodation section (Mountains Sunrise, Monsoon Valley, Beach & Open Sky, Starry Night)
-- [x] FAQ section (8 questions with real answers from doc)
+- [x] FAQ section (8 questions with real answers)
 - [x] Questionnaire modal with HD images, validation error messages
 - [x] Form timing options: April 2026, July 2026, Oct 2026, Flexible
 - [x] Multi-select max increased to 8
 - [x] Success page with large logo, "You're on Your Way!", "A Becoming bud will call you soon!"
 - [x] Contact email: enter@thebecoming.in throughout site
-- [x] All em dashes removed
-- [x] "Not just another networking event" text
-- [x] **Admin Dashboard** at /admin (username: admin, password: TheBecoming@2026)
-- [x] **Policy Pages**: Refund, Privacy, Terms of Use, Cookie (linked in footer)
-- [x] Bigger hero logo, bigger success page logo
+- [x] Admin Dashboard at /admin (username: admin, password: TheBecoming@2026)
+- [x] Policy Pages: Refund, Privacy, Terms of Use (linked in footer)
 - [x] Full mobile responsiveness with hamburger menu
 - [x] All background animations (luxurious, subtle)
+- [x] International phone input with validation
+- [x] Partial form tracking: saves progress on each step, visible in admin 'Incomplete' tab
+- [x] Admin dashboard: 3 tabs (Completed, Incomplete with WhatsApp message, Contacts)
+- [x] XLS/PDF export from admin dashboard
+- [x] Email automation via Resend
+- [x] Site branding (title, meta tags, favicon)
+- [x] **ALL form questions mandatory** (multi-select, textarea, single-select, text, phone, contact)
+- [x] **Fixed creativeExpression blocker bug** - canProceed() now validates multi and textarea types
 
 ## Admin Credentials
 - URL: /admin
 - Username: admin
 - Password: TheBecoming@2026
 
-- [x] Questionnaire: Phone is first question, email/social is last
-- [x] Questionnaire: Investment question added (3 price ranges in ₹)
-- [x] Questionnaire: Creative interests is multi-select with Poetry & Storytelling
-- [x] Partial form tracking: saves progress on each step, visible in admin 'Incomplete' tab
-- [x] Admin dashboard: 3 tabs (Completed, Incomplete with WhatsApp message, Contacts)
-
 ## API Endpoints
 - POST /api/signup - Questionnaire submissions
 - POST /api/contact - Contact form
 - POST /api/partial-signup - Save partial form progress
+- POST /api/admin/login - Admin authentication
 - GET /api/admin/signups - All completed signups (admin)
 - GET /api/admin/contacts - All contacts (admin)
 - GET /api/admin/partial-signups - Incomplete form submissions (admin)
 
 ## Next Action Items
-1. P1: Email notifications via Resend (need API key)
-2. P2: Refactor LandingPage.jsx into smaller components
+1. P2: Refactor LandingPage.jsx into smaller components (HeroSection, AboutSection, Questionnaire, etc.)
+2. P2: Refactor server.py into routes, models, and services folders
 
 ## Future/Backlog
 - SEO optimization
