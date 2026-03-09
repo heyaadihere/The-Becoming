@@ -141,7 +141,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-sans text-xs text-charcoal/50 uppercase tracking-wider">Email</p>
-                      <p className="font-sans text-deep-charcoal">hello@thebecoming.in</p>
+                      <p className="font-sans text-deep-charcoal">enter@enteryourbecoming.com</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -150,7 +150,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-sans text-xs text-charcoal/50 uppercase tracking-wider">Phone</p>
-                      <p className="font-sans text-deep-charcoal">[Contact Number]</p>
+                      <p className="font-sans text-deep-charcoal">+91-9653220972</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">

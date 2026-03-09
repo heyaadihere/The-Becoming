@@ -52,7 +52,7 @@ export default function TermsOfUsePage() {
           </section>
 
           <p className="border-t border-sand pt-6 text-sm text-charcoal/60 italic">
-            Last updated: February 2026. For questions, contact enter@thebecoming.in.
+            Last updated: February 2026. For questions, contact enter@enteryourbecoming.com.
           </p>
         </div>
       </main>

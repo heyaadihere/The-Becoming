@@ -48,7 +48,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-serif text-xl text-deep-charcoal mb-3">5. Your Rights</h2>
-            <p>You have the right to access, correct, or request deletion of your personal data. To exercise these rights, contact us at enter@thebecoming.in.</p>
+            <p>You have the right to access, correct, or request deletion of your personal data. To exercise these rights, contact us at enter@enteryourbecoming.com.</p>
           </section>
 
           <section>
@@ -57,7 +57,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <p className="border-t border-sand pt-6 text-sm text-charcoal/60 italic">
-            Last updated: February 2026. For questions, contact enter@thebecoming.in.
+            Last updated: February 2026. For questions, contact enter@enteryourbecoming.com.
           </p>
         </div>
       </main>

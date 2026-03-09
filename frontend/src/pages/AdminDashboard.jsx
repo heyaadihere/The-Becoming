@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown, ChevronUp, LogOut, Users, MessageSquare, Eye, EyeOff, Download } from 'lucide-react';
+import { ChevronDown, ChevronUp, LogOut, Users, MessageSquare, Eye, EyeOff, Download, Send } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -65,6 +65,19 @@ export default function AdminDashboard() {
       console.error('Failed to fetch data', err);
     }
     setLoading(false);
+  };
+
+  const WA_MESSAGE = "Hey. You didn't come this far to stop halfway.\nYour BECOMING journey is waiting.\nFinish your form.. let's move. \ud83d\udd25";
+  
+  const openWhatsApp = (phone) => {
+    // Clean phone number - remove spaces, dashes, keep + prefix
+    let cleaned = phone.replace(/[\s-()]/g, '');
+    // Remove leading + for wa.me format
+    if (cleaned.startsWith('+')) cleaned = cleaned.substring(1);
+    // If no country code, assume India
+    if (cleaned.length === 10) cleaned = '91' + cleaned;
+    const url = `https://wa.me/${cleaned}?text=${encodeURIComponent(WA_MESSAGE)}`;
+    window.open(url, '_blank');
   };
 
   const parseQuestionnaire = (data) => {
@@ -357,10 +370,19 @@ export default function AdminDashboard() {
         {/* Partials Table */}
         {!loading && activeTab === 'partials' && (
           <div className="space-y-2" data-testid="partials-table">
-            <div className="bg-orange-50/50 border border-orange-200/50 p-4 mb-4">
+            <div className="bg-orange-50/50 border border-orange-200/50 p-4 mb-4 flex items-center justify-between">
               <p className="font-sans text-sm text-orange-700">
-                <strong>WhatsApp Follow-up Message:</strong> "Hey. You didn't come this far to stop halfway. Your BECOMING journey is waiting. Finish your form.. let's move."
+                <strong>Incomplete forms:</strong> Send a WhatsApp nudge to bring them back.
               </p>
+              {partials.length > 0 && (
+                <button
+                  onClick={() => partials.forEach(p => openWhatsApp(p.phone))}
+                  className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white font-sans text-sm rounded hover:bg-green-600 transition-colors shrink-0"
+                  data-testid="send-all-wa"
+                >
+                  <Send className="w-4 h-4" /> Send All ({partials.length})
+                </button>
+              )}
             </div>
             {partials.length === 0 ? (
               <p className="text-center font-sans text-charcoal/50 py-12">No incomplete forms yet.</p>
@@ -380,6 +402,13 @@ export default function AdminDashboard() {
                         <span className="font-sans text-xs px-2 py-0.5 bg-orange-100 text-orange-600 rounded">Stopped at: {p.last_step}</span>
                       </div>
                       <div className="flex items-center gap-3">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); openWhatsApp(p.phone); }}
+                          className="flex items-center gap-1 px-3 py-1 bg-green-500 text-white text-xs font-sans rounded hover:bg-green-600 transition-colors"
+                          data-testid={`wa-btn-${idx}`}
+                        >
+                          <Send className="w-3 h-3" /> WhatsApp
+                        </button>
                         <span className="font-sans text-xs text-charcoal/40">{p.updated_at ? new Date(p.updated_at).toLocaleDateString() : ''}</span>
                         {isExpanded ? <ChevronUp className="w-4 h-4 text-charcoal/40" /> : <ChevronDown className="w-4 h-4 text-charcoal/40" />}
                       </div>
@@ -394,9 +423,17 @@ export default function AdminDashboard() {
                             </div>
                           ))}
                         </div>
-                        <div className="mt-4 p-3 bg-green-50/50 border border-green-200/50">
-                          <p className="font-sans text-xs text-green-700 mb-1">Send on WhatsApp to {p.phone}:</p>
-                          <p className="font-sans text-sm text-green-800 italic">"Hey. You didn't come this far to stop halfway. Your BECOMING journey is waiting. Finish your form.. let's move."</p>
+                        <div className="mt-4 p-4 bg-green-50/50 border border-green-200/50 flex items-center justify-between">
+                          <div>
+                            <p className="font-sans text-xs text-green-700 mb-1">WhatsApp message preview:</p>
+                            <p className="font-sans text-sm text-green-800 italic">{WA_MESSAGE}</p>
+                          </div>
+                          <button
+                            onClick={() => openWhatsApp(p.phone)}
+                            className="flex items-center gap-2 px-5 py-2.5 bg-green-500 text-white font-sans text-sm rounded hover:bg-green-600 transition-colors shrink-0 ml-4"
+                          >
+                            <Send className="w-4 h-4" /> Send on WhatsApp
+                          </button>
                         </div>
                       </div>
                     )}
