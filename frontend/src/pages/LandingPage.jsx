@@ -529,8 +529,8 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const [fieldError, setFieldError] = useState('');
   const [answers, setAnswers] = useState({
     name: '', email: '', phone: '', altPhone: '', socialMedia: '', socialHandle: '',
-    whatBringsYou: '', currentPhase: '', seekingGrowth: '', readyFor: '', showUpAs: '',
-    timing: '', stayPreference: '', creativeExpression: '', finalThought: ''
+    whatBringsYou: '', currentPhase: '', seekingGrowth: [], readyFor: '', showUpAs: '',
+    timing: '', investment: '', creativeExpression: [], finalThought: ''
   });
 
   const stepImages = [
@@ -549,19 +549,19 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
       options: ['Seeking clarity and direction', 'Ready for personal growth', 'Looking for meaningful connections', 'Curious about self-discovery', 'Ready to learn and evolve', 'Following my intuition'] },
     { id: 'currentPhase', type: 'single', label: "Where are you in your journey right now?", field: 'currentPhase',
       options: ['Beginning a new chapter', 'Growing and expanding', 'Seeking deeper meaning', 'Ready for transformation', 'Open to possibilities', 'Trusting the process'] },
-    { id: 'seekingGrowth', type: 'multi', label: "What kind of growth are you seeking?", hint: "Select all that resonate with you.", field: 'seekingGrowth', max: 8,
+    { id: 'seekingGrowth', type: 'multi', label: "What kind of growth are you seeking?", hint: "Select all that resonate with you. (Required)", field: 'seekingGrowth', max: 8,
       options: ['Learning new perspectives', 'Emotional intelligence', 'Creative expression', 'Deeper self-awareness', 'Meaningful connections', 'Inner peace', 'Clarity of purpose', 'Personal transformation'] },
-    { id: 'readyFor', type: 'textarea', label: "What are you ready to embrace?", hint: "Share what feels true for you.", field: 'readyFor', placeholder: "I'm ready to..." },
+    { id: 'readyFor', type: 'textarea', label: "What are you ready to embrace?", hint: "Share what feels true for you. (Required)", field: 'readyFor', placeholder: "I'm ready to..." },
     { id: 'showUpAs', type: 'single', label: "How would you like to show up?", field: 'showUpAs',
       options: ['Open and curious', 'Ready to participate fully', 'Observing and absorbing', 'Eager to connect', 'Present and mindful'] },
     { id: 'timing', type: 'single', label: "When would you like to join us?", field: 'timing', 
       options: ['April 2026', 'July 2026', 'Oct 2026', 'Flexible'] },
     { id: 'investment', type: 'single', label: "When you invest in who you're meant to become, which range feels right?", field: 'investment',
       options: ['\u20B91,75,000 \u2013 \u20B92,25,000', '\u20B92,75,000 \u2013 \u20B93,00,000', '\u20B93,25,000 \u2013 \u20B93,95,000'] },
-    { id: 'creativeExpression', type: 'multi', label: "Do you have any creative interests?", hint: "Select all that resonate with you.", field: 'creativeExpression', max: 10,
+    { id: 'creativeExpression', type: 'multi', label: "Do you have any creative interests?", hint: "Select all that resonate with you. (Required)", field: 'creativeExpression', max: 10,
       options: ['Music', 'Art', 'Writing', 'Poetry', 'Storytelling', 'Dance', 'Photography', 'Theatre', 'Other'] },
     { id: 'contact', type: 'contact', label: "Let's stay connected", hint: "How can we reach you?" },
-    { id: 'finalThought', type: 'textarea', label: "Anything else you'd like to share?", hint: "We're listening.", field: 'finalThought', placeholder: "Share your thoughts..." }
+    { id: 'finalThought', type: 'textarea', label: "Anything else you'd like to share?", hint: "We're listening. (Required)", field: 'finalThought', placeholder: "Share your thoughts..." }
   ];
 
   const totalSteps = questions.length;
@@ -580,6 +580,8 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
         setFieldError('Please select an option to continue.');
       } else if (currentQuestion.type === 'multi') {
         setFieldError('Please select at least one option.');
+      } else if (currentQuestion.type === 'textarea') {
+        setFieldError('This field is required to continue.');
       } else if (currentQuestion.type === 'contact') {
         if (!answers.email?.includes('@')) setFieldError('Please enter a valid email address.');
         else if (!answers.socialHandle) setFieldError('Please provide at least one social media handle.');
@@ -609,17 +611,28 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const handleSelectSingle = (option) => setAnswers({ ...answers, [currentQuestion.field]: option });
   const handleSelectMulti = (option) => {
     const current = answers[currentQuestion.field] || [];
-    if (Array.isArray(current)) {
-      if (current.includes(option)) setAnswers({ ...answers, [currentQuestion.field]: current.filter(o => o !== option) });
-      else if (current.length < (currentQuestion.max || 10)) setAnswers({ ...answers, [currentQuestion.field]: [...current, option] });
-    } else {
-      setAnswers({ ...answers, [currentQuestion.field]: [option] });
+    const arr = Array.isArray(current) ? current : [];
+    if (arr.includes(option)) {
+      setAnswers({ ...answers, [currentQuestion.field]: arr.filter(o => o !== option) });
+    } else if (arr.length < (currentQuestion.max || 10)) {
+      setAnswers({ ...answers, [currentQuestion.field]: [...arr, option] });
     }
   };
 
   const handleSubmit = async () => {
-    if (!answers.email || !answers.phone || !answers.socialHandle) {
-      toast.error('Please provide email, phone, and at least one social media handle.');
+    // Validate all required fields before submission
+    const missingFields = [];
+    for (const q of questions) {
+      if (q.type === 'welcome') continue;
+      if (q.type === 'text' && q.required && !answers[q.field]?.trim()) missingFields.push(q.label);
+      if (q.type === 'phone' && (!answers.phone || !isValidPhoneNumber(answers.phone))) missingFields.push(q.label);
+      if (q.type === 'single' && (!answers[q.field] || answers[q.field].length === 0)) missingFields.push(q.label);
+      if (q.type === 'multi' && (!Array.isArray(answers[q.field]) || answers[q.field].length === 0)) missingFields.push(q.label);
+      if (q.type === 'textarea' && !answers[q.field]?.trim()) missingFields.push(q.label);
+      if (q.type === 'contact' && (!answers.email?.includes('@') || !answers.socialHandle?.length)) missingFields.push(q.label);
+    }
+    if (missingFields.length > 0) {
+      toast.error(`Please complete all questions before submitting. Missing: ${missingFields.slice(0, 3).join(', ')}${missingFields.length > 3 ? '...' : ''}`);
       return;
     }
     setIsSubmitting(true);
@@ -638,7 +651,9 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
     if (currentQuestion.type === 'welcome') return true;
     if (currentQuestion.type === 'phone') return answers.phone && isValidPhoneNumber(answers.phone);
     if (currentQuestion.type === 'text' && currentQuestion.required) return answers[currentQuestion.field]?.trim().length > 0;
-    if (currentQuestion.type === 'single') return answers[currentQuestion.field]?.length > 0;
+    if (currentQuestion.type === 'single') return !!answers[currentQuestion.field] && answers[currentQuestion.field].length > 0;
+    if (currentQuestion.type === 'multi') return Array.isArray(answers[currentQuestion.field]) && answers[currentQuestion.field].length > 0;
+    if (currentQuestion.type === 'textarea') return answers[currentQuestion.field]?.trim().length > 0;
     if (currentQuestion.type === 'contact') return answers.email?.includes('@') && answers.socialHandle?.length > 0;
     return true;
   };
@@ -797,10 +812,11 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                   </div>
                   <textarea 
                     value={answers[currentQuestion.field] || ''} 
-                    onChange={(e) => setAnswers({ ...answers, [currentQuestion.field]: e.target.value })} 
+                    onChange={(e) => { setAnswers({ ...answers, [currentQuestion.field]: e.target.value }); setFieldError(''); }} 
                     placeholder={currentQuestion.placeholder || ''} 
-                    className="w-full bg-white/50 border border-sand px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans min-h-[120px] resize-none" 
+                    className={`w-full bg-white/50 border px-4 py-4 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans min-h-[120px] resize-none ${fieldError && !answers[currentQuestion.field]?.trim() ? 'border-red-400' : 'border-sand'}`} 
                   />
+                  {fieldError && <p className="text-red-500 font-sans text-sm" data-testid="field-error">{fieldError}</p>}
                 </div>
               )}
 
