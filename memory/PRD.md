@@ -4,15 +4,15 @@
 Build a "luxe minimalist" website for "The Becoming" - a 7-day psychological and creative reset experience. The site should be vibrant yet professional with warm tones, extensive animations, and full mobile responsiveness.
 
 ## Core Requirements
-- 4-image hero carousel with synced content
+- Video hero carousel with synced content
 - Warm color palette (cream, gold) - no black backgrounds
 - Luxurious animations throughout
-- Multi-step questionnaire modal
+- Multi-step questionnaire modal (all questions mandatory)
 - Contact page
 - Fully mobile responsive
 
 ## Page Structure
-Hero > About (The Essence) > Experience > What It Is / What It Isn't > Journey (Who Is This For) > Accommodation > Founder Story > CTA > FAQ > Contact > Footer
+Hero > About (The Essence) > **What is The Becoming (Video)** > Experience > What It Is / What It Isn't > Journey (Who Is This For) > Accommodation > **Founder's Vision (Video)** > CTA > FAQ > Contact > Footer
 
 ## Color Palette
 - Cream: #FAF8F5, Soft Cream: #F5F0EB, Sand: #E8DFD5
@@ -23,11 +23,13 @@ Hero > About (The Essence) > Experience > What It Is / What It Isn't > Journey (
 ```
 /app/
 ├── backend/
-│   └── server.py        # FastAPI: /api/signup, /api/contact, /api/admin/signups, /api/admin/contacts
-├── frontend/src/
-│   ├── App.js           # Routes: /, /contact, /admin, /signup, /refund-policy, /privacy-policy, /terms-of-use
-│   └── pages/
-│       ├── LandingPage.jsx    # All landing page sections + questionnaire logic
+│   └── server.py
+├── frontend/
+│   ├── public/videos/
+│   │   ├── founder-vision.mp4    # Founder's Vision Instagram Reel
+│   │   └── what-is-becoming.mp4  # What is The Becoming Instagram Reel
+│   └── src/pages/
+│       ├── LandingPage.jsx
 │       ├── ContactPage.jsx
 │       ├── AdminPage.jsx
 │       ├── SignupPage.jsx
@@ -39,30 +41,23 @@ Hero > About (The Essence) > Experience > What It Is / What It Isn't > Journey (
 
 ## Completed Features
 - [x] Hero video carousel (6 videos, synced content)
-- [x] About section (updated definition from doc)
+- [x] About section
+- [x] **"What is The Becoming" video section** (Instagram Reel, centered vertical video)
 - [x] Experience section with pyramid layout
 - [x] What It Is / What It Isn't section
-- [x] Journey section (Working Professionals, Creators, Artists, Homemakers + "Not For" disclaimer)
-- [x] Founder Story section
-- [x] Accommodation section (Mountains Sunrise, Monsoon Valley, Beach & Open Sky, Starry Night)
-- [x] FAQ section (8 questions with real answers)
-- [x] Questionnaire modal with HD images, validation error messages
-- [x] Form timing options: April 2026, July 2026, Oct 2026, Flexible
-- [x] Multi-select max increased to 8
-- [x] Success page with large logo, "You're on Your Way!", "A Becoming bud will call you soon!"
-- [x] Contact email: enter@thebecoming.in throughout site
-- [x] Admin Dashboard at /admin (username: admin, password: TheBecoming@2026)
-- [x] Policy Pages: Refund, Privacy, Terms of Use (linked in footer)
-- [x] Full mobile responsiveness with hamburger menu
-- [x] All background animations (luxurious, subtle)
+- [x] Journey section
+- [x] **Founder's Vision section with video** (Instagram Reel + story text side-by-side)
+- [x] Accommodation section
+- [x] FAQ section
+- [x] Questionnaire modal — **all questions mandatory**
+- [x] **Fixed creativeExpression blocker bug**
+- [x] Admin Dashboard with 3 tabs, XLS/PDF export, WhatsApp reminders
 - [x] International phone input with validation
-- [x] Partial form tracking: saves progress on each step, visible in admin 'Incomplete' tab
-- [x] Admin dashboard: 3 tabs (Completed, Incomplete with WhatsApp message, Contacts)
-- [x] XLS/PDF export from admin dashboard
+- [x] Partial form tracking
 - [x] Email automation via Resend
+- [x] Policy Pages: Refund, Privacy, Terms of Use
+- [x] Full mobile responsiveness
 - [x] Site branding (title, meta tags, favicon)
-- [x] **ALL form questions mandatory** (multi-select, textarea, single-select, text, phone, contact)
-- [x] **Fixed creativeExpression blocker bug** - canProceed() now validates multi and textarea types
 
 ## Admin Credentials
 - URL: /admin
@@ -79,8 +74,8 @@ Hero > About (The Essence) > Experience > What It Is / What It Isn't > Journey (
 - GET /api/admin/partial-signups - Incomplete form submissions (admin)
 
 ## Next Action Items
-1. P2: Refactor LandingPage.jsx into smaller components (HeroSection, AboutSection, Questionnaire, etc.)
-2. P2: Refactor server.py into routes, models, and services folders
+1. P2: Refactor LandingPage.jsx into smaller components
+2. P2: Refactor server.py into routes/models/services
 
 ## Future/Backlog
 - SEO optimization

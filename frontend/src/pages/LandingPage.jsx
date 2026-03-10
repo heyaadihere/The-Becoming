@@ -1280,6 +1280,76 @@ const AboutSection = () => {
   );
 };
 
+// What is The Becoming - Video Section
+const WhatIsBecomingVideoSection = () => {
+  return (
+    <section className="py-16 md:py-24 lg:py-28 bg-soft-cream relative overflow-hidden" data-testid="what-is-becoming-video-section">
+      <ShimmerBackground variant="light" />
+      
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
+        <div className="text-center mb-10 md:mb-14">
+          <FadeUpText>
+            <motion.p 
+              className="font-sans text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] text-accent-gold uppercase mb-3 md:mb-4"
+              initial={{ opacity: 0, letterSpacing: "0.1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              Discover
+            </motion.p>
+          </FadeUpText>
+          <FadeUpText delay={0.1}>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal mb-4 md:mb-6">
+              What is <span className="text-accent-gold italic">The Becoming</span>?
+            </h2>
+          </FadeUpText>
+          <FadeUpText delay={0.2}>
+            <p className="font-sans text-sm md:text-base lg:text-lg text-charcoal/70 max-w-2xl mx-auto">
+              A curated human experience where being ends and becoming begins.
+            </p>
+          </FadeUpText>
+        </div>
+
+        <AnimatedDivider className="mb-10 md:mb-14 max-w-sm mx-auto" />
+
+        <ScaleIn>
+          <div className="flex justify-center">
+            <motion.div 
+              className="relative w-full max-w-[320px] sm:max-w-[360px]"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-accent-gold/15 border border-sand/60" style={{ aspectRatio: '9/16' }}>
+                <video
+                  src="/videos/what-is-becoming.mp4"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-full object-cover"
+                  data-testid="what-is-becoming-video"
+                />
+              </div>
+              {/* Decorative elements */}
+              <motion.div 
+                className="absolute -bottom-4 -right-4 w-24 h-24 border border-accent-gold/15 rounded-full -z-10"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div 
+                className="absolute -top-4 -left-4 w-16 h-16 border border-accent-gold/10 rounded-full -z-10"
+                animate={{ scale: [1, 1.15, 1] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+            </motion.div>
+          </div>
+        </ScaleIn>
+      </div>
+    </section>
+  );
+};
+
+
 // Experience Section - Pyramid Structure with Learning
 const ExperienceSection = () => {
   const experiences = [
@@ -1696,13 +1766,13 @@ const WhatItIsSection = () => {
   );
 };
 
-// Founder Story Section
+// Founder Story Section with Video
 const FounderStorySection = () => {
   return (
     <section className="py-16 md:py-24 lg:py-32 bg-soft-cream relative overflow-hidden">
       <GentleWavesBackground variant="light" />
       
-      <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-12 relative z-10">
         <div className="text-center mb-10 md:mb-14">
           <FadeUpText>
             <motion.p 
@@ -1717,47 +1787,67 @@ const FounderStorySection = () => {
           </FadeUpText>
           <FadeUpText delay={0.1}>
             <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-deep-charcoal">
-              How It Began
+              Founder's Vision
             </h2>
           </FadeUpText>
         </div>
 
         <AnimatedDivider className="mb-10 md:mb-14 max-w-sm mx-auto" />
 
-        <FadeUpText delay={0.2}>
-          <div className="space-y-6 font-sans text-charcoal/80 text-base md:text-lg leading-relaxed">
-            <p>
-              Somewhere along the way, life became very serious. Calendars filled up. Minds got noisy. Days started repeating themselves. And strangely... even the wins began to feel routine.
-            </p>
-            <p>
-              The Becoming emerged from a very simple observation: <span className="text-deep-charcoal font-medium">Most people are not lost. They're just disconnected</span> from the parts of themselves that once felt light, curious, and fully alive.
-            </p>
-            <p>
-              That version of you still exists. Just buried under deadlines, roles, expectations, and the endless "what's next?"
-            </p>
-            <p>
-              The Becoming is a space created for a different kind of experience. One where you slow down without guilt. Think without pressure. Feel without filters. Laugh without performance. Reflect without heaviness.
-            </p>
-            <motion.blockquote 
-              className="border-l-2 border-accent-gold pl-6 py-2 my-8 font-serif text-lg md:text-xl lg:text-2xl text-deep-charcoal italic"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
+          {/* Video */}
+          <ScaleIn>
+            <motion.div 
+              className="relative mx-auto w-full max-w-[340px] lg:max-w-none"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
             >
-              Because becoming isn't always about fixing something. Sometimes, it's about remembering something.
-            </motion.blockquote>
-            <p>
-              Your clarity. Your playfulness. Your joy. Your depth. Your aliveness.
-            </p>
-            <p>
-              At its heart, The Becoming carries one simple belief: <span className="text-deep-charcoal font-medium">You are not meant to stay one version of yourself forever.</span> Life moves. You evolve. Your inner world expands.
-            </p>
-            <p className="text-accent-gold font-medium text-lg md:text-xl">
-              Because becoming should feel less like pressure, and more like coming alive.
-            </p>
-          </div>
-        </FadeUpText>
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-accent-gold/10 border border-sand/60" style={{ aspectRatio: '9/16' }}>
+                <video
+                  src="/videos/founder-vision.mp4"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster=""
+                  className="w-full h-full object-cover"
+                  data-testid="founder-vision-video"
+                />
+              </div>
+              <div className="absolute -bottom-3 -right-3 w-20 h-20 border border-accent-gold/20 rounded-full -z-10" />
+              <div className="absolute -top-3 -left-3 w-14 h-14 border border-accent-gold/15 rounded-full -z-10" />
+            </motion.div>
+          </ScaleIn>
+
+          {/* Text Content */}
+          <FadeUpText delay={0.2}>
+            <div className="space-y-6 font-sans text-charcoal/80 text-base md:text-lg leading-relaxed">
+              <p>
+                Somewhere along the way, life became very serious. Calendars filled up. Minds got noisy. Days started repeating themselves. And strangely... even the wins began to feel routine.
+              </p>
+              <p>
+                The Becoming emerged from a very simple observation: <span className="text-deep-charcoal font-medium">Most people are not lost. They're just disconnected</span> from the parts of themselves that once felt light, curious, and fully alive.
+              </p>
+              <p>
+                That version of you still exists. Just buried under deadlines, roles, expectations, and the endless "what's next?"
+              </p>
+              <motion.blockquote 
+                className="border-l-2 border-accent-gold pl-6 py-2 my-8 font-serif text-lg md:text-xl lg:text-2xl text-deep-charcoal italic"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                Because becoming isn't always about fixing something. Sometimes, it's about remembering something.
+              </motion.blockquote>
+              <p>
+                At its heart, The Becoming carries one simple belief: <span className="text-deep-charcoal font-medium">You are not meant to stay one version of yourself forever.</span> Life moves. You evolve. Your inner world expands.
+              </p>
+              <p className="text-accent-gold font-medium text-lg md:text-xl">
+                Because becoming should feel less like pressure, and more like coming alive.
+              </p>
+            </div>
+          </FadeUpText>
+        </div>
       </div>
     </section>
   );
@@ -2154,6 +2244,7 @@ export default function LandingPage() {
       <Navigation onBeginJourney={() => setShowQuestionnaire(true)} />
       <HeroSection onBeginJourney={() => setShowQuestionnaire(true)} />
       <AboutSection />
+      <WhatIsBecomingVideoSection />
       <ExperienceSection />
       <WhatItIsSection />
       <JourneySection />
