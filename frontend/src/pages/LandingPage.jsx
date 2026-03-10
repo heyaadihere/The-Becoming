@@ -2146,7 +2146,7 @@ const ContactSection = () => {
                 <div className="w-10 h-10 bg-accent-gold/10 flex items-center justify-center rounded-full">
                   <Phone className="w-5 h-5 text-accent-gold" />
                 </div>
-                <span className="font-sans text-deep-charcoal">enter@enteryourbecoming.com</span>
+                <span className="font-sans text-deep-charcoal">+91-9653220972</span>
               </div>
             </div>
             <div className="mt-auto pt-8 border-t border-sand">
