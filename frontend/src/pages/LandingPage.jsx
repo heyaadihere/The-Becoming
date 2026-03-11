@@ -529,8 +529,8 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const [fieldError, setFieldError] = useState('');
   const [answers, setAnswers] = useState({
     name: '', email: '', phone: '', altPhone: '', socialMedia: '', socialHandle: '',
-    whatBringsYou: '', currentPhase: '', seekingGrowth: [], readyFor: '', showUpAs: '',
-    timing: '', investment: '', creativeExpression: [], finalThought: ''
+    whatBringsYou: '', currentPhase: '', readyFor: '', investment: '',
+    creativeExpression: [], finalThought: ''
   });
 
   const stepImages = [
@@ -549,13 +549,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
       options: ['Seeking clarity and direction', 'Ready for personal growth', 'Looking for meaningful connections', 'Curious about self-discovery', 'Ready to learn and evolve', 'Following my intuition'] },
     { id: 'currentPhase', type: 'single', label: "Where are you in your journey right now?", field: 'currentPhase',
       options: ['Beginning a new chapter', 'Growing and expanding', 'Seeking deeper meaning', 'Ready for transformation', 'Open to possibilities', 'Trusting the process'] },
-    { id: 'seekingGrowth', type: 'multi', label: "What kind of growth are you seeking?", hint: "Select all that resonate with you. (Required)", field: 'seekingGrowth', max: 8,
-      options: ['Learning new perspectives', 'Emotional intelligence', 'Creative expression', 'Deeper self-awareness', 'Meaningful connections', 'Inner peace', 'Clarity of purpose', 'Personal transformation'] },
     { id: 'readyFor', type: 'textarea', label: "What are you ready to embrace?", hint: "Share what feels true for you. (Required)", field: 'readyFor', placeholder: "I'm ready to..." },
-    { id: 'showUpAs', type: 'single', label: "How would you like to show up?", field: 'showUpAs',
-      options: ['Open and curious', 'Ready to participate fully', 'Observing and absorbing', 'Eager to connect', 'Present and mindful'] },
-    { id: 'timing', type: 'single', label: "When would you like to join us?", field: 'timing', 
-      options: ['April 2026', 'July 2026', 'Oct 2026', 'Flexible'] },
     { id: 'investment', type: 'single', label: "When you invest in who you're meant to become, which range feels right?", field: 'investment',
       options: ['\u20B91,75,000 \u2013 \u20B92,25,000', '\u20B92,75,000 \u2013 \u20B93,00,000', '\u20B93,25,000 \u2013 \u20B93,95,000'] },
     { id: 'creativeExpression', type: 'multi', label: "Do you have any creative interests?", hint: "Select all that resonate with you. (Required)", field: 'creativeExpression', max: 10,
