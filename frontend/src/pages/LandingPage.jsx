@@ -2140,7 +2140,7 @@ const ContactSection = () => {
                 <div className="w-10 h-10 bg-accent-gold/10 flex items-center justify-center rounded-full">
                   <Mail className="w-5 h-5 text-accent-gold" />
                 </div>
-                <span className="font-sans text-deep-charcoal">enter@enteryourbecoming.com</span>
+                <span className="font-sans text-deep-charcoal">hello@enteryourbecoming.com</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-accent-gold/10 flex items-center justify-center rounded-full">
