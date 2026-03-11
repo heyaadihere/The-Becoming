@@ -49,7 +49,7 @@ Hero > About (The Essence) > **What is The Becoming (Video)** > Experience > Wha
 - [x] **Founder's Vision section with video** (Instagram Reel + story text side-by-side)
 - [x] Accommodation section
 - [x] FAQ section
-- [x] Questionnaire modal — **all questions mandatory**
+- [x] Questionnaire modal — **all questions mandatory** (10 steps: welcome, name, phone, whatBringsYou, currentPhase, readyFor, investment, creativeExpression, contact, finalThought)
 - [x] **Fixed creativeExpression blocker bug**
 - [x] Admin Dashboard with 3 tabs, XLS/PDF export, WhatsApp reminders
 - [x] International phone input with validation
