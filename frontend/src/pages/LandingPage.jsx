@@ -529,7 +529,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const [fieldError, setFieldError] = useState('');
   const [answers, setAnswers] = useState({
     name: '', email: '', phone: '', altPhone: '', socialMedia: '', socialHandle: '',
-    whatBringsYou: '', currentPhase: '', readyFor: '', investment: '',
+    whatBringsYou: '', currentPhase: '', timing: '', investment: '',
     creativeExpression: [], finalThought: ''
   });
 
@@ -549,13 +549,14 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
       options: ['Seeking clarity and direction', 'Ready for personal growth', 'Looking for meaningful connections', 'Curious about self-discovery', 'Ready to learn and evolve', 'Following my intuition'] },
     { id: 'currentPhase', type: 'single', label: "Where are you in your journey right now?", field: 'currentPhase',
       options: ['Beginning a new chapter', 'Growing and expanding', 'Seeking deeper meaning', 'Ready for transformation', 'Open to possibilities', 'Trusting the process'] },
-    { id: 'readyFor', type: 'textarea', label: "What are you ready to embrace?", hint: "Share what feels true for you. (Required)", field: 'readyFor', placeholder: "I'm ready to..." },
+    { id: 'timing', type: 'single', label: "When would you like to join us?", field: 'timing',
+      options: ['April 2026', 'July 2026', 'Oct 2026', 'Flexible'] },
     { id: 'investment', type: 'single', label: "When you invest in who you're meant to become, which range feels right?", field: 'investment',
       options: ['\u20B91,75,000 \u2013 \u20B92,25,000', '\u20B92,75,000 \u2013 \u20B93,00,000', '\u20B93,25,000 \u2013 \u20B93,95,000'] },
     { id: 'creativeExpression', type: 'multi', label: "Do you have any creative interests?", hint: "Select all that resonate with you. (Required)", field: 'creativeExpression', max: 10,
       options: ['Music', 'Art', 'Writing', 'Poetry', 'Storytelling', 'Dance', 'Photography', 'Theatre', 'Other'] },
     { id: 'contact', type: 'contact', label: "Let's stay connected", hint: "How can we reach you?" },
-    { id: 'finalThought', type: 'textarea', label: "Anything else you'd like to share?", hint: "We're listening. (Required)", field: 'finalThought', placeholder: "Share your thoughts..." }
+    { id: 'finalThought', type: 'textarea', label: "Anything else you'd like to share?", hint: "We're listening. (Optional)", field: 'finalThought', placeholder: "Share your thoughts...", optional: true }
   ];
 
   const totalSteps = questions.length;
@@ -617,7 +618,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
     // Validate all required fields before submission
     const missingFields = [];
     for (const q of questions) {
-      if (q.type === 'welcome') continue;
+      if (q.type === 'welcome' || q.optional) continue;
       if (q.type === 'text' && q.required && !answers[q.field]?.trim()) missingFields.push(q.label);
       if (q.type === 'phone' && (!answers.phone || !isValidPhoneNumber(answers.phone))) missingFields.push(q.label);
       if (q.type === 'single' && (!answers[q.field] || answers[q.field].length === 0)) missingFields.push(q.label);
@@ -643,6 +644,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
 
   const canProceed = () => {
     if (currentQuestion.type === 'welcome') return true;
+    if (currentQuestion.optional) return true;
     if (currentQuestion.type === 'phone') return answers.phone && isValidPhoneNumber(answers.phone);
     if (currentQuestion.type === 'text' && currentQuestion.required) return answers[currentQuestion.field]?.trim().length > 0;
     if (currentQuestion.type === 'single') return !!answers[currentQuestion.field] && answers[currentQuestion.field].length > 0;
