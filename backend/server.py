@@ -19,6 +19,12 @@ try:
 except ImportError:
     RESEND_AVAILABLE = False
 
+try:
+    from twilio.rest import Client as TwilioClient
+    TWILIO_AVAILABLE = True
+except ImportError:
+    TWILIO_AVAILABLE = False
+
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
@@ -32,6 +38,14 @@ RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 RESEND_TEMPLATE_ID = '4313defa-edad-4ba3-8592-b2b98fa91d64'
 CC_EMAIL = 'updates@enteryourbecoming.com'
+
+# Twilio setup
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
+TWILIO_VERIFY_SERVICE = os.environ.get('TWILIO_VERIFY_SERVICE')
+twilio_client = None
+if TWILIO_AVAILABLE and TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN:
+    twilio_client = TwilioClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 if RESEND_AVAILABLE and RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
@@ -202,10 +216,41 @@ class ContactSubmissionCreate(BaseModel):
     phone: str
     message: str
 
+class OTPSendRequest(BaseModel):
+    phone_number: str
+
+class OTPVerifyRequest(BaseModel):
+    phone_number: str
+    code: str
+
 # Routes
 @api_router.get("/")
 async def root():
     return {"message": "The Becoming API"}
+
+@api_router.post("/send-otp")
+async def send_otp(request: OTPSendRequest):
+    if not twilio_client or not TWILIO_VERIFY_SERVICE:
+        raise HTTPException(status_code=500, detail="SMS service not configured")
+    try:
+        verification = twilio_client.verify.v2.services(TWILIO_VERIFY_SERVICE) \
+            .verifications.create(to=request.phone_number, channel="sms")
+        return {"status": verification.status}
+    except Exception as e:
+        logger.error(f"Failed to send OTP to {request.phone_number}: {str(e)}")
+        raise HTTPException(status_code=400, detail="Failed to send OTP. Please check the phone number and try again.")
+
+@api_router.post("/verify-otp")
+async def verify_otp(request: OTPVerifyRequest):
+    if not twilio_client or not TWILIO_VERIFY_SERVICE:
+        raise HTTPException(status_code=500, detail="SMS service not configured")
+    try:
+        check = twilio_client.verify.v2.services(TWILIO_VERIFY_SERVICE) \
+            .verification_checks.create(to=request.phone_number, code=request.code)
+        return {"valid": check.status == "approved"}
+    except Exception as e:
+        logger.error(f"Failed to verify OTP for {request.phone_number}: {str(e)}")
+        raise HTTPException(status_code=400, detail="Verification failed. Please try again.")
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
