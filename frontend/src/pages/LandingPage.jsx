@@ -547,8 +547,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
 
   const questions = [
     { id: 'welcome', type: 'welcome', title: "Welcome to The Becoming", subtitle: "A space for growth, discovery, and transformation" },
-    { id: 'name', type: 'text', label: "What should we call you?", hint: "Your first name is perfect.", field: 'name', required: true },
-    { id: 'phone', type: 'phone', label: "What's the best number to reach you?", hint: "We'll use this to stay in touch.", field: 'phone', required: true },
+    { id: 'namePhone', type: 'name-phone', label: "Let's get to know you", hint: "Your name and phone number to stay in touch." },
     { id: 'whatBringsYou', type: 'single', label: "What brings you here today?", field: 'whatBringsYou',
       options: ['Seeking clarity and direction', 'Ready for personal growth', 'Looking for meaningful connections', 'Curious about self-discovery', 'Ready to learn and evolve', 'Following my intuition'] },
     { id: 'currentPhase', type: 'single', label: "Where are you in your journey right now?", field: 'currentPhase',
@@ -608,9 +607,10 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
     if (!canProceed()) {
       if (currentQuestion.type === 'text' && currentQuestion.required) {
         setFieldError('This field is required to continue.');
-      } else if (currentQuestion.type === 'phone') {
-        if (!answers.phone) setFieldError('Please enter your phone number.');
-        else if (!isValidPhoneNumber(answers.phone)) setFieldError('Please enter a valid phone number for the selected country.');
+      } else if (currentQuestion.type === 'name-phone') {
+        if (!answers.name?.trim()) setFieldError('Please enter your name.');
+        else if (!answers.phone) setFieldError('Please enter your phone number.');
+        else if (!isValidPhoneNumber(answers.phone)) setFieldError('Please enter a valid phone number.');
         else if (!otpVerified) setFieldError('Please verify your phone number with OTP.');
       } else if (currentQuestion.type === 'single') {
         setFieldError('Please select an option to continue.');
@@ -660,12 +660,15 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
     const missingFields = [];
     for (const q of questions) {
       if (q.type === 'welcome' || q.optional) continue;
+      if (q.type === 'name-phone') {
+        if (!answers.name?.trim()) missingFields.push('Name');
+        if (!answers.phone || !isValidPhoneNumber(answers.phone)) missingFields.push('Phone');
+      }
       if (q.type === 'text' && q.required && !answers[q.field]?.trim()) missingFields.push(q.label);
-      if (q.type === 'phone' && (!answers.phone || !isValidPhoneNumber(answers.phone))) missingFields.push(q.label);
       if (q.type === 'single' && (!answers[q.field] || answers[q.field].length === 0)) missingFields.push(q.label);
       if (q.type === 'multi' && (!Array.isArray(answers[q.field]) || answers[q.field].length === 0)) missingFields.push(q.label);
-      if (q.type === 'textarea' && !answers[q.field]?.trim()) missingFields.push(q.label);
-      if (q.type === 'contact' && (!answers.email?.includes('@') || !answers.socialHandle?.length)) missingFields.push(q.label);
+      if (q.type === 'textarea' && !q.optional && !answers[q.field]?.trim()) missingFields.push(q.label);
+      if (q.type === 'contact' && !answers.email?.includes('@')) missingFields.push(q.label);
     }
     if (missingFields.length > 0) {
       toast.error(`Please complete all questions before submitting. Missing: ${missingFields.slice(0, 3).join(', ')}${missingFields.length > 3 ? '...' : ''}`);
@@ -686,12 +689,12 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const canProceed = () => {
     if (currentQuestion.type === 'welcome') return true;
     if (currentQuestion.optional) return true;
-    if (currentQuestion.type === 'phone') return answers.phone && isValidPhoneNumber(answers.phone) && otpVerified;
+    if (currentQuestion.type === 'name-phone') return answers.name?.trim().length > 0 && answers.phone && isValidPhoneNumber(answers.phone) && otpVerified;
     if (currentQuestion.type === 'text' && currentQuestion.required) return answers[currentQuestion.field]?.trim().length > 0;
     if (currentQuestion.type === 'single') return !!answers[currentQuestion.field] && answers[currentQuestion.field].length > 0;
     if (currentQuestion.type === 'multi') return Array.isArray(answers[currentQuestion.field]) && answers[currentQuestion.field].length > 0;
     if (currentQuestion.type === 'textarea') return answers[currentQuestion.field]?.trim().length > 0;
-    if (currentQuestion.type === 'contact') return answers.email?.includes('@') && answers.socialHandle?.length > 0;
+    if (currentQuestion.type === 'contact') return answers.email?.includes('@');
     return true;
   };
 
@@ -703,22 +706,19 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         className="fixed inset-0 z-50 flex"
       >
-        {/* Left side - Image with animation */}
+        {/* Left side - Clean gradient */}
         <motion.div 
           className="hidden lg:block w-1/2 relative overflow-hidden"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.img 
-            key={step}
-            src={currentImage}
-            alt="Journey"
-            className="w-full h-full object-cover"
-            initial={{ scale: 1.1, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          />
+          <div className="w-full h-full bg-gradient-to-br from-sand/40 via-soft-cream to-cream flex items-center justify-center">
+            <div className="text-center px-12">
+              <Logo className="h-28 mx-auto mb-6 opacity-40" variant="dark" />
+              <p className="font-serif text-2xl text-deep-charcoal/30 italic">Your journey begins here</p>
+            </div>
+          </div>
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-cream/20" />
         </motion.div>
 
@@ -802,29 +802,49 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                 </div>
               )}
 
-              {currentQuestion.type === 'phone' && (
-                <div className="space-y-6">
+              {currentQuestion.type === 'name-phone' && (
+                <div className="space-y-5">
                   <div>
                     <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
                     {currentQuestion.hint && <p className="text-charcoal/50 font-sans text-sm">{currentQuestion.hint}</p>}
                   </div>
-                  <div className="phone-input-wrapper">
-                    <PhoneInput
-                      international
-                      defaultCountry="IN"
-                      value={answers.phone || ''}
-                      onChange={(val) => { 
-                        setAnswers({ ...answers, phone: val || '' }); 
-                        setFieldError(''); 
-                        if (otpVerified || otpSent) { setOtpVerified(false); setOtpSent(false); setOtpCode(''); }
-                      }}
-                      className={`w-full bg-white/50 border-b-2 px-2 py-3 text-lg text-deep-charcoal focus-within:border-accent-gold font-sans ${fieldError ? 'border-red-400' : 'border-sand'}`}
-                      disabled={otpVerified}
+                  
+                  {/* Name input */}
+                  <div>
+                    <label className="text-charcoal/60 font-sans text-xs tracking-wide uppercase mb-1 block">Your Name *</label>
+                    <input 
+                      type="text" 
+                      value={answers.name || ''} 
+                      onChange={(e) => { setAnswers({ ...answers, name: e.target.value }); setFieldError(''); }} 
+                      placeholder="First name" 
+                      className={`w-full bg-white/50 border-b-2 px-4 py-3 text-lg text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && !answers.name?.trim() ? 'border-red-400' : 'border-sand'}`} 
+                      autoFocus
+                      data-testid="name-input"
                     />
                   </div>
 
+                  {/* Phone input */}
+                  <div>
+                    <label className="text-charcoal/60 font-sans text-xs tracking-wide uppercase mb-1 block">Phone Number *</label>
+                    <div className="phone-input-wrapper">
+                      <PhoneInput
+                        international
+                        defaultCountry="IN"
+                        value={answers.phone || ''}
+                        onChange={(val) => { 
+                          setAnswers({ ...answers, phone: val || '' }); 
+                          setFieldError(''); 
+                          if (otpVerified || otpSent) { setOtpVerified(false); setOtpSent(false); setOtpCode(''); }
+                        }}
+                        className={`w-full bg-white/50 border-b-2 px-2 py-3 text-lg text-deep-charcoal focus-within:border-accent-gold font-sans ${fieldError && answers.name?.trim() ? 'border-red-400' : 'border-sand'}`}
+                        disabled={otpVerified}
+                        data-testid="phone-input"
+                      />
+                    </div>
+                  </div>
+
                   {/* OTP Flow */}
-                  {!otpVerified && !otpSent && answers.phone && isValidPhoneNumber(answers.phone) && (
+                  {!otpVerified && !otpSent && answers.phone && isValidPhoneNumber(answers.phone) && answers.name?.trim() && (
                     <motion.button
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -833,7 +853,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                       className="w-full py-3 bg-accent-gold/10 border border-accent-gold text-accent-gold font-sans text-sm tracking-wide hover:bg-accent-gold hover:text-white transition-all duration-300 disabled:opacity-50"
                       data-testid="send-otp-btn"
                     >
-                      {otpLoading ? 'Sending OTP...' : 'Send OTP to verify'}
+                      {otpLoading ? 'Sending OTP...' : 'Send OTP to verify phone'}
                     </motion.button>
                   )}
 
@@ -841,22 +861,20 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                     <motion.div 
                       initial={{ opacity: 0, y: 10 }} 
                       animate={{ opacity: 1, y: 0 }}
-                      className="space-y-4"
+                      className="space-y-3"
                     >
                       <p className="text-charcoal/60 font-sans text-sm">Enter the 6-digit code sent to your phone</p>
-                      <div className="flex gap-3">
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          maxLength={6}
-                          value={otpCode}
-                          onChange={(e) => { setOtpCode(e.target.value.replace(/\D/g, '')); setFieldError(''); }}
-                          placeholder="000000"
-                          className="flex-1 bg-white/50 border-b-2 border-sand px-4 py-3 text-xl text-center text-deep-charcoal tracking-[0.5em] font-sans focus:border-accent-gold focus:outline-none"
-                          autoFocus
-                          data-testid="otp-input"
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={6}
+                        value={otpCode}
+                        onChange={(e) => { setOtpCode(e.target.value.replace(/\D/g, '')); setFieldError(''); }}
+                        placeholder="000000"
+                        className="w-full bg-white/50 border-b-2 border-sand px-4 py-3 text-xl text-center text-deep-charcoal tracking-[0.5em] font-sans focus:border-accent-gold focus:outline-none"
+                        autoFocus
+                        data-testid="otp-input"
+                      />
                       <div className="flex gap-3">
                         <motion.button
                           onClick={handleVerifyOtp}
@@ -984,7 +1002,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                 <div className="space-y-6">
                   <div>
                     <h2 className="font-serif text-2xl md:text-3xl mb-2 text-deep-charcoal">{currentQuestion.label}</h2>
-                    <p className="text-charcoal/50 font-sans text-sm">Email and one social media handle are required.</p>
+                    <p className="text-charcoal/50 font-sans text-sm">Email is required. Social media is optional.</p>
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
@@ -996,7 +1014,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                       <input type="tel" value={answers.altPhone || ''} onChange={(e) => setAnswers({ ...answers, altPhone: e.target.value })} placeholder="Alternate phone (optional)" className="flex-1 bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans" />
                     </div>
                     <div className="pt-2">
-                      <p className="text-charcoal/60 font-sans text-sm mb-3">Social Media *</p>
+                      <p className="text-charcoal/60 font-sans text-sm mb-3">Social Media (optional)</p>
                       <div className="flex gap-2 mb-3">
                         {[{ name: 'Instagram', icon: Instagram }, { name: 'LinkedIn', icon: Linkedin }].map(({ name, icon: Icon }) => (
                           <button
@@ -1008,14 +1026,15 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                           </button>
                         ))}
                       </div>
-                      <input 
-                        type="text" 
-                        value={answers.socialHandle || ''} 
-                        onChange={(e) => { setAnswers({ ...answers, socialHandle: e.target.value }); setFieldError(''); }} 
-                        placeholder={answers.socialMedia ? `Your ${answers.socialMedia} handle *` : "Select a platform first"} 
-                        className={`w-full bg-white/50 border-b-2 px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans ${fieldError && !answers.socialHandle ? 'border-red-400' : 'border-sand'}`}
-                        disabled={!answers.socialMedia}
-                      />
+                      {answers.socialMedia && (
+                        <input 
+                          type="text" 
+                          value={answers.socialHandle || ''} 
+                          onChange={(e) => { setAnswers({ ...answers, socialHandle: e.target.value }); setFieldError(''); }} 
+                          placeholder={`Your ${answers.socialMedia} handle (optional)`} 
+                          className="w-full bg-white/50 border-b-2 border-sand px-2 py-3 text-deep-charcoal placeholder-charcoal/30 focus:border-accent-gold focus:outline-none font-sans"
+                        />
+                      )}
                     </div>
                     {fieldError && <p className="text-red-500 font-sans text-sm" data-testid="field-error">{fieldError}</p>}
                   </div>
@@ -1184,7 +1203,7 @@ const HeroSection = ({ onBeginJourney }) => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 8000);
+    }, 12000);
     return () => clearInterval(timer);
   }, []);
 
@@ -1209,6 +1228,7 @@ const HeroSection = ({ onBeginJourney }) => {
             muted 
             loop 
             playsInline
+            preload="none"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-cream/30 via-transparent to-cream/40" />
