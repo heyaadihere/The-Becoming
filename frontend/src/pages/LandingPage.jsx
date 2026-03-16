@@ -527,10 +527,6 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [fieldError, setFieldError] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpCode, setOtpCode] = useState('');
-  const [otpVerified, setOtpVerified] = useState(false);
-  const [otpLoading, setOtpLoading] = useState(false);
   const [answers, setAnswers] = useState({
     name: '', email: '', phone: '', altPhone: '', socialMedia: '', socialHandle: '',
     whatBringsYou: '', currentPhase: '', timing: '', investment: '',
@@ -567,42 +563,6 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const currentQuestion = questions[step];
   const currentImage = stepImages[step % stepImages.length];
 
-  const handleSendOtp = async () => {
-    if (!answers.phone || !isValidPhoneNumber(answers.phone)) {
-      setFieldError('Please enter a valid phone number first.');
-      return;
-    }
-    setOtpLoading(true);
-    setFieldError('');
-    try {
-      await axios.post(`${API}/send-otp`, { phone_number: answers.phone });
-      setOtpSent(true);
-      setOtpCode('');
-    } catch (e) {
-      setFieldError('Failed to send OTP. Please check the number and try again.');
-    } finally { setOtpLoading(false); }
-  };
-
-  const handleVerifyOtp = async () => {
-    if (!otpCode || otpCode.length < 4) {
-      setFieldError('Please enter the OTP code.');
-      return;
-    }
-    setOtpLoading(true);
-    setFieldError('');
-    try {
-      const res = await axios.post(`${API}/verify-otp`, { phone_number: answers.phone, code: otpCode });
-      if (res.data.valid) {
-        setOtpVerified(true);
-        setFieldError('');
-      } else {
-        setFieldError('Invalid OTP. Please try again.');
-      }
-    } catch (e) {
-      setFieldError('Verification failed. Please try again.');
-    } finally { setOtpLoading(false); }
-  };
-
   const handleNext = () => {
     if (!canProceed()) {
       if (currentQuestion.type === 'text' && currentQuestion.required) {
@@ -611,7 +571,6 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
         if (!answers.name?.trim()) setFieldError('Please enter your name.');
         else if (!answers.phone) setFieldError('Please enter your phone number.');
         else if (!isValidPhoneNumber(answers.phone)) setFieldError('Please enter a valid phone number.');
-        else if (!otpVerified) setFieldError('Please verify your phone number with OTP.');
       } else if (currentQuestion.type === 'single') {
         setFieldError('Please select an option to continue.');
       } else if (currentQuestion.type === 'multi') {
@@ -689,7 +648,7 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
   const canProceed = () => {
     if (currentQuestion.type === 'welcome') return true;
     if (currentQuestion.optional) return true;
-    if (currentQuestion.type === 'name-phone') return answers.name?.trim().length > 0 && answers.phone && isValidPhoneNumber(answers.phone) && otpVerified;
+    if (currentQuestion.type === 'name-phone') return answers.name?.trim().length > 0 && answers.phone && isValidPhoneNumber(answers.phone);
     if (currentQuestion.type === 'text' && currentQuestion.required) return answers[currentQuestion.field]?.trim().length > 0;
     if (currentQuestion.type === 'single') return !!answers[currentQuestion.field] && answers[currentQuestion.field].length > 0;
     if (currentQuestion.type === 'multi') return Array.isArray(answers[currentQuestion.field]) && answers[currentQuestion.field].length > 0;
@@ -831,84 +790,12 @@ export const QuestionnaireModal = ({ isOpen, onClose }) => {
                         international
                         defaultCountry="IN"
                         value={answers.phone || ''}
-                        onChange={(val) => { 
-                          setAnswers({ ...answers, phone: val || '' }); 
-                          setFieldError(''); 
-                          if (otpVerified || otpSent) { setOtpVerified(false); setOtpSent(false); setOtpCode(''); }
-                        }}
+                        onChange={(val) => { setAnswers({ ...answers, phone: val || '' }); setFieldError(''); }}
                         className={`w-full bg-white/50 border-b-2 px-2 py-3 text-lg text-deep-charcoal focus-within:border-accent-gold font-sans ${fieldError && answers.name?.trim() ? 'border-red-400' : 'border-sand'}`}
-                        disabled={otpVerified}
                         data-testid="phone-input"
                       />
                     </div>
                   </div>
-
-                  {/* OTP Flow */}
-                  {!otpVerified && !otpSent && answers.phone && isValidPhoneNumber(answers.phone) && answers.name?.trim() && (
-                    <motion.button
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      onClick={handleSendOtp}
-                      disabled={otpLoading}
-                      className="w-full py-3 bg-accent-gold/10 border border-accent-gold text-accent-gold font-sans text-sm tracking-wide hover:bg-accent-gold hover:text-white transition-all duration-300 disabled:opacity-50"
-                      data-testid="send-otp-btn"
-                    >
-                      {otpLoading ? 'Sending OTP...' : 'Send OTP to verify phone'}
-                    </motion.button>
-                  )}
-
-                  {otpSent && !otpVerified && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }} 
-                      animate={{ opacity: 1, y: 0 }}
-                      className="space-y-3"
-                    >
-                      <p className="text-charcoal/60 font-sans text-sm">Enter the 6-digit code sent to your phone</p>
-                      <input
-                        type="text"
-                        inputMode="numeric"
-                        maxLength={6}
-                        value={otpCode}
-                        onChange={(e) => { setOtpCode(e.target.value.replace(/\D/g, '')); setFieldError(''); }}
-                        placeholder="000000"
-                        className="w-full bg-white/50 border-b-2 border-sand px-4 py-3 text-xl text-center text-deep-charcoal tracking-[0.5em] font-sans focus:border-accent-gold focus:outline-none"
-                        autoFocus
-                        data-testid="otp-input"
-                      />
-                      <div className="flex gap-3">
-                        <motion.button
-                          onClick={handleVerifyOtp}
-                          disabled={otpLoading || otpCode.length < 4}
-                          className="flex-1 py-3 bg-accent-gold text-white font-sans text-sm tracking-wide hover:bg-accent-bronze transition-all duration-300 disabled:opacity-50"
-                          data-testid="verify-otp-btn"
-                        >
-                          {otpLoading ? 'Verifying...' : 'Verify'}
-                        </motion.button>
-                        <motion.button
-                          onClick={handleSendOtp}
-                          disabled={otpLoading}
-                          className="px-4 py-3 border border-sand text-charcoal/60 font-sans text-sm hover:border-accent-gold hover:text-accent-gold transition-all duration-300 disabled:opacity-50"
-                          data-testid="resend-otp-btn"
-                        >
-                          Resend
-                        </motion.button>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {otpVerified && (
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.95 }} 
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="flex items-center gap-2 py-3 px-4 bg-green-50 border border-green-200 rounded"
-                      data-testid="otp-verified-badge"
-                    >
-                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span className="font-sans text-sm text-green-700">Phone number verified</span>
-                    </motion.div>
-                  )}
 
                   {fieldError && <p className="text-red-500 font-sans text-sm mt-2" data-testid="field-error">{fieldError}</p>}
                 </div>
