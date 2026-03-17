@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
+import requests as http_requests
 
 try:
     import resend
@@ -46,6 +47,9 @@ TWILIO_VERIFY_SERVICE = os.environ.get('TWILIO_VERIFY_SERVICE')
 twilio_client = None
 if TWILIO_AVAILABLE and TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN:
     twilio_client = TwilioClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+# MSG91 setup
+MSG91_AUTH_KEY = os.environ.get('MSG91_AUTH_KEY')
 
 if RESEND_AVAILABLE and RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
@@ -230,24 +234,38 @@ async def root():
 
 @api_router.post("/send-otp")
 async def send_otp(request: OTPSendRequest):
-    if not twilio_client or not TWILIO_VERIFY_SERVICE:
+    if not MSG91_AUTH_KEY:
         raise HTTPException(status_code=500, detail="SMS service not configured")
     try:
-        verification = twilio_client.verify.v2.services(TWILIO_VERIFY_SERVICE) \
-            .verifications.create(to=request.phone_number, channel="sms")
-        return {"status": verification.status}
+        # Strip + prefix, MSG91 expects plain number with country code
+        mobile = request.phone_number.replace("+", "").strip()
+        url = "https://control.msg91.com/api/v5/otp"
+        params = {"mobile": mobile, "otp_length": 6}
+        headers = {"authkey": MSG91_AUTH_KEY}
+        resp = await asyncio.to_thread(http_requests.post, url, json=params, headers=headers)
+        data = resp.json()
+        logger.info(f"MSG91 send OTP response for {mobile}: {data}")
+        if data.get("type") == "success":
+            return {"status": "pending"}
+        raise HTTPException(status_code=400, detail=data.get("message", "Failed to send OTP"))
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Failed to send OTP to {request.phone_number}: {str(e)}")
         raise HTTPException(status_code=400, detail="Failed to send OTP. Please check the phone number and try again.")
 
 @api_router.post("/verify-otp")
 async def verify_otp(request: OTPVerifyRequest):
-    if not twilio_client or not TWILIO_VERIFY_SERVICE:
+    if not MSG91_AUTH_KEY:
         raise HTTPException(status_code=500, detail="SMS service not configured")
     try:
-        check = twilio_client.verify.v2.services(TWILIO_VERIFY_SERVICE) \
-            .verification_checks.create(to=request.phone_number, code=request.code)
-        return {"valid": check.status == "approved"}
+        mobile = request.phone_number.replace("+", "").strip()
+        url = f"https://control.msg91.com/api/v5/otp/verify?mobile={mobile}&otp={request.code}"
+        headers = {"authkey": MSG91_AUTH_KEY}
+        resp = await asyncio.to_thread(http_requests.get, url, headers=headers)
+        data = resp.json()
+        logger.info(f"MSG91 verify OTP response for {mobile}: {data}")
+        return {"valid": data.get("type") == "success"}
     except Exception as e:
         logger.error(f"Failed to verify OTP for {request.phone_number}: {str(e)}")
         raise HTTPException(status_code=400, detail="Verification failed. Please try again.")
