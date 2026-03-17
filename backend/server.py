@@ -50,6 +50,7 @@ if TWILIO_AVAILABLE and TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN:
 
 # MSG91 setup
 MSG91_AUTH_KEY = os.environ.get('MSG91_AUTH_KEY')
+MSG91_TEMPLATE_ID = os.environ.get('MSG91_TEMPLATE_ID')
 
 if RESEND_AVAILABLE and RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
@@ -240,7 +241,7 @@ async def send_otp(request: OTPSendRequest):
         # Strip + prefix, MSG91 expects plain number with country code
         mobile = request.phone_number.replace("+", "").strip()
         url = "https://control.msg91.com/api/v5/otp"
-        params = {"mobile": mobile, "otp_length": 6}
+        params = {"mobile": mobile, "otp_length": 6, "template_id": MSG91_TEMPLATE_ID}
         headers = {"authkey": MSG91_AUTH_KEY}
         resp = await asyncio.to_thread(http_requests.post, url, json=params, headers=headers)
         data = resp.json()
