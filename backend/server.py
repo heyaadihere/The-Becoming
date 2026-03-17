@@ -241,9 +241,9 @@ async def send_otp(request: OTPSendRequest):
         # Strip + prefix, MSG91 expects plain number with country code
         mobile = request.phone_number.replace("+", "").strip()
         url = "https://control.msg91.com/api/v5/otp"
-        params = {"mobile": mobile, "otp_length": 6, "template_id": MSG91_TEMPLATE_ID}
-        headers = {"authkey": MSG91_AUTH_KEY}
-        resp = await asyncio.to_thread(http_requests.post, url, json=params, headers=headers)
+        params = {"template_id": MSG91_TEMPLATE_ID, "mobile": mobile, "authkey": MSG91_AUTH_KEY, "otp_length": "6"}
+        headers = {"Content-Type": "application/json"}
+        resp = await asyncio.to_thread(http_requests.post, url, params=params, headers=headers)
         data = resp.json()
         logger.info(f"MSG91 send OTP response for {mobile}: {data}")
         if data.get("type") == "success":
@@ -261,9 +261,9 @@ async def verify_otp(request: OTPVerifyRequest):
         raise HTTPException(status_code=500, detail="SMS service not configured")
     try:
         mobile = request.phone_number.replace("+", "").strip()
-        url = f"https://control.msg91.com/api/v5/otp/verify?mobile={mobile}&otp={request.code}"
-        headers = {"authkey": MSG91_AUTH_KEY}
-        resp = await asyncio.to_thread(http_requests.get, url, headers=headers)
+        url = "https://control.msg91.com/api/v5/otp/verify"
+        params = {"mobile": mobile, "otp": request.code, "authkey": MSG91_AUTH_KEY}
+        resp = await asyncio.to_thread(http_requests.get, url, params=params)
         data = resp.json()
         logger.info(f"MSG91 verify OTP response for {mobile}: {data}")
         return {"valid": data.get("type") == "success"}
